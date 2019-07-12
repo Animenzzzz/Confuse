@@ -1,0 +1,101 @@
+{"params": ["NSString *", "NSLayoutFormatOptions", "nullable NSDictionary<NSString *,id> *", "NSDictionary<NSString *, id> *"], "returntype": "NSArray<__kindof NSLayoutConstraint *> *", "funcname": "constraintsWithVisualFormat", "descrip": ["options", "metrics", "views"]}
+{"params": ["NSArray<NSLayoutConstraint *> *"], "returntype": "void", "funcname": "activateConstraints", "descrip": []}
+{"params": ["NSArray<NSLayoutConstraint *> *"], "returntype": "void", "funcname": "deactivateConstraints", "descrip": []}
+{"params": ["NSTextAttachment *"], "returntype": "NSAttributedString *", "funcname": "attributedStringWithAttachment", "descrip": []}
+{"params": {}, "returntype": "UIAccelerometer *", "funcname": "sharedAccelerometer;", "descrip": []}
+{"params": ["id<UIStateRestoring>", "NSString *"], "returntype": "void", "funcname": "registerObjectForStateRestoration", "descrip": ["restorationIdentifier"]}
+{"params": ["UIBlurEffectStyle"], "returntype": "UIBlurEffect *", "funcname": "effectWithStyle", "descrip": []}
+{"params": ["CGFloat", "CGFloat"], "returntype": "UIColor *", "funcname": "colorWithWhite", "descrip": ["alpha"]}
+{"params": ["CGFloat", "CGFloat", "CGFloat", "CGFloat"], "returntype": "UIColor *", "funcname": "colorWithHue", "descrip": ["saturation", "brightness", "alpha"]}
+{"params": ["CGFloat", "CGFloat", "CGFloat", "CGFloat"], "returntype": "UIColor *", "funcname": "colorWithRed", "descrip": ["green", "blue", "alpha"]}
+{"params": ["CGFloat", "CGFloat", "CGFloat", "CGFloat"], "returntype": "UIColor *", "funcname": "colorWithDisplayP3Red", "descrip": ["green", "blue", "alpha"]}
+{"params": ["UIImage *"], "returntype": "UIColor *", "funcname": "colorWithPatternImage", "descrip": []}
+{"params": ["CIColor *"], "returntype": "UIColor *", "funcname": "colorWithCIColor", "descrip": []}
+{"params": ["NSString *", "nullable NSBundle *", "nullable UITraitCollection *"], "returntype": "nullable UIColor *", "funcname": "colorNamed", "descrip": ["inBundle", "compatibleWithTraitCollection"]}
+{"params": {}, "returntype": "UIDevice *", "funcname": "currentDevice;", "descrip": []}
+{"params": {}, "returntype": "id<UIFocusDebuggerOutput>", "funcname": "help;", "descrip": []}
+{"params": {}, "returntype": "id<UIFocusDebuggerOutput>", "funcname": "status;", "descrip": []}
+{"params": ["id<UIFocusItem>"], "returntype": "id<UIFocusDebuggerOutput>", "funcname": "checkFocusabilityForItem", "descrip": []}
+{"params": ["id<UIFocusEnvironment>"], "returntype": "id<UIFocusDebuggerOutput>", "funcname": "simulateFocusUpdateRequestFromEnvironment", "descrip": []}
+{"params": ["id<UIFocusEnvironment>"], "returntype": "nullable UIFocusSystem *", "funcname": "focusSystemForEnvironment", "descrip": []}
+{"params": ["id<UIFocusEnvironment>", "id<UIFocusEnvironment>"], "returntype": "BOOL", "funcname": "environment", "descrip": ["containsEnvironment"]}
+{"params": ["NSURL *", "UIFocusSoundIdentifier"], "returntype": "void", "funcname": "registerURL", "descrip": ["forSoundIdentifier"]}
+{"params": ["UIFontTextStyle"], "returntype": "UIFont *", "funcname": "preferredFontForTextStyle", "descrip": []}
+{"params": ["UIFontTextStyle", "nullable UITraitCollection *"], "returntype": "UIFont *", "funcname": "preferredFontForTextStyle", "descrip": ["compatibleWithTraitCollection"]}
+{"params": ["NSString *", "CGFloat"], "returntype": "nullable UIFont *", "funcname": "fontWithName", "descrip": ["size"]}
+{"params": {}, "returntype": "NSArray<NSString *> *", "funcname": "familyNames;", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSArray<NSString *> *", "funcname": "fontNamesForFamilyName", "descrip": []}
+{"params": ["CGFloat"], "returntype": "UIFont *", "funcname": "systemFontOfSize", "descrip": []}
+{"params": ["CGFloat"], "returntype": "UIFont *", "funcname": "boldSystemFontOfSize", "descrip": []}
+{"params": ["CGFloat"], "returntype": "UIFont *", "funcname": "italicSystemFontOfSize", "descrip": []}
+{"params": ["CGFloat", "UIFontWeight"], "returntype": "UIFont *", "funcname": "systemFontOfSize", "descrip": ["weight"]}
+{"params": ["CGFloat", "UIFontWeight"], "returntype": "UIFont *", "funcname": "monospacedDigitSystemFontOfSize", "descrip": ["weight"]}
+{"params": ["UIFontDescriptor *", "CGFloat"], "returntype": "UIFont *", "funcname": "fontWithDescriptor", "descrip": ["size"]}
+{"params": ["NSDictionary<UIFontDescriptorAttributeName, id> *"], "returntype": "UIFontDescriptor *", "funcname": "fontDescriptorWithFontAttributes", "descrip": []}
+{"params": ["NSString *", "CGFloat"], "returntype": "UIFontDescriptor *", "funcname": "fontDescriptorWithName", "descrip": ["size"]}
+{"params": ["UIFontTextStyle"], "returntype": "UIFontDescriptor *", "funcname": "preferredFontDescriptorWithTextStyle", "descrip": []}
+{"params": ["UIFontTextStyle", "nullable UITraitCollection *"], "returntype": "UIFontDescriptor *", "funcname": "preferredFontDescriptorWithTextStyle", "descrip": ["compatibleWithTraitCollection"]}
+{"params": ["CGPoint"], "returntype": "NSValue *", "funcname": "valueWithCGPoint", "descrip": []}
+{"params": ["CGSize"], "returntype": "NSValue *", "funcname": "valueWithCGSize", "descrip": []}
+{"params": ["CGRect"], "returntype": "NSValue *", "funcname": "valueWithCGRect", "descrip": []}
+{"params": {}, "returntype": "Class", "funcname": "rendererContextClass;", "descrip": []}
+{"params": ["UIGraphicsRendererFormat *"], "returntype": "nullable CGContextRef", "funcname": "contextWithFormat", "descrip": ["CF_RETURNS_RETAINED;"]}
+{"params": ["CGContextRef", "UIGraphicsRendererContext *"], "returntype": "void", "funcname": "prepareCGContext", "descrip": ["withRendererContext"]}
+{"params": ["NSString *", "nullable NSBundle *", "nullable UITraitCollection *"], "returntype": "nullable UIImage *", "funcname": "imageNamed", "descrip": ["inBundle", "compatibleWithTraitCollection"]}
+{"params": ["NSString *"], "returntype": "nullable UIImage *", "funcname": "imageWithContentsOfFile", "descrip": []}
+{"params": ["NSData *"], "returntype": "nullable UIImage *", "funcname": "imageWithData", "descrip": []}
+{"params": ["NSData *", "CGFloat"], "returntype": "nullable UIImage *", "funcname": "imageWithData", "descrip": ["scale"]}
+{"params": ["CGImageRef"], "returntype": "UIImage *", "funcname": "imageWithCGImage", "descrip": []}
+{"params": ["CGImageRef", "CGFloat", "UIImageOrientation"], "returntype": "UIImage *", "funcname": "imageWithCGImage", "descrip": ["scale", "orientation"]}
+{"params": ["CIImage *"], "returntype": "UIImage *", "funcname": "imageWithCIImage", "descrip": []}
+{"params": ["CIImage *", "CGFloat", "UIImageOrientation"], "returntype": "UIImage *", "funcname": "imageWithCIImage", "descrip": ["scale", "orientation"]}
+{"params": {}, "returntype": "UIColor *", "funcname": "groupTableViewBackgroundColor;", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "viewFlipsideBackgroundColor;", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "scrollViewTexturedBackgroundColor;", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "underPageBackgroundColor;", "descrip": []}
+{"params": {}, "returntype": "CGFloat", "funcname": "labelFontSize;", "descrip": []}
+{"params": {}, "returntype": "CGFloat", "funcname": "buttonFontSize;", "descrip": []}
+{"params": {}, "returntype": "CGFloat", "funcname": "smallSystemFontSize;", "descrip": []}
+{"params": {}, "returntype": "CGFloat", "funcname": "systemFontSize;", "descrip": []}
+{"params": {}, "returntype": "NSString *", "funcname": "persistentStoreName;", "descrip": []}
+{"params": {}, "returntype": "UIMenuController *", "funcname": "sharedMenuController;", "descrip": []}
+{"params": ["NSString *", "nullable NSBundle *"], "returntype": "UINib *", "funcname": "nibWithNibName", "descrip": ["bundle"]}
+{"params": ["NSData *", "nullable NSBundle *"], "returntype": "UINib *", "funcname": "nibWithData", "descrip": ["bundle"]}
+{"params": {}, "returntype": "UIPasteboard *", "funcname": "generalPasteboard;", "descrip": []}
+{"params": ["UIPasteboardName", "BOOL"], "returntype": "nullable UIPasteboard *", "funcname": "pasteboardWithName", "descrip": ["create"]}
+{"params": {}, "returntype": "UIPasteboard *", "funcname": "pasteboardWithUniqueName;", "descrip": []}
+{"params": ["UIPasteboardName"], "returntype": "void", "funcname": "removePasteboardWithName", "descrip": []}
+{"params": {}, "returntype": "CGFloat", "funcname": "arrowBase;", "descrip": []}
+{"params": {}, "returntype": "CGFloat", "funcname": "arrowHeight;", "descrip": []}
+{"params": {}, "returntype": "BOOL", "funcname": "wantsDefaultContentAppearance;", "descrip": []}
+{"params": {}, "returntype": "UIPrintInfo *", "funcname": "printInfo;", "descrip": []}
+{"params": ["NSURL *"], "returntype": "BOOL", "funcname": "canPrintURL", "descrip": []}
+{"params": ["NSData *"], "returntype": "BOOL", "funcname": "canPrintData", "descrip": []}
+{"params": {}, "returntype": "UIPrintInteractionController *", "funcname": "sharedPrintController;", "descrip": []}
+{"params": ["NSString *"], "returntype": "BOOL", "funcname": "dictionaryHasDefinitionForTerm", "descrip": []}
+{"params": {}, "returntype": "UIRegion *", "funcname": "infiniteRegion;", "descrip": []}
+{"params": ["NSString *"], "returntype": "void", "funcname": "clearTextInputContextIdentifier", "descrip": []}
+{"params": ["NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable UIViewController *", "funcname": "", "descrip": ["viewControllerWithRestorationIdentifierPath", "coder"]}
+{"params": ["NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable id<UIStateRestoring>", "funcname": "", "descrip": ["objectWithRestorationIdentifierPath", "coder"]}
+{"params": ["NSString *", "nullable NSBundle *"], "returntype": "UIStoryboard *", "funcname": "storyboardWithName", "descrip": ["bundle"]}
+{"params": ["NSString *"], "returntype": "void", "funcname": "learnWord", "descrip": []}
+{"params": ["NSString *"], "returntype": "BOOL", "funcname": "hasLearnedWord", "descrip": []}
+{"params": ["NSString *"], "returntype": "void", "funcname": "unlearnWord", "descrip": []}
+{"params": {}, "returntype": "NSArray *", "funcname": "availableLanguages;", "descrip": []}
+{"params": ["NSArray<UITraitCollection *> *"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithTraitsFromCollections", "descrip": []}
+{"params": ["UIUserInterfaceIdiom"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithUserInterfaceIdiom", "descrip": []}
+{"params": ["UIUserInterfaceStyle"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithUserInterfaceStyle", "descrip": []}
+{"params": ["UITraitEnvironmentLayoutDirection"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithLayoutDirection", "descrip": []}
+{"params": ["CGFloat"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithDisplayScale", "descrip": []}
+{"params": ["UIUserInterfaceSizeClass"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithHorizontalSizeClass", "descrip": []}
+{"params": ["UIUserInterfaceSizeClass"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithVerticalSizeClass", "descrip": []}
+{"params": ["UIForceTouchCapability"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithForceTouchCapability", "descrip": []}
+{"params": ["UIContentSizeCategory"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithPreferredContentSizeCategory", "descrip": []}
+{"params": ["UIDisplayGamut"], "returntype": "UITraitCollection *", "funcname": "traitCollectionWithDisplayGamut", "descrip": []}
+{"params": ["UIBlurEffect *"], "returntype": "UIVibrancyEffect *", "funcname": "effectForBlurEffect", "descrip": []}
+{"params": ["NSString *"], "returntype": "BOOL", "funcname": "canEditVideoAtPath", "descrip": []}
+{"params": ["UISemanticContentAttribute"], "returntype": "UIUserInterfaceLayoutDirection", "funcname": "userInterfaceLayoutDirectionForSemanticContentAttribute", "descrip": []}
+{"params": ["UISemanticContentAttribute", "UIUserInterfaceLayoutDirection"], "returntype": "UIUserInterfaceLayoutDirection", "funcname": "userInterfaceLayoutDirectionForSemanticContentAttribute", "descrip": ["relativeToLayoutDirection"]}
+{"params": {}, "returntype": "BOOL", "funcname": "areAnimationsEnabled;", "descrip": []}
+{"params": {}, "returntype": "BOOL", "funcname": "requiresConstraintBasedLayout;", "descrip": []}
+{"params": {}, "returntype": "void", "funcname": "attemptRotationToDeviceOrientation;", "descrip": []}

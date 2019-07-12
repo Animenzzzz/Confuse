@@ -1,0 +1,59 @@
+{"params": ["NSInteger", "NSInteger"], "returntype": "instancetype", "funcname": "indexPathForRow", "descrip": ["inSection"]}
+{"params": ["NSInteger", "NSInteger"], "returntype": "instancetype", "funcname": "indexPathForItem", "descrip": ["inSection"]}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": ["nullable NSString *", "nullable NSString *", "UIAlertControllerStyle"], "returntype": "instancetype", "funcname": "alertControllerWithTitle", "descrip": ["message", "preferredStyle"]}
+{"params": {}, "returntype": "instancetype", "funcname": "appearance;", "descrip": []}
+{"params": ["nullable Class <UIAppearanceContainer>"], "returntype": "instancetype", "funcname": "appearanceWhenContainedIn", "descrip": ["..", ""]}
+{"params": ["NSArray<Class <UIAppearanceContainer>> *"], "returntype": "instancetype", "funcname": "appearanceWhenContainedInInstancesOfClasses", "descrip": []}
+{"params": ["UITraitCollection *"], "returntype": "instancetype", "funcname": "appearanceForTraitCollection", "descrip": []}
+{"params": ["UITraitCollection *", "nullable Class <UIAppearanceContainer>"], "returntype": "instancetype", "funcname": "appearanceForTraitCollection", "descrip": ["whenContainedIn", "..", ""]}
+{"params": ["UITraitCollection *", "NSArray<Class <UIAppearanceContainer>> *"], "returntype": "instancetype", "funcname": "appearanceForTraitCollection", "descrip": ["whenContainedInInstancesOfClasses", ";"]}
+{"params": ["UIApplicationShortcutIconType"], "returntype": "instancetype", "funcname": "iconWithType", "descrip": []}
+{"params": ["NSString *"], "returntype": "instancetype", "funcname": "iconWithTemplateImageName", "descrip": []}
+{"params": ["id <UIDynamicItem>", "id <UIDynamicItem>", "CGPoint"], "returntype": "instancetype", "funcname": "fixedAttachmentWithItem", "descrip": ["attachedToItem", "attachmentAnchor"]}
+{"params": ["id <UIDynamicItem>", "id <UIDynamicItem>", "CGPoint"], "returntype": "instancetype", "funcname": "pinAttachmentWithItem", "descrip": ["attachedToItem", "attachmentAnchor"]}
+{"params": {}, "returntype": "instancetype", "funcname": "bezierPath;", "descrip": []}
+{"params": ["CGRect"], "returntype": "instancetype", "funcname": "bezierPathWithRect", "descrip": []}
+{"params": ["CGRect"], "returntype": "instancetype", "funcname": "bezierPathWithOvalInRect", "descrip": []}
+{"params": ["CGRect", "UIRectCorner", "CGSize"], "returntype": "instancetype", "funcname": "bezierPathWithRoundedRect", "descrip": ["byRoundingCorners", "cornerRadii"]}
+{"params": ["CGPoint", "CGFloat", "CGFloat", "CGFloat", "BOOL"], "returntype": "instancetype", "funcname": "bezierPathWithArcCenter", "descrip": ["radius", "startAngle", "endAngle", "clockwise"]}
+{"params": ["CGPathRef"], "returntype": "instancetype", "funcname": "bezierPathWithCGPath", "descrip": []}
+{"params": ["UIButtonType"], "returntype": "instancetype", "funcname": "buttonWithType", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": ["NSIndexPath *"], "returntype": "instancetype", "funcname": "layoutAttributesForCellWithIndexPath", "descrip": []}
+{"params": ["NSString *", "NSIndexPath *"], "returntype": "instancetype", "funcname": "layoutAttributesForSupplementaryViewOfKind", "descrip": ["withIndexPath"]}
+{"params": ["NSString *", "NSIndexPath *"], "returntype": "instancetype", "funcname": "layoutAttributesForDecorationViewOfKind", "descrip": ["withIndexPath"]}
+{"params": ["UIContextualActionStyle", "nullable NSString *", "UIContextualActionHandler"], "returntype": "instancetype", "funcname": "contextualActionWithStyle", "descrip": ["title", "handler"]}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "dragField;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "vortexField;", "descrip": []}
+{"params": ["CGPoint"], "returntype": "instancetype", "funcname": "radialGravityFieldWithPosition", "descrip": []}
+{"params": ["CGFloat", "CGFloat"], "returntype": "instancetype", "funcname": "noiseFieldWithSmoothness", "descrip": ["animationSpeed"]}
+{"params": ["CGFloat", "CGFloat"], "returntype": "instancetype", "funcname": "turbulenceFieldWithSmoothness", "descrip": ["animationSpeed"]}
+{"params": {}, "returntype": "instancetype", "funcname": "springField;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "electricField;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "magneticField;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": ["UIFontTextStyle"], "returntype": "instancetype", "funcname": "metricsForTextStyle", "descrip": []}
+{"params": ["UITraitCollection *"], "returntype": "instancetype", "funcname": "formatForTraitCollection", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "defaultFormat;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "preferredFormat;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "currentCollation;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": ["NSArray<UIContextualAction *> *"], "returntype": "instancetype", "funcname": "configurationWithActions", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": ["NSURL *"], "returntype": "instancetype", "funcname": "previewForURL", "descrip": []}
+{"params": ["NSURL *", "NSString * _Nullable"], "returntype": "instancetype", "funcname": "previewForURL", "descrip": ["title"]}
+{"params": ["NSURL *", "UIDragPreviewTarget*"], "returntype": "instancetype", "funcname": "previewForURL", "descrip": ["target"]}
+{"params": ["NSURL *", "NSString * _Nullable", "UIDragPreviewTarget*"], "returntype": "instancetype", "funcname": "previewForURL", "descrip": ["title", "target"]}
+{"params": {}, "returntype": "instancetype", "funcname": "new;", "descrip": []}
+{"params": ["NSString *"], "returntype": "instancetype", "funcname": "passwordRulesWithDescriptor", "descrip": []}
+{"params": ["NSString *", "UIPreviewActionStyle", "NSArray<UIPreviewAction *> *"], "returntype": "instancetype", "funcname": "actionGroupWithTitle", "descrip": ["style", "actions"]}
