@@ -1,6 +1,6 @@
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable NSData *", "nullable NSString *"], "returntype": "instancetype", "funcname": "initWithData", "descrip": ["ofType"]}
 {"params": ["CGSize"], "returntype": "instancetype", "funcname": "initWithSize", "descrip": []}
 {"params": ["NSCoder *"], "returntype": "instancetype", "funcname": "initWithCoder", "descrip": []}
@@ -9,71 +9,71 @@
 {"params": ["UIAccessibilityCustomSystemRotorType", "UIAccessibilityCustomRotorSearch"], "returntype": "instancetype", "funcname": "initWithSystemType", "descrip": ["itemSearchBlock"]}
 {"params": ["id<NSObject>", "nullable UITextRange *"], "returntype": "instancetype", "funcname": "initWithTargetElement", "descrip": ["targetRange"]}
 {"params": ["id"], "returntype": "instancetype", "funcname": "initWithAccessibilityContainer", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSString *", "UIView *"], "returntype": "instancetype", "funcname": "initWithName", "descrip": ["view"]}
 {"params": ["NSString *", "CGPoint", "UIView *"], "returntype": "instancetype", "funcname": "initWithName", "descrip": ["point", "inView"]}
 {"params": ["NSAttributedString *", "CGPoint", "UIView *"], "returntype": "instancetype", "funcname": "initWithAttributedName", "descrip": ["point", "inView"]}
 {"params": ["nullable NSString *", "nullable id<UIActionSheetDelegate>", "nullable NSString *", "nullable NSString *", "nullable NSString *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["delegate", "cancelButtonTitle", "destructiveButtonTitle", "otherButtonTitles", "..", ""]}
 {"params": ["CGRect"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": []}
 {"params": ["NSCoder *"], "returntype": "instancetype", "funcname": "", "descrip": ["initWithCoder"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
 {"params": ["NSArray *", "nullable NSArray<__kindof UIActivity *> *"], "returntype": "instancetype", "funcname": "initWithActivityItems", "descrip": ["applicationActivities"]}
 {"params": ["nullable NSString *", "nullable NSString *", "nullable id /*<UIAlertViewDelegate>*/", "nullable NSString *", "nullable NSString *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["message", "delegate", "cancelButtonTitle", "otherButtonTitles", "..", ""]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSString *", "NSString *", "nullable NSString *", "nullable UIApplicationShortcutIcon *", "nullable NSDictionary<NSString *, id <NSSecureCoding>> *"], "returntype": "instancetype", "funcname": "initWithType", "descrip": ["localizedTitle", "localizedSubtitle", "icon", "userInfo"]}
 {"params": ["NSString *", "NSString *"], "returntype": "instancetype", "funcname": "initWithType", "descrip": ["localizedTitle"]}
 {"params": ["id <UIDynamicItem>", "CGPoint"], "returntype": "instancetype", "funcname": "initWithItem", "descrip": ["attachedToAnchor"]}
 {"params": ["id <UIDynamicItem>", "id <UIDynamicItem>"], "returntype": "instancetype", "funcname": "initWithItem", "descrip": ["attachedToItem"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIView *"], "returntype": "instancetype", "funcname": "initWithCustomView", "descrip": []}
 {"params": ["NSArray<UIBarButtonItem *> *", "nullable UIBarButtonItem *"], "returntype": "instancetype", "funcname": "initWithBarButtonItems", "descrip": ["representativeItem"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
 {"params": ["CKShare *", "CKContainer *"], "returntype": "instancetype", "funcname": "initWithShare", "descrip": ["container"]}
 {"params": ["CGRect", "UICollectionViewLayout *"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": ["collectionViewLayout"]}
 {"params": ["UIDropOperation", "UICollectionViewDropIntent"], "returntype": "instancetype", "funcname": "initWithDropOperation", "descrip": ["intent"]}
 {"params": ["NSIndexPath*", "NSString *"], "returntype": "instancetype", "funcname": "initWithInsertionIndexPath", "descrip": ["reuseIdentifier"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UICollectionViewLayout *"], "returntype": "instancetype", "funcname": "initWithCollectionViewLayout", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UICollectionViewLayout *", "UICollectionViewLayout *"], "returntype": "instancetype", "funcname": "initWithCurrentLayout", "descrip": ["nextLayout"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSArray<id <UIDynamicItem>> *"], "returntype": "instancetype", "funcname": "initWithItems", "descrip": []}
 {"params": ["UIColor *"], "returntype": "instancetype", "funcname": "initWithColor", "descrip": []}
 {"params": ["NSURL *"], "returntype": "instancetype", "funcname": "initWithFileURL", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable NSArray <NSString *> *"], "returntype": "instancetype", "funcname": "initForOpeningFilesWithContentTypes", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSArray <NSString *> *", "UIDocumentPickerMode"], "returntype": "instancetype", "funcname": "initWithDocumentTypes", "descrip": ["inMode"]}
 {"params": ["NSURL *", "UIDocumentPickerMode"], "returntype": "instancetype", "funcname": "initWithURL", "descrip": ["inMode"]}
 {"params": ["NSArray <NSString *>*", "UIDocumentPickerMode"], "returntype": "instancetype", "funcname": "initWithDocumentTypes", "descrip": ["inMode"]}
 {"params": ["NSArray <NSURL *> *", "UIDocumentPickerMode"], "returntype": "instancetype", "funcname": "initWithURLs", "descrip": ["inMode"]}
 {"params": ["id<UIDragInteractionDelegate>"], "returntype": "instancetype", "funcname": "initWithDelegate", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSItemProvider *"], "returntype": "instancetype", "funcname": "initWithItemProvider", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIView *", "UIDragPreviewParameters *"], "returntype": "instancetype", "funcname": "initWithView", "descrip": ["parameters"]}
 {"params": ["UIView *"], "returntype": "instancetype", "funcname": "initWithView", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["id<UIDropInteractionDelegate>"], "returntype": "instancetype", "funcname": "initWithDelegate", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIDropOperation"], "returntype": "instancetype", "funcname": "initWithDropOperation", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIView *"], "returntype": "instancetype", "funcname": "initWithReferenceView", "descrip": []}
 {"params": ["UICollectionViewLayout *"], "returntype": "instancetype", "funcname": "initWithCollectionViewLayout", "descrip": []}
 {"params": ["NSArray<id <UIDynamicItem>> *"], "returntype": "instancetype", "funcname": "initWithItems", "descrip": []}
 {"params": ["NSArray<id <UIDynamicItem>> *"], "returntype": "instancetype", "funcname": "initWithItems", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSDictionary<UIFontDescriptorAttributeName, id> *"], "returntype": "instancetype", "funcname": "initWithFontAttributes", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIFontTextStyle"], "returntype": "instancetype", "funcname": "initForTextStyle", "descrip": []}
 {"params": ["CGSize"], "returntype": "instancetype", "funcname": "initWithSize", "descrip": []}
 {"params": ["CGSize", "UIGraphicsImageRendererFormat *"], "returntype": "instancetype", "funcname": "initWithSize", "descrip": ["format"]}
@@ -86,25 +86,25 @@
 {"params": ["CGImageRef", "CGFloat", "UIImageOrientation"], "returntype": "instancetype", "funcname": "initWithCGImage", "descrip": ["scale", "orientation"]}
 {"params": ["CIImage *"], "returntype": "instancetype", "funcname": "initWithCIImage", "descrip": []}
 {"params": ["CIImage *", "CGFloat", "UIImageOrientation"], "returntype": "instancetype", "funcname": "initWithCIImage", "descrip": ["scale", "orientation"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable UIImage *"], "returntype": "instancetype", "funcname": "initWithImage", "descrip": []}
 {"params": ["nullable UIImage *", "nullable UIImage *"], "returntype": "instancetype", "funcname": "initWithImage", "descrip": ["highlightedImage"]}
 {"params": ["UIImpactFeedbackStyle"], "returntype": "instancetype", "funcname": "initWithStyle", "descrip": []}
 {"params": ["CGRect", "UIInputViewStyle"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": ["inputViewStyle"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSString *", "UIInterpolatingMotionEffectType"], "returntype": "instancetype", "funcname": "initWithKeyPath", "descrip": ["type"]}
 {"params": ["nullable Class", "nullable Class"], "returntype": "instancetype", "funcname": "initWithNavigationBarClass", "descrip": ["toolbarClass"]}
 {"params": ["NSString *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": []}
 {"params": ["UIPageViewControllerTransitionStyle", "UIPageViewControllerNavigationOrientation", "nullable NSDictionary<UIPageViewControllerOptionsKey, id> *"], "returntype": "instancetype", "funcname": "initWithTransitionStyle", "descrip": ["navigationOrientation", "options"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSArray<NSString *> *"], "returntype": "instancetype", "funcname": "initWithAcceptableTypeIdentifiers", "descrip": []}
 {"params": ["Class<NSItemProviderReading>"], "returntype": "instancetype", "funcname": "initWithTypeIdentifiersForAcceptingClass", "descrip": []}
 {"params": ["UIViewController *"], "returntype": "instancetype", "funcname": "initWithContentViewController", "descrip": []}
 {"params": ["UIViewController *", "nullable UIViewController *"], "returntype": "instancetype", "funcname": "initWithPresentedViewController", "descrip": ["presentingViewController"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIView *"], "returntype": "instancetype", "funcname": "initWithView", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSString *"], "returntype": "instancetype", "funcname": "initWithText", "descrip": []}
 {"params": ["NSAttributedString *"], "returntype": "instancetype", "funcname": "initWithAttributedText", "descrip": []}
 {"params": ["NSString *"], "returntype": "instancetype", "funcname": "initWithMarkupText", "descrip": []}
@@ -112,56 +112,56 @@
 {"params": ["NSArray<id <UIDynamicItem>> *", "UIPushBehaviorMode"], "returntype": "instancetype", "funcname": "initWithItems", "descrip": ["mode"]}
 {"params": ["NSString *"], "returntype": "instancetype", "funcname": "initWithTerm", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["CGFloat"], "returntype": "instancetype", "funcname": "initWithRadius", "descrip": []}
 {"params": ["CGSize"], "returntype": "instancetype", "funcname": "initWithSize", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "inverseRegion;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "inverseRegion", "descrip": []}
 {"params": ["UIRegion *"], "returntype": "instancetype", "funcname": "regionByUnionWithRegion", "descrip": []}
 {"params": ["UIRegion *"], "returntype": "instancetype", "funcname": "regionByDifferenceFromRegion", "descrip": []}
 {"params": ["UIRegion *"], "returntype": "instancetype", "funcname": "regionByIntersectionWithRegion", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["CGRect"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": []}
 {"params": ["UISearchController *"], "returntype": "instancetype", "funcname": "initWithSearchController", "descrip": []}
 {"params": ["nullable UIViewController *"], "returntype": "instancetype", "funcname": "initWithSearchResultsController", "descrip": []}
 {"params": ["UISearchBar *", "UIViewController *"], "returntype": "instancetype", "funcname": "initWithSearchBar", "descrip": ["contentsController"]}
 {"params": ["id <UIDynamicItem>", "CGPoint"], "returntype": "instancetype", "funcname": "initWithItem", "descrip": ["snapToPoint"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["CGRect"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": []}
 {"params": ["NSCoder *"], "returntype": "instancetype", "funcname": "initWithCoder", "descrip": []}
 {"params": ["nullable NSString *", "UIViewController *", "UIViewController *"], "returntype": "instancetype", "funcname": "initWithIdentifier", "descrip": ["source", "destination"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable NSString *", "nullable UIImage *", "NSInteger"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["image", "tag"]}
 {"params": ["nullable NSString *", "nullable UIImage *", "nullable UIImage *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["image", "selectedImage"]}
 {"params": ["UITabBarSystemItem", "NSInteger"], "returntype": "instancetype", "funcname": "initWithTabBarSystemItem", "descrip": ["tag"]}
 {"params": ["UIDropOperation", "UITableViewDropIntent"], "returntype": "instancetype", "funcname": "initWithDropOperation", "descrip": ["intent"]}
 {"params": ["NSIndexPath *", "NSString *", "CGFloat"], "returntype": "instancetype", "funcname": "initWithInsertionIndexPath", "descrip": ["reuseIdentifier", "rowHeight"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UITableViewCellStyle", "nullable NSString *"], "returntype": "instancetype", "funcname": "initWithStyle", "descrip": ["reuseIdentifier"]}
 {"params": ["UITableViewStyle"], "returntype": "instancetype", "funcname": "initWithStyle", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
 {"params": ["nullable NSString *"], "returntype": "instancetype", "funcname": "initWithReuseIdentifier", "descrip": []}
 {"params": ["UIView *", "CGPoint"], "returntype": "instancetype", "funcname": "initWithContainer", "descrip": ["center"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIView *", "UIDragPreviewParameters *", "UIDragPreviewTarget *"], "returntype": "instancetype", "funcname": "initWithView", "descrip": ["parameters", "target"]}
 {"params": ["UIView *", "UIDragPreviewParameters *"], "returntype": "instancetype", "funcname": "initWithView", "descrip": ["parameters"]}
 {"params": ["UIView *"], "returntype": "instancetype", "funcname": "initWithView", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["NSLayoutManager*", "NSRange"], "returntype": "instancetype", "funcname": "initWithLayoutManager", "descrip": ["range"]}
 {"params": ["NSLayoutManager*", "NSRange", "BOOL"], "returntype": "instancetype", "funcname": "initWithLayoutManager", "descrip": ["range", "unifyRects"]}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["UIResponder <UITextInput> *"], "returntype": "instancetype", "funcname": "initWithTextInput", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["CGRect", "nullable NSTextContainer *"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": ["textContainer"]}
 {"params": ["UIViewAnimationCurve"], "returntype": "instancetype", "funcname": "initWithAnimationCurve", "descrip": []}
 {"params": ["CGPoint", "CGPoint"], "returntype": "instancetype", "funcname": "initWithControlPoint1", "descrip": ["controlPoint2"]}
 {"params": ["CGFloat"], "returntype": "instancetype", "funcname": "initWithDampingRatio", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
-{"params": {}, "returntype": "instancetype", "funcname": "init;", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["CGRect"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
 {"params": ["nullable UIVisualEffect *"], "returntype": "instancetype", "funcname": "initWithEffect", "descrip": []}

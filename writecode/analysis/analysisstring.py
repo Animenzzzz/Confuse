@@ -21,7 +21,8 @@ def func(funcstring,jsonoutputfile):
     descriparr = []
     if descrip:
         index = str(list1[1]).find(":")
-        resultDic["funcname"] = str(list1[1])[0:index]
+        funcname_string = str(list1[1])[0:index]
+        resultDic["funcname"] = str(funcname_string).strip(";")
         for num in range(2,len(list1)):
             tmp = str(list1[num])
             index = tmp.find(":")
