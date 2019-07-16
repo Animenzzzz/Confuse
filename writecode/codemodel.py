@@ -2,6 +2,9 @@
 import sys
 import os
 import randomvalue
+import re
+import json
+
 
 if_num_min = 1
 if_num_max = 5
@@ -16,6 +19,24 @@ func_num_max = 5
 tab_level_1 = "\t"
 tab_level_2 = "\t\t"
 tab_level_3 = "\t\t\t"
+
+
+def inline_model_tablevel(level):
+    param_name = randomvalue.stringvalue()
+    param_value = randomvalue.stringvalue()
+
+    result_string = ""
+    tab_string = ""
+    if level == 1:
+        tab_string = f'{tab_level_1}'
+    elif level == 2:
+        tab_string = f'{tab_level_2}'
+    elif level == 3:
+        tab_string = f'{tab_level_3}'
+    else:
+        tab_string = f'{tab_level_3}\t'
+    result_string = f'{tab_string}NSString *{param_name} = @\"{param_value}\";\n{tab_string}NSLog(\"%@\", {param_name});\n'
+    return result_string
 
 def if_model():
 
@@ -49,7 +70,7 @@ def if_model():
                 level_num_str1 = str(level*num)
                 inline_string = inline_model_tablevel(2)
                 if_string = f'{if_string}\telse if({param_name} > {level_num_str} && {param_name} =< {level_num_str1}){{\n{inline_string}\t}}\n'
-    return if_string
+    return f'\n{if_string}\n'
 
 def switch_model():
 
@@ -73,10 +94,10 @@ def switch_model():
             else:
                 inline_string1 = inline_model_tablevel(3)
                 num_str = str(num)
-                switch_string = f'{switch_string}{tab_level_2}case {num_str}:\n{inline_string1}{tab_level_3}break;\n'
-    return switch_string
+                switch_string = f'\n{switch_string}{tab_level_2}case {num_str}:\n{inline_string1}{tab_level_3}break;'
+    return f'\n{switch_string}\n'
 
-def func_model(funcjsonstring,tablevel):
+def func_call_model(funcjsonstring,tablevel):
 
     funcdic = eval(funcjsonstring)
     print(funcdic)
@@ -108,26 +129,61 @@ def func_model(funcjsonstring,tablevel):
         func_string = f'{func_string}{sel_string}'
 
     func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},sel{msg_send_param});'
-    return func_string
+    return f'\n{func_string}\n'
+
+def func_create_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_create_file):
+
+    if_string = ""
+    if if_model_flag == 1:
+        if_string = if_model()
+    
+    while_string = ""
+    if while_model_flag == 1:
+        while_string = while_model()
+
+    switch_string = ""
+    if switch_model_flag == 1:
+        switch_string = switch_model()
+
+    func_call_string = ""
+    for item in func_call_string_array:
+        print(f'item:{item}')
+        func_call_string_item = ""
+        while func_call_string_item == "":
+            func_call_string_item = func_call_model(str(item).strip('\n'), tablevel)
+        func_call_string = f'{func_call_string}{func_call_string_item}'
+
+    func_dic = {}
+    func_dic["params"] = []
+    params_num = randomvalue.intvalue(1,5)
+    for k in range(0,params_num):
+        func_dic["params"].append(randomvalue.typevalue())
+    func_dic["returntype"] = "void"
+    func_dic["funcname"] = randomvalue.stringvalue_num(3)
+    desc_num = params_num - 1
+    func_dic["descrip"] = []
+    for index in range(0,desc_num):
+        func_dic["descrip"].append(randomvalue.stringvalue())
+
+    jsonfile = open(func_create_file,'a+')
+    jsonfile.writelines(json.dumps(func_dic)+'\n')
+    jsonfile.close()
+
+
+    first_params_name = randomvalue.stringvalue()
+    func_create_string = ""
+    func_create_string = f'- (void) {func_dic["funcname"]}:(void *){first_params_name}'
+
+    descrp_string = ""
+    for j in range(0,len(func_dic["descrip"])):
+        descrp_string = f'{descrp_string} {func_dic["descrip"][j]}:({func_dic["params"][j+1]}){func_dic["descrip"][j]}'
+
+
+    func_create_string = f'{func_create_string} {descrp_string}{{\n{if_string}{while_string}{switch_string}{func_call_string}}}'
+        
+    return f'\n{func_create_string}\n'
 
 def while_model():
 
     while_string = "\n\twhile(1){\n\t\tNSLog(\"滚滚滚滚\");\n\t}\n"
     return while_string
-
-def inline_model_tablevel(level):
-    param_name = randomvalue.stringvalue()
-    param_value = randomvalue.stringvalue()
-
-    result_string = ""
-    tab_string = ""
-    if level == 1:
-        tab_string = f'{tab_level_1}'
-    elif level == 2:
-        tab_string = f'{tab_level_2}'
-    elif level == 3:
-        tab_string = f'{tab_level_3}'
-    else:
-        tab_string = f'{tab_level_3}\t'
-    result_string = f'{tab_string}NSString *{param_name} = @\"{param_value}\";\n{tab_string}NSLog(\"%@\", {param_name});\n'
-    return result_string

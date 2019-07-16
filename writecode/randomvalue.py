@@ -5,6 +5,13 @@ import re
 
 worlds_path = "/Users/animenzzz/GitCode/Confuse/resource/words.txt"
 
+
+params_type_pool = ["int","float","void *","double","long long","bool","char"]
+
+def typevalue():
+    index = random.randint(0,len(params_type_pool)-1)
+    return params_type_pool[index]
+
 def intvalue(minv,maxv):
     return random.randint(minv,maxv)
 

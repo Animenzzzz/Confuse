@@ -4,24 +4,39 @@ import os
 import linecache
 import randomvalue
 test_pat = "/Users/animenzzz/Desktop/aa.txt"
-
+random_func_path = "/Users/animenzzz/GitCode/Confuse/resource/random_func_create.txt"
 
 work_path = "/Users/animenzzz/GitCode/Confuse/resource"
 file_json_path1 = f"{work_path}/func_analysised/uikit_class_func.txt"
 
 
-
+func_arr = []
 funcfile = open(file_json_path1,'r')
 lengh = len(funcfile.readlines())
 funcfile.close()
-random_row = randomvalue.intvalue(1,lengh)
-random_line = linecache.getline(file_json_path1, random_row)
-write_string = codemodel.func_model(random_line,1)
+for i in range(1,3):
+    random_row = randomvalue.intvalue(1,lengh)
+    random_line = linecache.getline(file_json_path1, random_row)
+    func_arr.append(random_line)
+print(f'数组：{func_arr}')
+write_string = codemodel.func_create_model(1,1,1,func_arr,1,random_func_path)
 if write_string != "":
     os.remove(test_pat)
     file_te = open(test_pat, 'a+')
     file_te.write(write_string)
     file_te.close()
+
+# funcfile = open(file_json_path1,'r')
+# lengh = len(funcfile.readlines())
+# funcfile.close()
+# random_row = randomvalue.intvalue(1,lengh)
+# random_line = linecache.getline(file_json_path1, random_row)
+# write_string = codemodel.func_call_model(random_line,1)
+# if write_string != "":
+#     os.remove(test_pat)
+#     file_te = open(test_pat, 'a+')
+#     file_te.write(write_string)
+#     file_te.close()
 
 
 # write_string = codemodel.if_model()
