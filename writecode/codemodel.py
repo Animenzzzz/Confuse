@@ -109,7 +109,7 @@ def func_model(funcjsonstring,tablevel):
 
     func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},sel{msg_send_param});'
     return func_string
-    
+
 def while_model():
 
     while_string = "\n\twhile(1){\n\t\tNSLog(\"滚滚滚滚\");\n\t}\n"
@@ -120,12 +120,14 @@ def inline_model_tablevel(level):
     param_value = randomvalue.stringvalue()
 
     result_string = ""
+    tab_string = ""
     if level == 1:
-        result_string = "\tNSString *"+param_name+" = @\""+param_value+"\";\n"+"\tNSLog(\"%@\", "+param_name+");\n"
+        tab_string = f'{tab_level_1}'
     elif level == 2:
-        result_string = "\t\tNSString *"+param_name+" = @\""+param_value+"\";\n"+"\t\tNSLog(\"%@\", "+param_name+");\n"
+        tab_string = f'{tab_level_2}'
     elif level == 3:
-        result_string = "\t\t\tNSString *"+param_name+" = @\""+param_value+"\";\n"+"\t\t\tNSLog(\"%@\", "+param_name+");\n"
+        tab_string = f'{tab_level_3}'
     else:
-        result_string = "\t\t\t\tNSString *"+param_name+" = @\""+param_value+"\";\n"+"\t\t\t\tNSLog(\"%@\", "+param_name+");\n"
+        tab_string = f'{tab_level_3}\t'
+    result_string = f'{tab_string}NSString *{param_name} = @\"{param_value}\";\n{tab_string}NSLog(\"%@\", {param_name});\n'
     return result_string
