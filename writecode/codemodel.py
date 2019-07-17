@@ -90,14 +90,20 @@ def switch_model():
                 inline_string1 = inline_model_tablevel(3)
                 switch_string = f'{switch_string}\tswitch ({param_name}) {{\n{tab_level_2}case 2:\n{inline_string1}{tab_level_3}break;\n'
             elif num == random_num:
-                switch_string = f'{switch_string}{tab_level_2}default:\n{tab_level_3}NSLog(\"%@\"{randstring1});\n{tab_level_3}break;\n\t}}\n'
+                switch_string = f'{switch_string}\n{tab_level_2}default:\n{tab_level_3}NSLog(\"%@\",{randstring1});\n{tab_level_3}break;\n\t}}\n'
             else:
                 inline_string1 = inline_model_tablevel(3)
                 num_str = str(num)
-                switch_string = f'\n{switch_string}{tab_level_2}case {num_str}:\n{inline_string1}{tab_level_3}break;'
+                switch_string = f'\n{switch_string}\n{tab_level_2}case {num_str}:\n{inline_string1}{tab_level_3}break;'
     return f'\n{switch_string}\n'
 
-def func_call_model(funcjsonstring,tablevel):
+def constom_func_call_model(funcjsonstring,tablevel):
+    funcdic = eval(funcjsonstring)
+    if len(funcdic["descrip"])>0:
+        del funcdic["descrip"][0]
+    system_func_call_model(json.dumps(funcdic),tablevel)
+
+def system_func_call_model(funcjsonstring,tablevel):
 
     funcdic = eval(funcjsonstring)
     print(funcdic)
@@ -131,7 +137,20 @@ def func_call_model(funcjsonstring,tablevel):
     func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},sel{msg_send_param});'
     return f'\n{func_string}\n'
 
-def func_create_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_create_file):
+def constom_func_head_model(funcdic):
+
+    
+    func_head_string = ""
+    func_head_string = f'- (void) {funcdic["funcname"]}:({funcdic["params"][0]}){funcdic["descrip"][0]}'
+
+    descrp_string = ""
+    for j in range(1,len(funcdic["descrip"])):
+        descrp_string = f'{descrp_string} {funcdic["descrip"][j]}:({funcdic["params"][j]}){funcdic["descrip"][j]}'
+
+    return f'{func_head_string}{descrp_string}'
+
+
+def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_create_file):
 
     if_string = ""
     if if_model_flag == 1:
@@ -150,40 +169,16 @@ def func_create_model(if_model_flag, while_model_flag, switch_model_flag, func_c
         print(f'item:{item}')
         func_call_string_item = ""
         while func_call_string_item == "":
-            func_call_string_item = func_call_model(str(item).strip('\n'), tablevel)
+            func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
         func_call_string = f'{func_call_string}{func_call_string_item}'
 
-    func_dic = {}
-    func_dic["params"] = []
-    params_num = randomvalue.intvalue(1,5)
-    for k in range(0,params_num):
-        func_dic["params"].append(randomvalue.typevalue())
-    func_dic["returntype"] = "void"
-    func_dic["funcname"] = randomvalue.stringvalue_num(3)
-    desc_num = params_num - 1
-    func_dic["descrip"] = []
-    for index in range(0,desc_num):
-        func_dic["descrip"].append(randomvalue.stringvalue())
-
-    jsonfile = open(func_create_file,'a+')
-    jsonfile.writelines(json.dumps(func_dic)+'\n')
-    jsonfile.close()
-
-
-    first_params_name = randomvalue.stringvalue()
-    func_create_string = ""
-    func_create_string = f'- (void) {func_dic["funcname"]}:(void *){first_params_name}'
-
-    descrp_string = ""
-    for j in range(0,len(func_dic["descrip"])):
-        descrp_string = f'{descrp_string} {func_dic["descrip"][j]}:({func_dic["params"][j+1]}){func_dic["descrip"][j]}'
-
-
-    func_create_string = f'{func_create_string} {descrp_string}{{\n{if_string}{while_string}{switch_string}{func_call_string}}}'
+    func_dic = randomvalue.funccreate(func_create_file,3)
+    func_head_string = constom_func_head_model(func_dic)
+    func_create_string = f'{func_head_string}{{\n{if_string}{while_string}{switch_string}{func_call_string}}}'
         
     return f'\n{func_create_string}\n'
 
 def while_model():
 
-    while_string = "\n\twhile(1){\n\t\tNSLog(\"滚滚滚滚\");\n\t}\n"
+    while_string = "\n\twhile(0){\n\t\tNSLog(\"滚滚滚滚\");\n\t}\n"
     return while_string
