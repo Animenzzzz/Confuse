@@ -40,10 +40,11 @@ def stringvalue_num(num):
     return random_world
 
 
-def funccreate(random_func_path, func_name_num):
+def funccreate(random_func_path, func_name_num,class_name):
     func_dic = {}
     func_dic["params"] = []
     func_dic["descrip"] = []
+    func_dic["class_name"] = class_name
     params_num = intvalue(1,5)
     for k in range(0,params_num):
         func_dic["params"].append(typevalue())

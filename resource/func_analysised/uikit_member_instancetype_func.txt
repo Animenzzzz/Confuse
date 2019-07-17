@@ -15,7 +15,6 @@
 {"params": ["NSAttributedString *", "CGPoint", "UIView *"], "returntype": "instancetype", "funcname": "initWithAttributedName", "descrip": ["point", "inView"]}
 {"params": ["nullable NSString *", "nullable id<UIActionSheetDelegate>", "nullable NSString *", "nullable NSString *", "nullable NSString *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["delegate", "cancelButtonTitle", "destructiveButtonTitle", "otherButtonTitles", "..", ""]}
 {"params": ["CGRect"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": []}
-{"params": ["NSCoder *"], "returntype": "instancetype", "funcname": "", "descrip": ["initWithCoder"]}
 {"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}

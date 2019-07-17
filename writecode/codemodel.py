@@ -82,7 +82,7 @@ def switch_model():
     randstring1 = randomvalue.stringvalue()
     if random_num == switch_num_min:
         inline_string1 = inline_model_tablevel(3)
-        switch_string = f'{switch_string}\tswitch ({param_name}) {{\n{tab_level_2}case 2:{{\n{inline_string1}{tab_level_3}}}break;\n{tab_level_2}default:\n{{{tab_level_3}NSLog(@\"do not catch anything\");\n{tab_level_3}}}break;\n\t}}\n'
+        switch_string = f'{switch_string}\tswitch ({param_name}) {{\n{tab_level_2}case 2:{{\n{inline_string1}{tab_level_3}}}break;\n{tab_level_2}default:{{\n{tab_level_3}NSLog(@\"do not catch anything\");\n{tab_level_3}}}break;\n\t}}\n'
     else:
         for num in range(switch_num_min,random_num+1):
             if num == switch_num_min:
@@ -96,12 +96,42 @@ def switch_model():
                 switch_string = f'\n{switch_string}\n{tab_level_2}case {num_str}:{{\n{inline_string1}{tab_level_3}}}break;'
     return f'\n{switch_string}\n'
 
+# 自定义函数的调用
 def constom_func_call_model(funcjsonstring,tablevel):
     funcdic = eval(funcjsonstring)
-    if len(funcdic["descrip"])>0:
-        del funcdic["descrip"][0]
-    system_func_call_model(json.dumps(funcdic),tablevel)
+    if funcdic["funcname"] == "":
+        print("函数名为空")
+        return
+    obj_name = randomvalue.stringvalue()
+    class_type = funcdic["class_name"]
 
+    func_string = ""
+    func_string = f'{tab_level_1}{class_type} *{obj_name} = [{class_type} new];\n'
+
+    params_name = []
+    for i in range(0,len(funcdic["params"])):
+        params_name.append(randomvalue.stringvalue())
+
+    param_init_string = ""
+    for i in range(len(funcdic["params"])):
+        param_init_string = f'{param_init_string}{tab_level_1}{funcdic["params"][i]} {params_name[i]};\n'
+
+
+    call_string = ""
+    if len(params_name) == 0:
+        call_string = f'{tab_level_1}[{obj_name} {funcdic["funcname"]}];\n'
+    else:
+        if len(funcdic["descrip"]) == 1:
+            call_string = f'{tab_level_1}[{obj_name} {funcdic["funcname"]}:{params_name[0]}];\n'
+        else:
+            call_string = f'{tab_level_1}[{obj_name} {funcdic["funcname"]}:{params_name[0]} '
+            for i in range(1,len(funcdic["descrip"])):
+                call_string = f'{call_string}{funcdic["descrip"][i]}:{params_name[i]} '
+            call_string = f'{call_string}];\n'
+
+    return f'\n{func_string}{param_init_string}{call_string}\n'
+
+# 系统函数的调用
 def system_func_call_model(funcjsonstring,tablevel):
 
     funcdic = eval(funcjsonstring)
@@ -136,6 +166,7 @@ def system_func_call_model(funcjsonstring,tablevel):
     func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},{sel_name}{msg_send_param});'
     return f'\n{func_string}\n'
 
+# 自定义函数的声明
 def constom_func_head_model(funcdic):
 
     
@@ -148,7 +179,7 @@ def constom_func_head_model(funcdic):
 
     return f'\n{func_head_string}{descrp_string}'
 
-
+# 自定义函数的实现
 def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_dic):
 
     if_string = ""
@@ -166,10 +197,6 @@ def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_str
     func_call_string = ""
     for item in func_call_string_array:
         func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
-        # while func_call_string_item == "":
-        #     func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
-        #     if func_call_string_item is None:
-        #         func_call_string_item = ""
         if func_call_string_item is None:
             func_call_string_item = " "
         func_call_string = f'{func_call_string}{func_call_string_item}'

@@ -194,15 +194,9 @@
 {"params": ["UIApplication *"], "returntype": "void", "funcname": "applicationProtectedDataDidBecomeAvailable", "descrip": ["", "", ";"]}
 {"params": ["UIApplication *", "nullable UIWindow *"], "returntype": "UIInterfaceOrientationMask", "funcname": "application", "descrip": ["supportedInterfaceOrientationsForWindow", ";"]}
 {"params": ["UIApplication *", "UIApplicationExtensionPointIdentifier"], "returntype": "BOOL", "funcname": "application", "descrip": ["shouldAllowExtensionPointIdentifier"]}
-{"params": ["UIApplication *", "NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable UIViewController *", "funcname": "", "descrip": ["application", "viewControllerWithRestorationIdentifierPath", "coder"]}
-{"params": ["UIApplication *", "NSCoder *"], "returntype": "BOOL", "funcname": "", "descrip": ["application", "shouldSaveApplicationState"]}
-{"params": ["UIApplication *", "NSCoder *"], "returntype": "BOOL", "funcname": "", "descrip": ["application", "shouldRestoreApplicationState"]}
-{"params": ["UIApplication *", "NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["application", "willEncodeRestorableStateWithCoder"]}
-{"params": ["UIApplication *", "NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["application", "didDecodeRestorableStateWithCoder"]}
 {"params": ["UIApplication *", "NSString *"], "returntype": "BOOL", "funcname": "application", "descrip": ["willContinueUserActivityWithType"]}
 {"params": ["UIApplication *", "NSString *", "NSError *"], "returntype": "void", "funcname": "application", "descrip": ["didFailToContinueUserActivityWithType", "error"]}
 {"params": ["UIApplication *", "NSUserActivity *"], "returntype": "void", "funcname": "application", "descrip": ["didUpdateUserActivity"]}
-{"params": ["UIApplication *", "CKShareMetadata *"], "returntype": "void", "funcname": "", "descrip": ["application", "userDidAcceptCloudKitShareWithMetadata"]}
 {"params": ["UIInterfaceOrientation", "BOOL"], "returntype": "void", "funcname": "setStatusBarOrientation", "descrip": ["animated"]}
 {"params": ["UIStatusBarStyle", "BOOL"], "returntype": "void", "funcname": "setStatusBarStyle", "descrip": ["animated"]}
 {"params": ["BOOL", "UIStatusBarAnimation"], "returntype": "void", "funcname": "setStatusBarHidden", "descrip": ["withAnimation"]}
@@ -783,10 +777,6 @@
 {"params": ["UISearchController *"], "returntype": "void", "funcname": "didDismissSearchController", "descrip": []}
 {"params": ["UISearchController *"], "returntype": "void", "funcname": "presentSearchController", "descrip": []}
 {"params": ["UISearchController *"], "returntype": "void", "funcname": "updateSearchResultsForSearchController", "descrip": []}
-{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerWillBeginSearch"]}
-{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerDidBeginSearch"]}
-{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerWillEndSearch"]}
-{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerDidEndSearch"]}
 {"params": ["UISearchDisplayController *", "UITableView *"], "returntype": "void", "funcname": "searchDisplayController", "descrip": ["didLoadSearchResultsTableView"]}
 {"params": ["UISearchDisplayController *", "UITableView *"], "returntype": "void", "funcname": "searchDisplayController", "descrip": ["willUnloadSearchResultsTableView"]}
 {"params": ["UISearchDisplayController *", "UITableView *"], "returntype": "void", "funcname": "searchDisplayController", "descrip": ["willShowSearchResultsTableView"]}
@@ -847,11 +837,6 @@
 {"params": ["UIView *", "NSUInteger"], "returntype": "void", "funcname": "insertArrangedSubview", "descrip": ["atIndex"]}
 {"params": ["CGFloat", "UIView *"], "returntype": "void", "funcname": "setCustomSpacing", "descrip": ["afterView"]}
 {"params": ["UIView *"], "returntype": "CGFloat", "funcname": "customSpacingAfterView", "descrip": []}
-{"params": ["NSIndexPath *", "UIView *"], "returntype": "nullable NSString *", "funcname": "", "descrip": ["modelIdentifierForElementAtIndexPath", "inView"]}
-{"params": ["NSString *", "UIView *"], "returntype": "nullable NSIndexPath *", "funcname": "", "descrip": ["indexPathForElementWithModelIdentifier", "inView"]}
-{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["encodeRestorableStateWithCoder"]}
-{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["decodeRestorableStateWithCoder"]}
-{"params": {}, "returntype": "void", "funcname": "", "descrip": ["applicationFinishedRestoringState;"]}
 {"params": ["nullable UIImage*", "UIControlState"], "returntype": "void", "funcname": "setBackgroundImage", "descrip": ["forState"]}
 {"params": ["UIControlState"], "returntype": "nullable UIImage*", "funcname": "backgroundImageForState", "descrip": []}
 {"params": ["nullable UIImage*", "UIControlState", "UIControlState"], "returntype": "void", "funcname": "setDividerImage", "descrip": ["forLeftSegmentState", "rightSegmentState"]}
@@ -1129,8 +1114,6 @@
 {"params": {}, "returntype": "BOOL", "funcname": "hasAmbiguousLayout", "descrip": []}
 {"params": ["UILayoutConstraintAxis"], "returntype": "NSArray<__kindof NSLayoutConstraint *> *", "funcname": "constraintsAffectingLayoutForAxis", "descrip": []}
 {"params": {}, "returntype": "BOOL", "funcname": "hasAmbiguousLayout", "descrip": []}
-{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["encodeRestorableStateWithCoder"]}
-{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["decodeRestorableStateWithCoder"]}
 {"params": ["BOOL"], "returntype": "nullable UIView *", "funcname": "snapshotViewAfterScreenUpdates", "descrip": []}
 {"params": ["CGRect", "BOOL"], "returntype": "BOOL", "funcname": "drawViewHierarchyInRect", "descrip": ["afterScreenUpdates"]}
 {"params": {}, "returntype": "void", "funcname": "startAnimation", "descrip": []}
@@ -1180,9 +1163,6 @@
 {"params": {}, "returntype": "BOOL", "funcname": "shouldAutomaticallyForwardAppearanceMethods", "descrip": []}
 {"params": ["nullable UIViewController *"], "returntype": "void", "funcname": "willMoveToParentViewController", "descrip": []}
 {"params": ["nullable UIViewController *"], "returntype": "void", "funcname": "didMoveToParentViewController", "descrip": []}
-{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["encodeRestorableStateWithCoder"]}
-{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["decodeRestorableStateWithCoder"]}
-{"params": {}, "returntype": "void", "funcname": "", "descrip": ["applicationFinishedRestoringState;"]}
 {"params": {}, "returntype": "void", "funcname": "updateViewConstraints", "descrip": []}
 {"params": {}, "returntype": "void", "funcname": "viewLayoutMarginsDidChang", "descrip": [""]}
 {"params": {}, "returntype": "void", "funcname": "viewSafeAreaInsetsDidChang", "descrip": [""]}
@@ -1221,7 +1201,6 @@
 {"params": ["UIViewController *"], "returntype": "CGRect", "funcname": "initialFrameForViewController", "descrip": []}
 {"params": ["UIViewController *"], "returntype": "CGRect", "funcname": "finalFrameForViewController", "descrip": []}
 {"params": ["id <UIViewControllerContextTransitioning>"], "returntype": "void", "funcname": "animateTransition", "descrip": []}
-{"params": ["id <UIViewControllerContextTransitioning>"], "returntype": "id <UIViewImplicitlyAnimating>", "funcname": "", "descrip": ["interruptibleAnimatorForTransition"]}
 {"params": ["id <UIViewControllerContextTransitioning>"], "returntype": "void", "funcname": "startInteractiveTransition", "descrip": []}
 {"params": {}, "returntype": "CGFloat", "funcname": "completionSpeed", "descrip": []}
 {"params": {}, "returntype": "UIViewAnimationCurve", "funcname": "completionCurve", "descrip": []}

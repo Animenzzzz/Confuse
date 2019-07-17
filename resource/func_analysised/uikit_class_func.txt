@@ -75,8 +75,6 @@
 {"params": ["NSString *"], "returntype": "BOOL", "funcname": "dictionaryHasDefinitionForTerm", "descrip": []}
 {"params": {}, "returntype": "UIRegion *", "funcname": "infiniteRegion", "descrip": []}
 {"params": ["NSString *"], "returntype": "void", "funcname": "clearTextInputContextIdentifier", "descrip": []}
-{"params": ["NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable UIViewController *", "funcname": "", "descrip": ["viewControllerWithRestorationIdentifierPath", "coder"]}
-{"params": ["NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable id<UIStateRestoring>", "funcname": "", "descrip": ["objectWithRestorationIdentifierPath", "coder"]}
 {"params": ["NSString *", "nullable NSBundle *"], "returntype": "UIStoryboard *", "funcname": "storyboardWithName", "descrip": ["bundle"]}
 {"params": ["NSString *"], "returntype": "void", "funcname": "learnWord", "descrip": []}
 {"params": ["NSString *"], "returntype": "BOOL", "funcname": "hasLearnedWord", "descrip": []}
