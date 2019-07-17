@@ -20,10 +20,13 @@ def stringvalue():
     wfile = open(worlds_path,'r')
     wstring = str(wfile.read())
     worlds_arr = wstring.split(' ')
-    random_index = random.randint(0,len(worlds_arr))
+    random_index = random.randint(0,len(worlds_arr)-1)
     random_world = worlds_arr[random_index]
     wfile.close()
-    return random_world
+    if random_world is None or random_world == " ":
+        stringvalue()
+    else:
+        return random_world
 
 def stringvalue_num(num):
     wfile = open(worlds_path,'r')
@@ -31,7 +34,7 @@ def stringvalue_num(num):
     worlds_arr = wstring.split(' ')
     random_world = ""
     for item in range(0,num):
-        random_index = random.randint(0,len(worlds_arr))
+        random_index = random.randint(0,len(worlds_arr)-1)
         random_world = random_world + worlds_arr[random_index]
     wfile.close()
     return random_world

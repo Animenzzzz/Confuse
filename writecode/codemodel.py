@@ -35,7 +35,7 @@ def inline_model_tablevel(level):
         tab_string = f'{tab_level_3}'
     else:
         tab_string = f'{tab_level_3}\t'
-    result_string = f'{tab_string}NSString *{param_name} = @\"{param_value}\";\n{tab_string}NSLog(\"%@\", {param_name});\n'
+    result_string = f'{tab_string}NSString *{param_name} = @\"{param_value}\";\n{tab_string}NSLog(@\"%@\", {param_name});\n'
     return result_string
 
 def if_model():
@@ -47,7 +47,6 @@ def if_model():
     #if的分支数
     random_num = randomvalue.intvalue(if_num_min,if_num_max)
 
-    print("生成的随机数："+str(random_num))
     if random_num == 1:
         inline_string = inline_model_tablevel(2)
         if_string = f'{if_string}\tif ({param_name} <= 1000){{\n{inline_string}\t}}\n'
@@ -69,7 +68,7 @@ def if_model():
                 level_num_str = str(level*(num-1))
                 level_num_str1 = str(level*num)
                 inline_string = inline_model_tablevel(2)
-                if_string = f'{if_string}\telse if({param_name} > {level_num_str} && {param_name} =< {level_num_str1}){{\n{inline_string}\t}}\n'
+                if_string = f'{if_string}\telse if({param_name} > {level_num_str} && {param_name} <= {level_num_str1}){{\n{inline_string}\t}}\n'
     return f'\n{if_string}\n'
 
 def switch_model():
@@ -83,18 +82,18 @@ def switch_model():
     randstring1 = randomvalue.stringvalue()
     if random_num == switch_num_min:
         inline_string1 = inline_model_tablevel(3)
-        switch_string = f'{switch_string}\tswitch ({param_name}) {{\n{tab_level_2}case 2:\n{inline_string1}{tab_level_3}break;\n{tab_level_2}default:\n{tab_level_3}NSLog(\"%@\",{randstring1});\n{tab_level_3}break;\n\t}}\n'
+        switch_string = f'{switch_string}\tswitch ({param_name}) {{\n{tab_level_2}case 2:{{\n{inline_string1}{tab_level_3}}}break;\n{tab_level_2}default:\n{{{tab_level_3}NSLog(@\"do not catch anything\");\n{tab_level_3}}}break;\n\t}}\n'
     else:
         for num in range(switch_num_min,random_num+1):
             if num == switch_num_min:
                 inline_string1 = inline_model_tablevel(3)
-                switch_string = f'{switch_string}\tswitch ({param_name}) {{\n{tab_level_2}case 2:\n{inline_string1}{tab_level_3}break;\n'
+                switch_string = f'{switch_string}\tswitch ({param_name}) {{\n{tab_level_2}case 2:{{\n{inline_string1}{tab_level_3}}}break;\n'
             elif num == random_num:
-                switch_string = f'{switch_string}\n{tab_level_2}default:\n{tab_level_3}NSLog(\"%@\",{randstring1});\n{tab_level_3}break;\n\t}}\n'
+                switch_string = f'{switch_string}\n{tab_level_2}default:\n{tab_level_3}{{NSLog(@\"do not catch anything\");\n{tab_level_3}}}break;\n\t}}\n'
             else:
                 inline_string1 = inline_model_tablevel(3)
                 num_str = str(num)
-                switch_string = f'\n{switch_string}\n{tab_level_2}case {num_str}:\n{inline_string1}{tab_level_3}break;'
+                switch_string = f'\n{switch_string}\n{tab_level_2}case {num_str}:{{\n{inline_string1}{tab_level_3}}}break;'
     return f'\n{switch_string}\n'
 
 def constom_func_call_model(funcjsonstring,tablevel):
@@ -106,7 +105,6 @@ def constom_func_call_model(funcjsonstring,tablevel):
 def system_func_call_model(funcjsonstring,tablevel):
 
     funcdic = eval(funcjsonstring)
-    print(funcdic)
     if funcdic["funcname"] == "":
         print("函数名为空")
         return
@@ -119,6 +117,7 @@ def system_func_call_model(funcjsonstring,tablevel):
     msg_send_param = ""
     param_string = ""
     param_descri_string = ""
+    sel_name = randomvalue.stringvalue()
     if len(funcdic["params"]):
         for i in range(len(funcdic["params"])):
             param_name = randomvalue.stringvalue()
@@ -128,13 +127,13 @@ def system_func_call_model(funcjsonstring,tablevel):
                 param_descri_string = f'{param_descri_string}:{funcdic["descrip"][i-1]}'
         if param_descri_string == "":
             param_descri_string = ":"
-        sel_string = f'{tab_level_1}SEL sel = @selector({funcdic["funcname"]}{param_descri_string});\n'
+        sel_string = f'{tab_level_1}SEL {sel_name} = @selector({funcdic["funcname"]}{param_descri_string}:);\n'
         func_string = f'{func_string}{param_string}{sel_string}'
     else:
-        sel_string = f'{tab_level_1}SEL sel = @selector({funcdic["funcname"]});\n'
+        sel_string = f'{tab_level_1}SEL {sel_name} = @selector({funcdic["funcname"]});\n'
         func_string = f'{func_string}{sel_string}'
 
-    func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},sel{msg_send_param});'
+    func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},{sel_name}{msg_send_param});'
     return f'\n{func_string}\n'
 
 def constom_func_head_model(funcdic):
@@ -147,10 +146,10 @@ def constom_func_head_model(funcdic):
     for j in range(1,len(funcdic["descrip"])):
         descrp_string = f'{descrp_string} {funcdic["descrip"][j]}:({funcdic["params"][j]}){funcdic["descrip"][j]}'
 
-    return f'{func_head_string}{descrp_string}'
+    return f'\n{func_head_string}{descrp_string}'
 
 
-def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_create_file):
+def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_dic):
 
     if_string = ""
     if if_model_flag == 1:
@@ -166,13 +165,18 @@ def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_str
 
     func_call_string = ""
     for item in func_call_string_array:
-        print(f'item:{item}')
-        func_call_string_item = ""
-        while func_call_string_item == "":
-            func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
+        func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
+        # while func_call_string_item == "":
+        #     func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
+        #     if func_call_string_item is None:
+        #         func_call_string_item = ""
+        if func_call_string_item is None:
+            func_call_string_item = " "
         func_call_string = f'{func_call_string}{func_call_string_item}'
 
-    func_dic = randomvalue.funccreate(func_create_file,3)
+    if func_call_string == "":
+        func_call_string = " "
+    
     func_head_string = constom_func_head_model(func_dic)
     func_create_string = f'{func_head_string}{{\n{if_string}{while_string}{switch_string}{func_call_string}}}'
         
@@ -180,5 +184,5 @@ def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_str
 
 def while_model():
 
-    while_string = "\n\twhile(0){\n\t\tNSLog(\"滚滚滚滚\");\n\t}\n"
+    while_string = "\n\twhile(0){\n\t\tNSLog(@\"滚滚滚滚\");\n\t}\n"
     return while_string
