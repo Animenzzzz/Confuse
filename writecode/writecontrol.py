@@ -4,13 +4,16 @@ import os
 import linecache
 import randomvalue
 import filemanager
+import subprocess
+import sys
 
-#当前脚本工程的绝对路径
-confuse_path = "/Users/animenzzz/GitCode/Confuse"
+#当前脚本工程的路径
+confuse_path = f'{os.path.dirname(sys.path[0])}'
 confuse_resource_path = f'{confuse_path}/resource'
 system_func_path = f'{confuse_resource_path}/func_analysised/uikit_class_func.txt'
 random_func_path = f'{confuse_resource_path}/random_func_create.txt'
 random_class_name_path = f'{confuse_resource_path}/random_class_name.txt'
+ruby_path = f'{confuse_path}/writecode/xcodeprojhelp.rb'
 
 m_h_num_min = 5
 m_h_num_max = 10
@@ -20,6 +23,7 @@ file_num = randomvalue.intvalue((int(file_level)*10),(int(file_level)*10+10))
 
 xcodefile_path = input("工程文件路径\n")
 xcodefile_name = os.path.basename(xcodefile_path)
+xcodefile_project_path = f'{xcodefile_path}/{xcodefile_name}.xcodeproj'
 
 system_funcfile = open(system_func_path,'r')
 system_func_lengh = len(system_funcfile.readlines())
@@ -38,6 +42,9 @@ for index in range(0,file_num):
     m_file = new_file_dic["m_path"]
     class_name = new_file_dic["class_name"]
 
+
+    # 在project添加引用
+    subprocess.call(f'ruby {ruby_path} {xcodefile_project_path} {xcodefile_name} {class_name} {xcodefile_path}/{xcodefile_name}/',shell=True)
 
     classfile = open(random_class_name_path,'a+')
     classfile.writelines(f'{class_name}\n')
@@ -64,16 +71,18 @@ for index in range(0,file_num):
 
 # 调用所有垃圾方法的开关
 print("创建控制开关")
-call_all_name = "AnimenzzzAllCall"
+# 方法实现
+call_all_name = f"{xcodefile_name}AllCall"
 filemanager.create_h_m(f'{xcodefile_path}/{xcodefile_name}',f'{call_all_name}')
 filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.m',"- (void)callString{\n\n\n\n\n\n}\n",line_num=None)
 random_func_file = open(random_func_path)
 for line in random_func_file:
     call_string = codemodel.constom_func_call_model(line,1)
     funcdic = eval(line)
-    filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.m',call_string,line_num=7)
+    if randomvalue.halfprobability() == 1:
+        filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.m',call_string,line_num=7)
 
-
+# 方法导入
 total = 4
 random_classfunc_file = open(random_class_name_path,"r")
 for num,value in enumerate(random_classfunc_file):
@@ -81,7 +90,5 @@ for num,value in enumerate(random_classfunc_file):
     name = str(value).replace('\n','')
     filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.h',f'#import \"{name}.h\"\n' ,line_num=1)
 random_classfunc_file.close()
-
-print(f'最后的行号：{total}')
 
 filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.h',"\n- (void)callString;\n",line_num=total)

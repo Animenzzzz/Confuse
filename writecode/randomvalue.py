@@ -39,7 +39,6 @@ def stringvalue_num(num):
     wfile.close()
     return random_world
 
-
 def funccreate(random_func_path, func_name_num,class_name):
     func_dic = {}
     func_dic["params"] = []
@@ -57,3 +56,10 @@ def funccreate(random_func_path, func_name_num,class_name):
     jsonfile.close()
 
     return func_dic
+
+def halfprobability():
+    intnum = random.randint(1,2)
+    if intnum == 1:
+        return 1
+    else:
+        return 2
