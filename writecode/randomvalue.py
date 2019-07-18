@@ -3,6 +3,7 @@ import random
 import sys
 import re
 import json
+import string
 
 worlds_path = "/Users/animenzzz/GitCode/Confuse/resource/words.txt"
 
@@ -16,6 +17,16 @@ wfile.close()
 def typevalue():
     index = random.randint(0,len(params_type_pool)-1)
     return params_type_pool[index]
+
+def typerandomvalue(typevalue):
+    if typevalue == "int" or typevalue == "float" or typevalue == "double" or typevalue == "long long":
+        return intvalue(1,1000)
+    elif typevalue == "char":
+        return f'\'{chr(random.randint(97, 122))}\''
+    elif typevalue == "bool":
+        return "YES"
+    else:
+        return "NULL"
 
 def intvalue(minv,maxv):
     return random.randint(minv,maxv)
