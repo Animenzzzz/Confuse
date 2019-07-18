@@ -21,6 +21,22 @@ tab_level_2 = "\t\t"
 tab_level_3 = "\t\t\t"
 
 
+property_list = [\
+"@property (nonatomic, assign) int ",\
+"@property (nonatomic, assign) NSInteger ",\
+"@property (nonatomic, assign) long ",\
+"@property (nonatomic, assign) long long ",\
+"@property (nonatomic, assign) CGFloat ",\
+"@property (nonatomic, assign) double ",\
+"@property (nonatomic, assign) BOOL ",\
+"@property (nonatomic, assign) CGRect ",\
+"@property (nonatomic, assign) CGSize ",\
+"@property (nonatomic, copy) id ",\
+"@property (nonatomic, strong) id ",\
+"@property (nonatomic, weak) id "
+]
+
+
 def inline_model_tablevel(level):
     param_name = randomvalue.stringvalue()
     param_value = randomvalue.stringvalue()
@@ -40,7 +56,7 @@ def inline_model_tablevel(level):
 
 def if_model():
 
-    param_name = randomvalue.stringvalue()
+    param_name = randomvalue.stringvalue_num(2)
     param_value = randomvalue.intvalue(0,1000)
     if_string = f"\tint {param_name} = {param_value};\n"
 
@@ -110,7 +126,7 @@ def constom_func_call_model(funcjsonstring,tablevel):
 
     params_name = []
     for i in range(0,len(funcdic["params"])):
-        params_name.append(randomvalue.stringvalue())
+        params_name.append(randomvalue.stringvalue_num(2))
 
     param_init_string = ""
     for i in range(len(funcdic["params"])):
@@ -205,11 +221,31 @@ def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_str
         func_call_string = " "
     
     func_head_string = constom_func_head_model(func_dic)
-    func_create_string = f'{func_head_string}{{\n{if_string}{while_string}{switch_string}{func_call_string}}}'
-        
+
+    # 每个模块随机乱序
+    random_sort = randomvalue.intvalue(1,4)
+    if random_sort == 1:
+        func_create_string = f'{func_head_string}{{\n{if_string}{while_string}{switch_string}{func_call_string}}}'
+    elif random_sort == 2:
+        func_create_string = f'{func_head_string}{{\n{while_string}{switch_string}{if_string}{func_call_string}}}'
+    elif random_sort == 3:
+        func_create_string = f'{func_head_string}{{\n{func_call_string}{while_string}{if_string}{switch_string}}}'
+    else:
+        func_create_string = f'{func_head_string}{{\n{switch_string}{func_call_string}{if_string}{while_string}}}'
+
     return f'\n{func_create_string}\n'
 
 def while_model():
 
     while_string = "\n\twhile(0){\n\t\tNSLog(@\"滚滚滚滚\");\n\t}\n"
     return while_string
+
+def property_model(num_min,num_max):
+    totle = randomvalue.intvalue(num_min,num_max)
+    property_string = ""
+    for i in range(totle):
+        index = randomvalue.intvalue(0,len(property_list)-1)
+        property_name = randomvalue.stringvalue_num(2)
+        property_string = f'{property_string}{property_list[index]}{property_name};\n'
+
+    return property_string

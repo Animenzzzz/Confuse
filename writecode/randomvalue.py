@@ -37,7 +37,10 @@ def stringvalue_num(num):
         random_index = random.randint(0,len(worlds_arr)-1)
         random_world = random_world + worlds_arr[random_index]
     wfile.close()
-    return random_world
+    if random_world is None or random_world == " ":
+        stringvalue_num(num)
+    else:
+        return random_world
 
 def funccreate(random_func_path, func_name_num,class_name):
     func_dic = {}

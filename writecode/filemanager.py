@@ -26,10 +26,11 @@ def create_h_m(outpath,name):
     m_string = f'#import \"{name}.h\"\n#import <objc/message.h>\n@implementation {name}\n\n@end'
     newfile_m.write(m_string)
     newfile_m.close()
+    print(f'生成类：{name}')
 
     path_dir = {"m_path":f'{outpath}/{name}.m',"h_path":f'{outpath}/{name}.h',"class_name":f'{name}'}
 
-    print(f'生成的文件：{name}')
+    
     return path_dir
 
 def writestring(filepath,string,line_num):
