@@ -6,8 +6,12 @@ import json
 
 worlds_path = "/Users/animenzzz/GitCode/Confuse/resource/words.txt"
 
-
 params_type_pool = ["int","float","void *","double","long long","bool","char"]
+
+wfile = open(worlds_path,'r')
+wstring = str(wfile.read())
+worlds_arr = wstring.split(' ')
+wfile.close()
 
 def typevalue():
     index = random.randint(0,len(params_type_pool)-1)
@@ -17,27 +21,23 @@ def intvalue(minv,maxv):
     return random.randint(minv,maxv)
 
 def stringvalue():
-    wfile = open(worlds_path,'r')
-    wstring = str(wfile.read())
-    worlds_arr = wstring.split(' ')
     random_index = random.randint(0,len(worlds_arr)-1)
     random_world = worlds_arr[random_index]
-    wfile.close()
-    if random_world is None or random_world == " ":
+    if random_world is None or random_world == "":
         stringvalue()
     else:
         return random_world
 
 def stringvalue_num(num):
-    wfile = open(worlds_path,'r')
-    wstring = str(wfile.read())
-    worlds_arr = wstring.split(' ')
     random_world = ""
     for item in range(0,num):
         random_index = random.randint(0,len(worlds_arr)-1)
-        random_world = random_world + worlds_arr[random_index]
-    wfile.close()
-    if random_world is None or random_world == " ":
+        world_tmp = worlds_arr[random_index]
+        if world_tmp is None or world_tmp == "":
+            random_world = ""
+            break
+        random_world = random_world + world_tmp
+    if random_world is None or random_world == "":
         stringvalue_num(num)
     else:
         return random_world
