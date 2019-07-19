@@ -78,7 +78,7 @@ for index in range(0,file_num):
         func_dic = randomvalue.funccreate(random_func_path,3,class_name)
         # 函数声明（写进.h中）
         func_head_string = f'{codemodel.constom_func_head_model(func_dic)};'
-        filemanager.writestring(h_file,func_head_string,line_num=None)
+        filemanager.writestring(h_file,f'{func_head_string}\n',line_num=None)
         # 函数实现（写进.m中）
         if_model_flag = randomvalue.halfprobability()
         while_model_flag = randomvalue.halfprobability()

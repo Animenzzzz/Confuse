@@ -6,6 +6,7 @@ import json
 import string
 
 worlds_path = "/Users/animenzzz/GitCode/Confuse/resource/words.txt"
+ios_worlds_path = "/Users/animenzzz/GitCode/Confuse/resource/ioswords.txt"
 
 params_type_pool = ["int","float","void *","double","long long","bool","char"]
 
@@ -13,6 +14,11 @@ wfile = open(worlds_path,'r')
 wstring = str(wfile.read())
 worlds_arr = wstring.split(' ')
 wfile.close()
+
+iosfile = open(ios_worlds_path,'r')
+iosstring = str(iosfile.read())
+iosworlds_arr = iosstring.split(' ')
+iosfile.close()
 
 def typevalue():
     index = random.randint(0,len(params_type_pool)-1)
@@ -34,6 +40,14 @@ def intvalue(minv,maxv):
 def stringvalue():
     random_index = random.randint(0,len(worlds_arr)-1)
     random_world = worlds_arr[random_index]
+    if random_world is None or random_world == "":
+        stringvalue()
+    else:
+        return random_world
+
+def stringiosvalue():
+    random_index = random.randint(0,len(iosworlds_arr)-1)
+    random_world = iosworlds_arr[random_index]
     if random_world is None or random_world == "":
         stringvalue()
     else:
@@ -63,7 +77,9 @@ def funccreate(random_func_path, func_name_num,class_name):
         func_dic["params"].append(typevalue())
         func_dic["descrip"].append(stringvalue())
     func_dic["returntype"] = "void"
-    func_dic["funcname"] = stringvalue_num(func_name_num)
+    # 这是之前的写法，使用三个随机的单词组成函数名
+    # func_dic["funcname"] = stringvalue_num(func_name_num)
+    func_dic["funcname"] = f'{stringvalue()}{stringiosvalue()}'
 
     jsonfile = open(random_func_path,'a+')
     jsonfile.writelines(json.dumps(func_dic)+'\n')
