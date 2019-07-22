@@ -16,6 +16,11 @@ random_func_path = f'{confuse_resource_path}/random_func_create.txt'
 random_class_name_path = f'{confuse_resource_path}/random_class_name.txt'
 ruby_path = f'{confuse_path}/writecode/xcodeprojhelp.rb'
 
+# 全局变量
+xcodefile_path = ""
+xcodefile_name = ""
+xcodefile_project_path = ""
+
 # 文件夹白名单
 file_while_list = ["Base","LoginService","View"]
 
@@ -23,40 +28,25 @@ file_while_list = ["Base","LoginService","View"]
 m_h_num_min = 5
 m_h_num_max = 10
 
+def writewhite(filepath,whitelist):
+    write_file_list = filemanager.getwhitefile(filepath,whitelist)
+    for file_item in write_file_list:
+        if os.path.splitext(file_item)[-1] == '.h':
+            end_num = filemanager.findkeyline(file_item,"@interface")
+            filemanager.writestring(file_item,codemodel.property_model(m_h_num_min,m_h_num_max),line_num=(int(end_num)+1))
+        if os.path.splitext(file_item)[-1] == '.m':
+            end_num = filemanager.findkeyline(file_item,"@implementation")
+            for funcnum in range(m_h_num_min,m_h_num_max):
+                func_dic = randomvalue.funccreate(random_func_path,3,None,None)
+                filemanager.writestring(file_item,codemodel.func_model(1,1,1,[],1,func_dic),line_num=(int(end_num)+1))
 
-def main(argv):
-
-    file_level = input(f"新建垃圾文件个数(每个文件内包含{m_h_num_min}-{m_h_num_max}个函数)： 0. 不新建  1. 10-20  2. 20-30  3. 30-40\n")
-    file_num = randomvalue.intvalue((int(file_level)*10),(int(file_level)*10+10))
-    property_flag = input(f"是否添加属性(每个文件内{m_h_num_min}-{m_h_num_max}个)  是：y  默认：否\n")
-    white_write_flag = input(f"是否在白名单文件夹写入垃圾代码  是：y  默认：否\n")
-    xcodefile_path = ""
-
-    while True:
-        xcodefile_path = input("工程文件路径\n")
-        xcodefile_path = str(xcodefile_path).strip()
-        if os.path.exists(xcodefile_path) == True:
-            break
-        else:
-            print("文件不存在，请重新输入")
-
-    xcodefile_name = os.path.basename(xcodefile_path)
-    xcodefile_project_path = f'{xcodefile_path}/{xcodefile_name}.xcodeproj'
-
-    starttime = datetime.datetime.now()
-
-    if white_write_flag == 'y' or white_write_flag == 'Y':
-        write_file_list = filemanager.getwhitefile(xcodefile_path,file_while_list)
-        for file_item in write_file_list:
-            if os.path.splitext(file_item)[-1] == '.h':
-                end_num = filemanager.findkeyline(file_item,"@interface")
-                filemanager.writestring(file_item,codemodel.property_model(m_h_num_min,m_h_num_max),line_num=(int(end_num)+1))
-            if os.path.splitext(file_item)[-1] == '.m':
-                end_num = filemanager.findkeyline(file_item,"@implementation")
-                for funcnum in range(m_h_num_min,m_h_num_max):
-                    func_dic = randomvalue.funccreate(random_func_path,3,None,None)
-                    filemanager.writestring(file_item,codemodel.func_model(1,1,1,[],1,func_dic),line_num=(int(end_num)+1))
-
+def newlajifile(lajifilenum):
+    global xcodefile_path
+    global xcodefile_project_path
+    global xcodefile_name
+    # global random_class_name_path
+    # global system_func_path
+    # global random_func_path
     system_funcfile = open(system_func_path,'r')
     system_func_lengh = len(system_funcfile.readlines())
     system_funcfile.close()
@@ -67,8 +57,8 @@ def main(argv):
     if os.path.exists(random_class_name_path):
         os.remove(random_class_name_path)
 
-    print(f'新建的文件个数：{str(file_num)}')
-    for index in range(0,file_num):
+    print(f'新建的文件个数：{str(lajifilenum)}')
+    for index in range(0,lajifilenum):
         new_file_dic = filemanager.create_h_m(f'{xcodefile_path}/{xcodefile_name}',name=None)
         h_file = new_file_dic["h_path"]
         m_file = new_file_dic["m_path"]
@@ -76,6 +66,7 @@ def main(argv):
 
 
         # 在project添加引用
+        global ruby_path
         subprocess.call(f'ruby {ruby_path} {xcodefile_project_path} {xcodefile_name} {class_name} {xcodefile_path}/{xcodefile_name}/',shell=True)
 
         classfile = open(random_class_name_path,'a+')
@@ -104,6 +95,10 @@ def main(argv):
             func_write_string = codemodel.func_model(if_model_flag,while_model_flag,switch_model_flag,func_arr,1,func_dic)
             filemanager.writestring(m_file,func_write_string,line_num=None)
 
+def creatswitch(propertyflag):
+    global xcodefile_name
+    global xcodefile_path
+    global xcodefile_project_path
     # 调用所有垃圾方法的开关
     print("创建控制开关")
     # 方法实现
@@ -125,17 +120,45 @@ def main(argv):
         total = total+1
         name = str(value).replace('\n','')
         filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.h',f'#import \"{name}.h\"\n' ,line_num=1)
-        if property_flag == 'y' or property_flag == 'Y':
+        if propertyflag == 'y' or propertyflag == 'Y':
             filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{name}.h',codemodel.property_model(m_h_num_min,m_h_num_max),line_num=None)
+
     random_classfunc_file.close()
-
     filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.h',"\n- (void)callString;\n",line_num=total)
-
     print(f'\n垃圾代码的调用在：{call_all_name}.h ...是否开关自行调用')
+
+def main(argv):
+
+    file_level = input(f"新建垃圾文件个数(每个文件内包含{m_h_num_min}-{m_h_num_max}个函数)： 0. 不新建  1. 10-20  2. 20-30  3. 30-40\n")
+    file_num = randomvalue.intvalue((int(file_level)*10),(int(file_level)*10+10))
+    property_flag = input(f"是否添加属性(每个文件内{m_h_num_min}-{m_h_num_max}个)  是：y  默认：否\n")
+    white_write_flag = input(f"是否在白名单文件夹写入垃圾代码  是：y  默认：否\n")
+
+    global xcodefile_path
+    global xcodefile_name
+    global xcodefile_project_path
+    while True:
+        xcodefile_path = input("工程文件路径\n")
+        xcodefile_path = str(xcodefile_path).strip()
+        if os.path.exists(xcodefile_path) == True:
+            break
+        else:
+            print("文件不存在，请重新输入")
+
+    xcodefile_name = os.path.basename(xcodefile_path)
+    xcodefile_project_path = f'{xcodefile_path}/{xcodefile_name}.xcodeproj'
+
+    starttime = datetime.datetime.now()
+
+    if white_write_flag == 'y' or white_write_flag == 'Y':
+        writewhite(xcodefile_path,file_while_list)
+
+    if file_level != '0':
+        newlajifile(file_num)
+        creatswitch(property_flag)
 
     endtime = datetime.datetime.now()
     print (f'耗时：{(endtime - starttime).seconds}秒')
-
 
 if __name__ == '__main__':
     main(sys.argv[1:])
