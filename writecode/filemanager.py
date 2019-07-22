@@ -40,13 +40,16 @@ def findkeyline(filepath,keyworld):
 
 def getwhitefile(filepath,whitelist):
     resultlist = []
-    for path,group_list,file_name_list in os.walk(filepath):
-        for group_item in group_list:
-            if group_item in whitelist:
-                for path1,group_list1,file_name_list1 in os.walk(os.path.join(path, group_item)):
-                    for item in file_name_list1:
-                        resultlist.append(os.path.join(path, group_item,item))
-    return resultlist
+    dirlist = []
+    for root, dirs, files in os.walk(filepath):
+        for dir in dirs:
+            if dir in whitelist:
+                dirlist.append(os.path.join(root,dir))
+    for dir in dirlist:
+        for root, dirs, files in os.walk(dir):
+            for dd in files:
+                resultlist.append(os.path.join(root,dd))
+    return set(resultlist)
 
 def writestring(filepath,string,line_num):
 

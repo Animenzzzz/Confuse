@@ -22,11 +22,54 @@ xcodefile_name = ""
 xcodefile_project_path = ""
 
 # 文件夹白名单
-file_while_list = ["Base","LoginService","View"]
+file_while_list = ["LoginRegister"]
 
-# 函数的数量最值
+# 函数、属性的数量最值
 m_h_num_min = 5
 m_h_num_max = 10
+
+OPTION = """----------------
+新建垃圾文件个数：
+输入     个数
+0       不新建
+1       10-20
+2       20-30
+3       30-40  
+----------------
+"""
+
+def main(argv):
+    print(f'\n当前文件夹白名单：{file_while_list}')
+    file_level = input(f'{OPTION}')
+    file_num = randomvalue.intvalue((int(file_level)*10),(int(file_level)*10+10))
+    property_flag = input(f"是否添加属性(是：y  默认：否)\n")
+    white_write_flag = input(f"是否在白名单文件夹写入垃圾代码(是：y  默认：否)\n")
+
+    global xcodefile_path
+    global xcodefile_name
+    global xcodefile_project_path
+    while True:
+        xcodefile_path = input("工程文件路径\n")
+        xcodefile_path = str(xcodefile_path).strip()
+        if os.path.exists(xcodefile_path) == True:
+            break
+        else:
+            print("文件不存在，请重新输入")
+
+    xcodefile_name = os.path.basename(xcodefile_path)
+    xcodefile_project_path = f'{xcodefile_path}/{xcodefile_name}.xcodeproj'
+
+    starttime = datetime.datetime.now()
+
+    if white_write_flag == 'y' or white_write_flag == 'Y':
+        writewhite(xcodefile_path,file_while_list)
+
+    if file_level != '0':
+        newlajifile(file_num)
+        creatswitch(property_flag)
+
+    endtime = datetime.datetime.now()
+    print (f'耗时：{(endtime - starttime).seconds}秒')
 
 def writewhite(filepath,whitelist):
     write_file_list = filemanager.getwhitefile(filepath,whitelist)
@@ -100,7 +143,7 @@ def creatswitch(propertyflag):
     global xcodefile_path
     global xcodefile_project_path
     # 调用所有垃圾方法的开关
-    print("创建控制开关")
+    print("\n创建控制开关")
     # 方法实现
     call_all_name = f"{xcodefile_name}AllCall"
     filemanager.create_h_m(f'{xcodefile_path}/{xcodefile_name}',f'{call_all_name}')
@@ -126,39 +169,6 @@ def creatswitch(propertyflag):
     random_classfunc_file.close()
     filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.h',"\n- (void)callString;\n",line_num=total)
     print(f'\n垃圾代码的调用在：{call_all_name}.h ...是否开关自行调用')
-
-def main(argv):
-
-    file_level = input(f"新建垃圾文件个数(每个文件内包含{m_h_num_min}-{m_h_num_max}个函数)： 0. 不新建  1. 10-20  2. 20-30  3. 30-40\n")
-    file_num = randomvalue.intvalue((int(file_level)*10),(int(file_level)*10+10))
-    property_flag = input(f"是否添加属性(每个文件内{m_h_num_min}-{m_h_num_max}个)  是：y  默认：否\n")
-    white_write_flag = input(f"是否在白名单文件夹写入垃圾代码  是：y  默认：否\n")
-
-    global xcodefile_path
-    global xcodefile_name
-    global xcodefile_project_path
-    while True:
-        xcodefile_path = input("工程文件路径\n")
-        xcodefile_path = str(xcodefile_path).strip()
-        if os.path.exists(xcodefile_path) == True:
-            break
-        else:
-            print("文件不存在，请重新输入")
-
-    xcodefile_name = os.path.basename(xcodefile_path)
-    xcodefile_project_path = f'{xcodefile_path}/{xcodefile_name}.xcodeproj'
-
-    starttime = datetime.datetime.now()
-
-    if white_write_flag == 'y' or white_write_flag == 'Y':
-        writewhite(xcodefile_path,file_while_list)
-
-    if file_level != '0':
-        newlajifile(file_num)
-        creatswitch(property_flag)
-
-    endtime = datetime.datetime.now()
-    print (f'耗时：{(endtime - starttime).seconds}秒')
 
 if __name__ == '__main__':
     main(sys.argv[1:])
