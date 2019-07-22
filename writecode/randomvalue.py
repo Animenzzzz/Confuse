@@ -4,9 +4,12 @@ import sys
 import re
 import json
 import string
+import os
 
-worlds_path = "/Users/animenzzz/GitCode/Confuse/resource/words.txt"
-ios_worlds_path = "/Users/animenzzz/GitCode/Confuse/resource/ioswords.txt"
+# 当前脚本工程的路径
+confuse_path = f'{os.path.dirname(sys.path[0])}'
+worlds_path = f"{confuse_path}/resource/words.txt"
+ios_worlds_path = f"{confuse_path}/resource/ioswords.txt"
 
 params_type_pool = ["int","float","void *","double","long long","bool","char"]
 
@@ -67,7 +70,7 @@ def stringvalue_num(num):
     else:
         return random_world
 
-def funccreate(random_func_path, func_name_num,class_name):
+def funccreate(random_func_path, func_name_num,class_name,writeflag):
     func_dic = {}
     func_dic["params"] = []
     func_dic["descrip"] = []
@@ -81,9 +84,10 @@ def funccreate(random_func_path, func_name_num,class_name):
     # func_dic["funcname"] = stringvalue_num(func_name_num)
     func_dic["funcname"] = f'{stringvalue()}{stringiosvalue()}'
 
-    jsonfile = open(random_func_path,'a+')
-    jsonfile.writelines(json.dumps(func_dic)+'\n')
-    jsonfile.close()
+    if writeflag == 1:
+        jsonfile = open(random_func_path,'a+')
+        jsonfile.writelines(json.dumps(func_dic)+'\n')
+        jsonfile.close()
 
     return func_dic
 

@@ -160,12 +160,15 @@ def system_func_call_model(funcjsonstring,tablevel):
     msg_send_param = ""
     param_string = ""
     param_descri_string = ""
+    imp_string = ""
     sel_name = randomvalue.stringvalue()
+    imp_name = randomvalue.stringvalue()
     if len(funcdic["params"]):
         for i in range(len(funcdic["params"])):
             param_name = randomvalue.stringvalue()
             param_string = f'{param_string}{tab_level_1}id {param_name};\n'
             msg_send_param = f'{msg_send_param},{param_name}'
+            imp_string = f'{imp_string},id'
             if i != 0:
                 param_descri_string = f'{param_descri_string}:{funcdic["descrip"][i-1]}'
         if param_descri_string == "":
@@ -176,14 +179,21 @@ def system_func_call_model(funcjsonstring,tablevel):
         sel_string = f'{tab_level_1}SEL {sel_name} = @selector({funcdic["funcname"]});\n'
         func_string = f'{func_string}{sel_string}'
 
-    func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},{sel_name}{msg_send_param});'
+    # objc_msgSend 的写法
+    # func_string = f'{func_string}{tab_level_1}objc_msgSend({class_name},{sel_name}{msg_send_param});'
+    # func_string = str(func_string).replace("::",":")
+    # performSelector 的写法
+    # func_string = f'{func_string}{tab_level_1}[{class_name} performSelector:{sel_name} withObject:{msg_send_param}];'
+    # func_string = str(func_string).replace("::",":").replace(":,",":")
+    # imp 的写法
+    imp_init_string = f'IMP {imp_name} = [{class_name} methodForSelector:{sel_name}];'
+    func_string = f'{func_string}{tab_level_1}{imp_init_string}\n{tab_level_1}((id(*)(id, SEL{imp_string})){imp_name})({class_name},{sel_name}{msg_send_param});'
     func_string = str(func_string).replace("::",":")
     return f'\n{func_string}\n'
 
 # 自定义函数的声明
 def constom_func_head_model(funcdic):
 
-    
     func_head_string = ""
     func_head_string = f'- (void) {funcdic["funcname"]}:({funcdic["params"][0]}){funcdic["descrip"][0]}'
 
@@ -209,11 +219,12 @@ def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_str
         switch_string = switch_model(None)
 
     func_call_string = ""
-    for item in func_call_string_array:
-        func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
-        if func_call_string_item is None:
-            func_call_string_item = " "
-        func_call_string = f'{func_call_string}{func_call_string_item}'
+    if len(func_call_string_array):
+        for item in func_call_string_array:
+            func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
+            if func_call_string_item is None:
+                func_call_string_item = " "
+            func_call_string = f'{func_call_string}{func_call_string_item}'
 
     if func_call_string == "":
         func_call_string = " "

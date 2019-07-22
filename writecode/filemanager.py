@@ -33,6 +33,21 @@ def create_h_m(outpath,name):
     
     return path_dir
 
+def findkeyline(filepath,keyworld):
+    for count,line in enumerate(open(filepath,'r')):
+        if keyworld in line and line.find(f'//{keyworld}') == -1:
+            return count
+
+def getwhitefile(filepath,whitelist):
+    resultlist = []
+    for path,group_list,file_name_list in os.walk(filepath):
+        for group_item in group_list:
+            if group_item in whitelist:
+                for path1,group_list1,file_name_list1 in os.walk(os.path.join(path, group_item)):
+                    for item in file_name_list1:
+                        resultlist.append(os.path.join(path, group_item,item))
+    return resultlist
+
 def writestring(filepath,string,line_num):
 
     if line_num is None:
@@ -48,9 +63,9 @@ def writestring(filepath,string,line_num):
         lines.append(line)
     writefile.close()
  
-    lines.insert(line_num,string)          
-    s = ''.join(lines)
+    lines.insert(line_num,string)
+    s = "".join('%s' %id for id in lines)
     writefile = open(filepath,'w+')
     writefile.write(s)
     writefile.close()
-    del lines[:]                  
+    del lines[:]
