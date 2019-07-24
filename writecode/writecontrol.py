@@ -16,14 +16,18 @@ random_func_path = f'{confuse_resource_path}/random_func_create.txt'
 random_class_name_path = f'{confuse_resource_path}/random_class_name.txt'
 ruby_path = f'{confuse_path}/writecode/xcodeprojhelp.rb'
 
+# 垃圾代码调用开关
+call_all_path = ""
+call_all_class = "XSDKAllCall" #若设置为空，则默认创建 工程名+AllCall 类作为控制开关
+call_func_name = "callString"
+
 # 全局变量
 xcodefile_path = ""
 xcodefile_name = ""
 xcodefile_project_path = ""
 
 # 文件夹白名单
-file_while_list = ["LoginRegister"]
-
+file_while_list = ["Services","TFBLoginRegister"]
 # 函数、属性的数量最值
 m_h_num_min = 5
 m_h_num_max = 10
@@ -48,6 +52,7 @@ def main(argv):
     global xcodefile_path
     global xcodefile_name
     global xcodefile_project_path
+    global call_all_path
     while True:
         xcodefile_path = input("工程文件路径\n")
         xcodefile_path = str(xcodefile_path).strip()
@@ -58,6 +63,10 @@ def main(argv):
 
     xcodefile_name = os.path.basename(xcodefile_path)
     xcodefile_project_path = f'{xcodefile_path}/{xcodefile_name}.xcodeproj'
+    if call_all_class == "":
+        call_all_path = f'{xcodefile_path}/{xcodefile_name}'
+    else:
+        call_all_path = f'{xcodefile_path}/HX/'
 
     starttime = datetime.datetime.now()
 
@@ -79,7 +88,8 @@ def writewhite(filepath,whitelist):
             filemanager.writestring(file_item,codemodel.property_model(m_h_num_min,m_h_num_max),line_num=(int(end_num)+1))
         if os.path.splitext(file_item)[-1] == '.m':
             end_num = filemanager.findkeyline(file_item,"@implementation")
-            for funcnum in range(m_h_num_min,m_h_num_max):
+            randomint = randomvalue.intvalue(m_h_num_min,m_h_num_max)
+            for funcnum in range(randomint):
                 func_dic = randomvalue.funccreate(random_func_path,3,None,None)
                 filemanager.writestring(file_item,codemodel.func_model(1,1,1,[],1,func_dic),line_num=(int(end_num)+1))
 
@@ -142,19 +152,27 @@ def creatswitch(propertyflag):
     global xcodefile_name
     global xcodefile_path
     global xcodefile_project_path
+    global call_all_path
     # 调用所有垃圾方法的开关
     print("\n创建控制开关")
     # 方法实现
-    call_all_name = f"{xcodefile_name}AllCall"
-    filemanager.create_h_m(f'{xcodefile_path}/{xcodefile_name}',f'{call_all_name}')
-    subprocess.call(f'ruby {ruby_path} {xcodefile_project_path} {xcodefile_name} {call_all_name} {xcodefile_path}/{xcodefile_name}/',shell=True)
-    filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.m',"- (void)callString{\n\n\n\n\n\n}\n",line_num=None)
+    if call_all_class == "":
+        call_all_name = f"{xcodefile_name}AllCall"
+        filemanager.create_h_m(f'{xcodefile_path}/{xcodefile_name}',f'{call_all_name}')
+        subprocess.call(f'ruby {ruby_path} {xcodefile_project_path} {xcodefile_name} {call_all_name} {xcodefile_path}/{xcodefile_name}/',shell=True)
+        filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.m',f"- (void){call_func_name}{{\n\n\n\n\n\n}}\n",line_num=None)
+    else:
+        call_all_name = f"{call_all_class}"
     random_func_file = open(random_func_path)
     for line in random_func_file:
         call_string = codemodel.constom_func_call_model(line,1)
         funcdic = eval(line)
         if randomvalue.halfprobability() == 1:
-            filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.m',call_string,line_num=7)
+            if call_all_class == "":
+                filemanager.writestring(f'{call_all_path}/{call_all_name}.m',call_string,line_num=7)
+            else:
+                line_num = filemanager.findkeyline(f'{call_all_path}/{call_all_name}.m',f'{call_func_name}')
+                filemanager.writestring(f'{call_all_path}/{call_all_name}.m',call_string,line_num+1)
 
     # 方法导入
     total = 4
@@ -162,12 +180,18 @@ def creatswitch(propertyflag):
     for num,value in enumerate(random_classfunc_file):
         total = total+1
         name = str(value).replace('\n','')
-        filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.h',f'#import \"{name}.h\"\n' ,line_num=1)
+        line_num = 0
+        if call_all_class == "":
+            line_num = 1
+        else:
+            line_num = 8
+        filemanager.writestring(f'{call_all_path}/{call_all_name}.h',f'#import \"{name}.h\"\n' ,line_num=line_num)
         if propertyflag == 'y' or propertyflag == 'Y':
             filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{name}.h',codemodel.property_model(m_h_num_min,m_h_num_max),line_num=None)
 
     random_classfunc_file.close()
-    filemanager.writestring(f'{xcodefile_path}/{xcodefile_name}/{call_all_name}.h',"\n- (void)callString;\n",line_num=total)
+    if call_all_class == "":
+        filemanager.writestring(f'{call_all_path}/{call_all_name}.h',f"\n- (void){call_func_name};\n",line_num=total)
     print(f'\n垃圾代码的调用在：{call_all_name}.h ...是否开关自行调用')
 
 if __name__ == '__main__':

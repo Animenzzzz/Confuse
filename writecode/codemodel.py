@@ -248,7 +248,8 @@ def while_model(tablevel):
 
     if tablevel is None:
         tablevel = tab_level_1
-    while_string = f'\n{tablevel}while(0){{\n{tablevel}\tNSLog(@\"滚滚滚滚\");\n{tablevel}}}\n'
+    inline_string = inline_model_tablevel(tab_level_2)
+    while_string = f'\n{tablevel}while(1){{\n{inline_string}\n{tablevel}break;\n{tablevel}}}\n'
     return while_string
 
 def property_model(num_min,num_max):
