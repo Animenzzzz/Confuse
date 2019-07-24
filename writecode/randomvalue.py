@@ -23,13 +23,13 @@ iosstring = str(iosfile.read())
 iosworlds_arr = iosstring.split(' ')
 iosfile.close()
 
-def typevalue():
+def _type_value():
     index = random.randint(0,len(params_type_pool)-1)
     return params_type_pool[index]
 
-def typerandomvalue(typevalue):
+def _type_random_value(typevalue):
     if typevalue == "int" or typevalue == "float" or typevalue == "double" or typevalue == "long long":
-        return intvalue(1,1000)
+        return _int_value(1,1000)
     elif typevalue == "char":
         return f'\'{chr(random.randint(97, 122))}\''
     elif typevalue == "bool":
@@ -37,26 +37,26 @@ def typerandomvalue(typevalue):
     else:
         return "NULL"
 
-def intvalue(minv,maxv):
+def _int_value(minv,maxv):
     return random.randint(minv,maxv)
 
-def stringvalue():
+def _string_value():
     random_index = random.randint(0,len(worlds_arr)-1)
     random_world = worlds_arr[random_index]
     if random_world is None or random_world == "":
-        stringvalue()
+        _string_value()
     else:
         return random_world
 
-def stringiosvalue():
+def _string_ios_value():
     random_index = random.randint(0,len(iosworlds_arr)-1)
     random_world = iosworlds_arr[random_index]
     if random_world is None or random_world == "":
-        stringvalue()
+        _string_value()
     else:
         return random_world
 
-def stringvalue_num(num):
+def _string_value_num(num):
     random_world = ""
     for item in range(0,num):
         random_index = random.randint(0,len(worlds_arr)-1)
@@ -66,23 +66,23 @@ def stringvalue_num(num):
             break
         random_world = random_world + world_tmp
     if random_world is None or random_world == "":
-        stringvalue_num(num)
+        _string_value_num(num)
     else:
         return random_world
 
-def funccreate(random_func_path, func_name_num,class_name,writeflag):
+def _func_create(random_func_path, func_name_num,class_name,writeflag):
     func_dic = {}
     func_dic["params"] = []
     func_dic["descrip"] = []
     func_dic["class_name"] = class_name
-    params_num = intvalue(1,5)
+    params_num = _int_value(1,5)
     for k in range(0,params_num):
-        func_dic["params"].append(typevalue())
-        func_dic["descrip"].append(stringvalue())
+        func_dic["params"].append(_type_value())
+        func_dic["descrip"].append(_string_value())
     func_dic["returntype"] = "void"
     # 这是之前的写法，使用三个随机的单词组成函数名
     # func_dic["funcname"] = stringvalue_num(func_name_num)
-    func_dic["funcname"] = f'{stringvalue()}{stringiosvalue()}'
+    func_dic["funcname"] = f'{_string_value()}{_string_ios_value()}'
 
     if writeflag == 1:
         jsonfile = open(random_func_path,'a+')
@@ -91,7 +91,7 @@ def funccreate(random_func_path, func_name_num,class_name,writeflag):
 
     return func_dic
 
-def halfprobability():
+def _half_probability():
     intnum = random.randint(1,2)
     if intnum == 1:
         return 1
