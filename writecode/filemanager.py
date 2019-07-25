@@ -8,12 +8,12 @@ import json
 file_type_pool = ["UIViewController","NSObject","UIView","UICollectionViewCell","UICollectionViewController","UITableViewCell","UITableViewController"]
 file_name_pool = ["ViewController","Obj","View","CollectionViewCell","CollectionController","Cell","TableViewController"]
 
-def _create_h_m(outpath,name):
+def create_h_m(outpath,name):
 
     super_class = "NSObject"
     if name is None:
-        index = randomvalue._int_value(0,len(file_type_pool)-1)
-        world = randomvalue._string_value()
+        index = randomvalue.int_value(0,len(file_type_pool)-1)
+        world = randomvalue.string_value()
         name = f'{world}{file_name_pool[index]}'
         super_class = f'{file_type_pool[index]}'
 
@@ -33,12 +33,12 @@ def _create_h_m(outpath,name):
     
     return path_dir
 
-def _find_key_line(filepath,keyworld):
+def find_key_line(filepath,keyworld):
     for count,line in enumerate(open(filepath,'r')):
         if keyworld in line and line.find(f'//{keyworld}') == -1:
             return count
 
-def _get_white_file(filepath,whitelist):
+def get_white_file(filepath,whitelist):
     resultlist = []
     dirlist = []
     for root, dirs, files in os.walk(filepath):
@@ -51,7 +51,7 @@ def _get_white_file(filepath,whitelist):
                 resultlist.append(os.path.join(root,dd))
     return set(resultlist)
 
-def _write_string(filepath,string,line_num):
+def write_string(filepath,string,line_num):
 
     if line_num is None:
         line_num = 0

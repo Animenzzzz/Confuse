@@ -37,88 +37,88 @@ property_list = [\
 ]
 
 
-def _inline_model_tablevel(tablevel):
+def inline_model_tablevel(tablevel):
     if tablevel is None:
         tablevel = tab_level_1
-    param_name = randomvalue._string_value()
-    param_value = randomvalue._string_value()
+    param_name = randomvalue.string_value()
+    param_value = randomvalue.string_value()
     result_string = f'{tablevel}NSString *{param_name} = @\"{param_value}\";\n{tablevel}NSLog(@\"%@\", {param_name});\n'
     return result_string
 
-def _if_model(tablevel):
+def if_model(tablevel):
 
     if tablevel is None:
         tablevel = tab_level_1
 
-    param_name = randomvalue._string_value_num(2)
-    param_value = randomvalue._int_value(0,1000)
-    param_name_selfid = randomvalue._string_value_num(3)
+    param_name = randomvalue.string_value_num(2)
+    param_value = randomvalue.int_value(0,1000)
+    param_name_selfid = randomvalue.string_value_num(3)
     if_string = f"{tablevel}id {param_name_selfid} = self;\n{tablevel}int {param_name} = [{param_name_selfid} intValue];\n"
 
     #if的分支数
-    random_num = randomvalue._int_value(if_num_min,if_num_max)
+    random_num = randomvalue.int_value(if_num_min,if_num_max)
 
     if random_num == 1:
-        inline_string = _inline_model_tablevel(tab_level_2)
+        inline_string = inline_model_tablevel(tab_level_2)
         if_string = f'{if_string}{tablevel}if ({param_name} <= 1000){{\n{inline_string}\t}}\n'
     elif random_num == 2:
-        inline_string1 = _inline_model_tablevel(tab_level_2)
-        inline_string2 = _inline_model_tablevel(tab_level_2)
+        inline_string1 = inline_model_tablevel(tab_level_2)
+        inline_string2 = inline_model_tablevel(tab_level_2)
         if_string = f'{if_string}{tablevel}if ({param_name} <= 500){{\n{inline_string1}\t}}else{{\n{inline_string2}\t}}\n'
     else:
         level = 1000/random_num
         for num in range(1,random_num+1):
             if num == 1:
-                inline_string = _inline_model_tablevel(tab_level_2)
+                inline_string = inline_model_tablevel(tab_level_2)
                 level_num_str = str(level*num)
                 if_string = f'{if_string}{tablevel}if ({param_name} <= {level_num_str}){{\n{inline_string}\t}}\n'
             elif num == random_num:
-                inline_string = _inline_model_tablevel(tab_level_2)
+                inline_string = inline_model_tablevel(tab_level_2)
                 if_string = f'{if_string}{tablevel}else{{\n{inline_string}\t}}\n'
             else:
-                inline_string = _inline_model_tablevel(tab_level_2)
+                inline_string = inline_model_tablevel(tab_level_2)
                 level_num_str = str(level*(num-1))
                 level_num_str1 = str(level*num)
                 if_string = f'{if_string}{tablevel}else if({param_name} > {level_num_str} && {param_name} <= {level_num_str1}){{\n{inline_string}\t}}\n'
     return f'\n{if_string}\n'
 
-def _switch_model(tablevel):
+def switch_model(tablevel):
 
     if tablevel is None:
         tablevel = tab_level_1
 
-    param_name = randomvalue._string_value()
-    param_value = randomvalue._int_value(switch_num_min,switch_num_max)
-    param_name_selfid = randomvalue._string_value_num(3)
+    param_name = randomvalue.string_value()
+    param_value = randomvalue.int_value(switch_num_min,switch_num_max)
+    param_name_selfid = randomvalue.string_value_num(3)
     switch_string = f"{tablevel}id {param_name_selfid} = self;\n{tablevel}int {param_name} = [{param_name_selfid} intValue];\n"
     # switch_string = f"{tablevel}int {param_name} = {param_value};\n"
 
     #switch的分支数
-    random_num = randomvalue._int_value(switch_num_min,switch_num_max)
-    randstring1 = randomvalue._string_value()
+    random_num = randomvalue.int_value(switch_num_min,switch_num_max)
+    randstring1 = randomvalue.string_value()
     if random_num == switch_num_min:
-        inline_string1 = _inline_model_tablevel(tab_level_3)
+        inline_string1 = inline_model_tablevel(tab_level_3)
         switch_string = f'{switch_string}{tablevel}switch ({param_name}) {{\n{tablevel}{tab_level_1}case 2:{{\n{inline_string1}{tablevel}{tab_level_2}}}break;\n{tablevel}{tab_level_1}default:{{\n{tablevel}{tab_level_2}NSLog(@\"do not catch anything\");\n{tablevel}{tab_level_2}}}break;\n\t}}\n'
     else:
         for num in range(switch_num_min,random_num+1):
             if num == switch_num_min:
-                inline_string1 = _inline_model_tablevel(tab_level_3)
+                inline_string1 = inline_model_tablevel(tab_level_3)
                 switch_string = f'{switch_string}{tablevel}switch ({param_name}) {{\n{tablevel}{tab_level_1}case 2:{{\n{inline_string1}{tablevel}{tab_level_2}}}break;\n'
             elif num == random_num:
                 switch_string = f'{switch_string}\n{tablevel}{tab_level_1}default:\n{tablevel}{tab_level_2}{{NSLog(@\"do not catch anything\");\n{tablevel}{tab_level_2}}}break;\n\t}}\n'
             else:
-                inline_string1 = _inline_model_tablevel(tab_level_3)
+                inline_string1 = inline_model_tablevel(tab_level_3)
                 num_str = str(num)
                 switch_string = f'\n{switch_string}\n{tablevel}{tab_level_1}case {num_str}:{{\n{inline_string1}{tablevel}{tab_level_2}}}break;'
     return f'\n{switch_string}\n'
 
 # 自定义函数的调用
-def _constom_func_call_model(funcjsonstring,tablevel):
+def constom_func_call_model(funcjsonstring,tablevel):
     funcdic = eval(funcjsonstring)
     if funcdic["funcname"] == "":
         print("函数名为空")
         return
-    obj_name = randomvalue._string_value()
+    obj_name = randomvalue.string_value()
     class_type = funcdic["class_name"]
 
     func_string = ""
@@ -126,11 +126,11 @@ def _constom_func_call_model(funcjsonstring,tablevel):
 
     params_name = []
     for i in range(0,len(funcdic["params"])):
-        params_name.append(randomvalue._string_value_num(2))
+        params_name.append(randomvalue.string_value_num(2))
 
     param_init_string = ""
     for i in range(len(funcdic["params"])):
-        param_init_string = f'{param_init_string}{tab_level_1}{funcdic["params"][i]} {params_name[i]} = {randomvalue._type_random_value(funcdic["params"][i])};\n'
+        param_init_string = f'{param_init_string}{tab_level_1}{funcdic["params"][i]} {params_name[i]} = {randomvalue.type_random_value(funcdic["params"][i])};\n'
 
 
     call_string = ""
@@ -148,14 +148,14 @@ def _constom_func_call_model(funcjsonstring,tablevel):
     return f'\n{func_string}{param_init_string}{call_string}\n'
 
 # 系统函数的调用
-def _system_func_call_model(funcjsonstring,tablevel):
+def system_func_call_model(funcjsonstring,tablevel):
 
     funcdic = eval(funcjsonstring)
     if funcdic["funcname"] == "":
         print("函数名为空")
         return
-    class_name = randomvalue._string_value()
-    class_string = randomvalue._string_value()
+    class_name = randomvalue.string_value()
+    class_string = randomvalue.string_value()
 
     func_string = ""
     func_string = f'{tab_level_1}Class {class_name} = NSClassFromString(@\"{class_string}\");\n'
@@ -164,11 +164,11 @@ def _system_func_call_model(funcjsonstring,tablevel):
     param_string = ""
     param_descri_string = ""
     imp_string = ""
-    sel_name = randomvalue._string_value()
-    imp_name = randomvalue._string_value()
+    sel_name = randomvalue.string_value()
+    imp_name = randomvalue.string_value()
     if len(funcdic["params"]):
         for i in range(len(funcdic["params"])):
-            param_name = randomvalue._string_value()
+            param_name = randomvalue.string_value()
             param_string = f'{param_string}{tab_level_1}id {param_name};\n'
             msg_send_param = f'{msg_send_param},{param_name}'
             imp_string = f'{imp_string},id'
@@ -195,7 +195,7 @@ def _system_func_call_model(funcjsonstring,tablevel):
     return f'\n{func_string}\n'
 
 # 自定义函数的声明
-def _constom_func_head_model(funcdic):
+def constom_func_head_model(funcdic):
 
     func_head_string = ""
     func_head_string = f'- (void) {funcdic["funcname"]}:({funcdic["params"][0]}){funcdic["descrip"][0]}'
@@ -207,24 +207,24 @@ def _constom_func_head_model(funcdic):
     return f'\n{func_head_string}{descrp_string}'
 
 # 自定义函数的实现
-def _func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_dic):
+def func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_string_array, tablevel,func_dic):
 
     if_string = ""
     if if_model_flag == 1:
-        if_string = _if_model(None)
+        if_string = if_model(None)
     
     while_string = ""
     if while_model_flag == 1:
-        while_string = _while_model(None)
+        while_string = while_model(None)
 
     switch_string = ""
     if switch_model_flag == 1:
-        switch_string = _switch_model(None)
+        switch_string = switch_model(None)
 
     func_call_string = ""
     if len(func_call_string_array):
         for item in func_call_string_array:
-            func_call_string_item = _system_func_call_model(str(item).strip('\n'), tablevel)
+            func_call_string_item = system_func_call_model(str(item).strip('\n'), tablevel)
             if func_call_string_item is None:
                 func_call_string_item = " "
             func_call_string = f'{func_call_string}{func_call_string_item}'
@@ -232,10 +232,10 @@ def _func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_st
     if func_call_string == "":
         func_call_string = " "
     
-    func_head_string = _constom_func_head_model(func_dic)
+    func_head_string = constom_func_head_model(func_dic)
 
     # 每个模块随机乱序
-    random_sort = randomvalue._int_value(1,4)
+    random_sort = randomvalue.int_value(1,4)
     if random_sort == 1:
         func_create_string = f'{func_head_string}{{\n{if_string}{while_string}{switch_string}{func_call_string}}}'
     elif random_sort == 2:
@@ -247,20 +247,20 @@ def _func_model(if_model_flag, while_model_flag, switch_model_flag, func_call_st
 
     return f'\n{func_create_string}\n'
 
-def _while_model(tablevel):
+def while_model(tablevel):
 
     if tablevel is None:
         tablevel = tab_level_1
-    inline_string = _inline_model_tablevel(tab_level_2)
+    inline_string = inline_model_tablevel(tab_level_2)
     while_string = f'\n{tablevel}while(1){{\n{inline_string}\n{tablevel}break;\n{tablevel}}}\n'
     return while_string
 
-def _property_model(num_min,num_max):
-    totle = randomvalue._int_value(num_min,num_max)
+def property_model(num_min,num_max):
+    totle = randomvalue.int_value(num_min,num_max)
     property_string = ""
     for i in range(totle):
-        index = randomvalue._int_value(0,len(property_list)-1)
-        property_name = randomvalue._string_value_num(2)
+        index = randomvalue.int_value(0,len(property_list)-1)
+        property_name = randomvalue.string_value_num(2)
         property_string = f'{property_string}{property_list[index]}{property_name};\n'
 
     return property_string
