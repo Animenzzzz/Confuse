@@ -10,8 +10,9 @@ import datetime
 import config
 
 # 脚本说明：
+# 第1点是为了适应XSDK，若在一个新工程，则忽略第1点，在新工程下，会自动创建 工程名+AllCall.h.m两个文件
 # 假设工程的.xcodeproj路径为：/Users/animenzzz/XPlatformKit/XPlatformKit.xcodeproj
-# 1.此脚本会在指定工程文件（.xcodeproj）的同级目录的HX目录（此目录自己在工程中新建）下创建垃圾带代码（.h.m文件）
+# 1.此脚本会在指定工程文件（.xcodeproj）的同级目录的HX目录（此目录自己在工程中新建，且在下面要创建XSDKAllCall.h.m文件）下创建垃圾带代码（.h.m文件）
 # 如：根据假设，则HX目录为/Users/animenzzz/XPlatformKit/HX
 # 2.需要设置文件夹白名单，白名单设置在config.py的file_while_list数组中配置，只有在此白名单内，才会进行垃圾代码的写入
 # 如：根据假设，则白名单某个文件夹的路径为：/Users/animenzzz/XPlatformKit/XPlatformKit/白名单文件夹
