@@ -15,6 +15,8 @@ import config
 # 如：根据假设，则HX目录为/Users/animenzzz/XPlatformKit/HX
 # 2.需要设置文件夹白名单，白名单设置在config.py的file_while_list数组中配置，只有在此白名单内，才会进行垃圾代码的写入
 # 如：根据假设，则白名单某个文件夹的路径为：/Users/animenzzz/XPlatformKit/XPlatformKit/白名单文件夹
+# 3.输入的文件路径为.xcodeproj的上一级目录
+# 如：根据假设：则为/Users/animenzzz/XPlatformKit
 
 OPTION = """----------------
 新建垃圾文件个数：
