@@ -9,15 +9,19 @@ import sys
 import datetime
 import config
 
-# 脚本说明：
-# 第1点是为了适应XSDK，若在一个新工程，则忽略第1点，在新工程下，会自动创建 工程名+AllCall.h.m两个文件
+# 你需要做的配置：
+# 1.config.py中，白名单文件夹的设置（只在此白名单中的文件才进行垃圾代码的写入）
+# 2.config.py中，对 call_all_class 进行设置，
+#   1)若设置为空，则默认创建 工程名+AllCall 类作为控制开关
+#   2)若设置为 XXXX，则需要在指定工程文件（.xcodeproj）的同级目录穿件 HX 文件夹，且在此文件夹新建 XXXX.h，XXXX.m两个文件
+
+# 脚本说明
 # 假设工程的.xcodeproj路径为：/Users/animenzzz/XPlatformKit/XPlatformKit.xcodeproj
-# 1.此脚本会在指定工程文件（.xcodeproj）的同级目录的HX目录（此目录自己在工程中新建，且在下面要创建XSDKAllCall.h.m文件）下创建垃圾带代码（.h.m文件）
-# 如：根据假设，则HX目录为/Users/animenzzz/XPlatformKit/HX
-# 2.需要设置文件夹白名单，白名单设置在config.py的file_while_list数组中配置，只有在此白名单内，才会进行垃圾代码的写入
-# 如：根据假设，则白名单某个文件夹的路径为：/Users/animenzzz/XPlatformKit/XPlatformKit/白名单文件夹
+# 1.根据假设，则HX目录为/Users/animenzzz/XPlatformKit/HX
+# 2.根据假设，则白名单某个文件夹的路径为：/Users/animenzzz/XPlatformKit/XPlatformKit/白名单文件夹
 # 3.输入的文件路径为.xcodeproj的上一级目录
 # 如：根据假设：则为/Users/animenzzz/XPlatformKit
+
 
 OPTION = """----------------
 新建垃圾文件个数：
@@ -49,7 +53,7 @@ def main(argv):
     if config.call_all_class == "":
         config.set_call_all_path(f'{config.get_xcodefile_path()}/{config.get_xcodefile_name()}')
     else:
-        config.set_call_all_path(f'{config.get_xcodefile_path()}/HX/')
+        config.set_call_all_path(f'{config.get_xcodefile_path()}/HX')
 
     starttime = datetime.datetime.now()
 
