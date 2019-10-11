@@ -4,29 +4,33 @@
 ```
 Confuse
 ├── README.md                                      // help
-├── resource                                       // 资源
-│   ├── random_func_create.txt
-│   ├── random_class_name.txt                      //
+├── resource                                       // 脚本所需的资源库
+│   ├── random_func_create.txt                     // 脚本一次运行创建的随机方法名(Git上忽略其修改)
+│   ├── random_class_name.txt                      // 脚本一次运行创建的随机类名(Git上忽略其修改)
 │   ├── ioswords.txt                               // iOS风格词库
 │   ├── words.txt                                  // 普通词库
-│   ├── func_orign                                 // 
+│   ├── func_orign                                 // 此文件夹下是iOS的原生API
 │       ├── uikit_member_instancetype_func.txt
+│       ├── uikit_member_func.txt
+│       ├── uikit_class_instancetype_func.txt
+│       └── uikit_class_func.txt
+│   └── func_analysised                            // 此文件夹下是原生API经过脚本(analysis)解析成字典的格式，为了便于使用
 │       ├── uikit_member_instancetype_func.txt
-│       ├── uikit_member_instancetype_func.txt
-│       └── uikit_member_instancetype_func.txt
-│   └── func_orign                                 // 
-│       ├── uikit_member_instancetype_func.txt
-│       ├── uikit_member_instancetype_func.txt
-│       ├── uikit_member_instancetype_func.txt
-│       └── uikit_member_instancetype_func.txt
-├── writecode
-├── doc                                            // 文档
-├── static                                         // web静态资源加载
-│   └── initjson
-│       └── config.js                              // 提供给前端的配置
-├── test
-├── test-service.js
-└── tools
+│       ├── uikit_member_func.txt
+│       ├── uikit_class_instancetype_func.txt
+│       └── uikit_class_func.txt
+├── writecode                                      // 垃圾代码写入模块
+│   ├── config.py                                  // 脚本配置（需要根据工程进行修改配置，见下文）
+│   ├── xcodeprojhelp.rb                           // .xcoproject操作脚本（用于给创建的垃圾代码文件添加、修改引用等）
+│   ├── codemodel.py                               // 垃圾代码样式模块（包括分支语句、函数调用语句、循环语句等）
+│   ├── filemanager.py                             // 文件操作模块（新建文件、对文件进行读写等）
+│   ├── writecontrol.py                            // 脚本入口
+│   ├── randomvalue.py                             // 产生随机值（函数名、类名等）
+│   └── analysis                                   // 原生SDK解析脚本
+│       ├── analysisstring.py
+│       └── analys.py
+└── rename                                         // 前缀重命名模块
+    └── projectfile.sh                             // 脚本入口
 ```
 
 # 环境
