@@ -1,12 +1,9 @@
-# /*
-#  * @Author: Animenzzz 
-#  * @Date: 2019-10-11 17:12:59 
-#  * @Last Modified by:   Animenzzz 
-#  * @Last Modified time: 2019-10-11 17:12:59
-#  */
+#  Created by Animenzzz on 19/10/11.
+#  Copyright (c) 2019年 Animenzzz. All rights reserved.
+
 #!/bin/bash
 
-# 此脚本会 拷贝一份旧工程，并在这个备份进行重命名，不会对原工程有影响
+# 此脚本，README有详细说明
 
 echo "---项目将进行前缀重命名。"
 echo "---当前项目的前缀："

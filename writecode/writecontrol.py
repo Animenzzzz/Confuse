@@ -1,6 +1,8 @@
 #  Created by Animenzzz on 19/7/12.
 #  Copyright (c) 2019年 Animenzzz. All rights reserved.
 
+# 此脚本，README有详细说明
+
 # -*- coding: utf-8 -*-
 import codemodel
 import os
