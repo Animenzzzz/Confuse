@@ -1,3 +1,6 @@
+#  Created by Animenzzz on 19/7/12.
+#  Copyright (c) 2019年 Animenzzz. All rights reserved.
+
 # -*- coding: utf-8 -*-
 import codemodel
 import os
