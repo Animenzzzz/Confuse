@@ -25,6 +25,7 @@ OPTION = """----------------
 """
 
 def main(argv):
+    print("当前功能模块：【写入垃圾代码】")
     print(f'\n当前文件夹白名单：{config.file_while_list}')
     file_level = input(f'{OPTION}')
     file_num = randomvalue.int_value((int(file_level)*10),(int(file_level)*10+10))
