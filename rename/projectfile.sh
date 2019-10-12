@@ -45,9 +45,6 @@ newProjectName=${oldProjectName/#$prefixOldName/$prefixNewName}
 newProjectPath="$renameFilePath/$newProjectName"
 echo "正在新建目录：$newProjectPath"
 mkdir $newProjectPath
-if [ "$renameFilePath/$oldProjectName" != "$newProjectPath" ];then
-mv "$renameFilePath/$oldProjectName" "$newProjectPath"
-fi
 
 echo "正在进行项目重命名..."
 function travelFile(){
