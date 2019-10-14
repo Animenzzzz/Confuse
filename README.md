@@ -10,10 +10,10 @@ Confuse
 │   ├── ioswords.txt                               // iOS风格词库
 │   ├── words.txt                                  // 普通词库
 │   ├── func_orign                                 // 此文件夹下是iOS的原生API
-│       ├── uikit_member_instancetype_func.txt
-│       ├── uikit_member_func.txt
-│       ├── uikit_class_instancetype_func.txt
-│       └── uikit_class_func.txt
+│   │   ├── uikit_member_instancetype_func.txt
+│   │   ├── uikit_member_func.txt
+│   │   ├── uikit_class_instancetype_func.txt
+│   │   └── uikit_class_func.txt
 │   └── func_analysised                            // 此文件夹下是原生API经过脚本(analysis)解析成字典的格式，为了便于使用
 │       ├── uikit_member_instancetype_func.txt
 │       ├── uikit_member_func.txt
