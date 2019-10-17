@@ -30,8 +30,8 @@ Confuse
 │       ├── analysisstring.py
 │       └── analys.py
 └── rename                                         // 前缀重命名模块
-    ├── func.sh                                    // 函数重命名
-    └── projectfile.sh                             // 脚本入口
+    ├── func.sh                                    // 脚本入口（函数重命名）
+    └── projectfile.sh                             // 脚本入口（前缀重命名）
 ```
 
 # 环境
