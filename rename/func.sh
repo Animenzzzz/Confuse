@@ -22,9 +22,9 @@ IGNORE_FILE=("3rd" \
 )
 
 echo "当前功能模块：【函数重命名】"
-echo "1:特征函数混淆（如有特征前缀：qwe_）    2:所有.h的函数混淆"
+echo "1:特征函数混淆（如有特征前缀：qwe_） 2:所有.h的函数混淆  3: 1+2一起混淆"
 read choosen_func
-if [ "${choosen_func}" = "1" ];then
+if [[ "${choosen_func}" = "1" || "${choosen_func}" = "3" ]];then
     echo "请输入特征前缀："
     read func_pre
 fi
@@ -105,20 +105,21 @@ function travelFile(){
                 travelFile "${path}"
             fi
         else
-            if [ "${ignoreFile}" = "NO" ];then
-                if [ "${choosen_func}" = "1" ];then #特征前缀
-                    getFuncList_pref $path
-                elif [ "${choosen_func}" = "2" ];then #所有函数
-                    if [ "${path##*.}" = "h" ];then
-                        getFuncList_allHM $path
-                    fi
-                fi
+            if [ "${path##*.}" = "h" ];then
+                getFuncList_allHM $path
             fi
         fi
     done
 }
 
-travelFile ${projectPath}
+if [ "${choosen_func}" = "1" ];then #特征前缀
+    getFuncList_pref $projectPath
+elif [ "${choosen_func}" = "2" ];then #所有函数
+    travelFile ${projectPath}
+elif [ "${choosen_func}" = "3" ];then #所有函数
+    getFuncList_pref $projectPath
+    travelFile ${projectPath}
+fi
 
 # ————————————————
 # 版权声明：本文为CSDN博主「念茜」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
