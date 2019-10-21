@@ -17,9 +17,7 @@ IOS_WORDS_LIST=(${IOS_WORDS})
 IOS_WORDS_LIST_COUNT=${#IOS_WORDS_LIST[@]}
 
 # 此白名单下的文件、文件夹不做处理
-IGNORE_FILE=("3rd" \
-"core"\
-)
+IGNORE_FILE=("3rd" "core" "WebView")
 
 echo "当前功能模块：【函数重命名】"
 echo "1:特征函数混淆（如有特征前缀：qwe_） 2:所有.h的函数混淆  3: 1+2一起混淆"
@@ -61,6 +59,7 @@ function getFuncList_pref(){
     |sed "s/[();,: *\^\/\{]/ /g"\
     |sed "s/[ ]*</</"\
     |sed "/^[ ]*IBAction/d"\
+    |sed "/^[ ]*instancetype/d"\
     |awk '{split($0,b," "); print b[2]; }'\
     |sort|uniq \
     |sed -n "/^${func_pre}/p" >>$FUNC_LIST
@@ -72,6 +71,7 @@ function getFuncList_allHM(){
     |sed "s/[();,: *\^\/\{]/ /g"\
     |sed "s/[ ]*</</"\
     |sed "/^[ ]*IBAction/d"\
+    |sed "/^[ ]*instancetype/d"\
     |awk '{split($0,b," "); print b[2]; }'\
     |sort|uniq \
     |sed "/^set/d"\
@@ -84,7 +84,7 @@ function getFuncList_allHM(){
     |sed "/^sdk_/d"\
     |sed "/error/d"\
     |sed "/sharedInstance/d"\
-    |sed "/show/d"\
+    |sed "/^show/d"\
     |sed "/addButtonWithTitle/d"\
     |sed "/textFieldAtIndex/d"\
     |sed "/^dealloc/d" >>$FUNC_LIST
@@ -106,7 +106,9 @@ function travelFile(){
             fi
         else
             if [ "${path##*.}" = "h" ];then
-                getFuncList_allHM $path
+                if [ "${ignoreFile}" = "NO" ];then
+                    getFuncList_allHM $path
+                fi
             fi
         fi
     done
@@ -117,7 +119,9 @@ if [ "${choosen_func}" = "1" ];then #特征前缀
 elif [ "${choosen_func}" = "2" ];then #所有函数
     travelFile ${projectPath}
 elif [ "${choosen_func}" = "3" ];then #所有函数
-    getFuncList_pref $projectPath
+    if [ -n "$func_pre" ];then
+        getFuncList_pref $projectPath
+    fi
     travelFile ${projectPath}
 fi
 
