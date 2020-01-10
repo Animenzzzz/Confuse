@@ -64,7 +64,7 @@ Confuse
 
 ### 三、函数前缀重命名(func.sh)
 #### （1）命令：
-	python3 yourpath/Confuse/rename/func.sh
+	sh yourpath/Confuse/rename/func.sh
 #### （2）脚本说明：
 	1. 在白名单中（IGNORE_FILE）添加你不需要更改的内容
 	2. 函数重命名分成三个部分。
