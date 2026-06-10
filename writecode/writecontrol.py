@@ -4,15 +4,25 @@
 # 此脚本，README有详细说明
 
 # -*- coding: utf-8 -*-
-import codemodel
 import os
+import sys
+
+import profile_loader
+
+_argv = sys.argv[1:]
+_profile = profile_loader.resolve_profile_name(_argv)
+os.environ['CONFUSE_PROFILE'] = _profile
+
+import codemodel
 import linecache
 import randomvalue
 import filemanager
 import subprocess
-import sys
 import datetime
 import config
+
+config.load_profile(_profile)
+sys.argv = [sys.argv[0]] + _argv
 
 OPTION = """----------------
 新建垃圾文件个数：
@@ -26,7 +36,8 @@ OPTION = """----------------
 
 def main(argv):
     print("当前功能模块：【写入垃圾代码】")
-    print(f'\n当前文件夹白名单：{config.file_while_list}')
+    print(f'\n当前 profile：{config.active_profile}')
+    print(f'当前文件夹白名单：{config.file_while_list}')
     file_level = input(f'{OPTION}')
     file_num = randomvalue.int_value((int(file_level)*10),(int(file_level)*10+10))
     property_flag = input(f"是否添加属性(是：y  默认：否)\n")
@@ -45,7 +56,7 @@ def main(argv):
     if config.call_all_class == "":
         config.set_call_all_path(f'{config.get_xcodefile_path()}/{config.get_xcodefile_name()}')
     else:
-        config.set_call_all_path(f'{config.get_xcodefile_path()}/HX')
+        config.set_call_all_path(f'{config.get_xcodefile_path()}/{config.hx_folder}')
 
     starttime = datetime.datetime.now()
 

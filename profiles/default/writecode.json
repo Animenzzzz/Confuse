@@ -1,0 +1,8 @@
+{
+  "file_while_list": ["Services", "TFBLoginRegister"],
+  "m_h_num_min": 5,
+  "m_h_num_max": 10,
+  "call_all_class": "XSDKAllCall",
+  "call_func_name": "callString",
+  "hx_folder": "HX"
+}

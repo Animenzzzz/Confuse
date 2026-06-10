@@ -4,71 +4,69 @@
 
 #!/bin/bash
 
-# 此白名单下的文件、文件夹不做处理
-IGNORE_FILE=("Build" \
-"Index" \
-".gitignore" \
-".vscode" \
-".git" \
-"README.md" \
-)
+PROJECTFILE_SH_PATH=$(cd "$(dirname "$0")" && pwd)
+CONFUSE_PATH=${PROJECTFILE_SH_PATH%/*}
+
+# shellcheck source=common.sh
+source "$PROJECTFILE_SH_PATH/common.sh"
+load_rename_profile "$@"
+
+IGNORE_FILE=("${PROJECT_IGNORE_FILE[@]}")
 
 function isIgnoreFile(){
     local fileName=${1}
     local result="NO"
-    for ignore in ${IGNORE_FILE[@]};
+    for ignore in "${IGNORE_FILE[@]}";
     do
-        if [[ "$fileName" = "$ignore" ]];then #是忽略的文件/文件夹
+        if [[ "$fileName" = "$ignore" ]]; then
             result="YES"
             break
         fi
     done
-    echo $result
+    echo "$result"
 }
 
 echo "当前功能模块：【前缀重命名】"
+echo "当前 profile：$CONFUSE_PROFILE"
 echo "请输入当前项目的前缀："
-read prefixOldName
+read -r prefixOldName
 echo "请输入新前缀："
-read prefixNewName
+read -r prefixNewName
 echo "请输入当前工程项目的路径（项目整个文件夹）："
-read oldFilePath
+read -r oldFilePath
 echo "请输入输出的路径（新工程路径）："
-read renameFilePath
+read -r renameFilePath
 
-# 旧工程的文件名
-oldProjectName=$(basename $oldFilePath)
-# 新工程的文件名
-# ${string/#substring/replacement}   如果$string的前缀匹配$substring, 那么就用$replacement来代替匹配到的$substring
+oldProjectName=$(basename "$oldFilePath")
 newProjectName=${oldProjectName/#$prefixOldName/$prefixNewName}
 
 newProjectPath="$renameFilePath/$newProjectName"
 echo "正在新建目录：$newProjectPath"
-mkdir $newProjectPath
+mkdir -p "$newProjectPath"
 
 echo "正在进行项目重命名..."
 function travelFile(){
 
-    ls "${1}" | while read f;
+    ls "${1}" | while read -r f;
     do
-        old_path=""${1}"/"${f}""
-        new_path=""${2}"/"${f}""
+        old_path="${1}/${f}"
+        new_path="${2}/${f}"
         destPath=${new_path//${prefixOldName}/${prefixNewName}}
 
-        ignoreFile=$(isIgnoreFile "$(basename $old_path)")
+        ignoreFile=$(isIgnoreFile "$(basename "$old_path")")
 
-        if [ -d "${old_path}" ];then
-            if [ "${ignoreFile}" = "NO" ];then 
-                mkdir "${destPath}"
+        if [ -d "${old_path}" ]; then
+            if [ "${ignoreFile}" = "NO" ]; then
+                mkdir -p "${destPath}"
                 travelFile "${old_path}" "${destPath}"
             fi
         else
-            if [ "${ignoreFile}" = "NO" ];then
+            if [ "${ignoreFile}" = "NO" ]; then
                 cp "${old_path}" "${destPath}"
-                sed -i "s/${prefixOldName}/${prefixNewName}/g" "${destPath}"
+                sed -i '' "s/${prefixOldName}/${prefixNewName}/g" "${destPath}"
             fi
         fi
     done
 }
-travelFile ${oldFilePath} ${newProjectPath}
-open $newProjectPath
+travelFile "${oldFilePath}" "${newProjectPath}"
+open "$newProjectPath"
