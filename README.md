@@ -12,8 +12,8 @@ Confuse/
 │       ├── writecode.json             # 垃圾代码写入：白名单、数量、开关类名等
 │       └── rename.env                 # 重命名：白名单、临时目录、宏头文件路径等
 ├── resource/                          # 共享资源（词库、UIKit API 解析结果等）
-│   ├── words.txt                      # 普通词库（需自行准备，见下文）
-│   ├── ioswords.txt                   # iOS 风格词库（需自行准备）
+│   ├── words.txt                      # 通用英文词库（内置，一行一词）
+│   ├── ioswords.txt                   # iOS/OC 风格后缀词库（内置）
 │   ├── random_func_create.txt         # 运行时生成，Git 忽略
 │   ├── random_class_name.txt          # 运行时生成，Git 忽略
 │   ├── func_orign/                    # iOS 原生 API 原文
@@ -86,7 +86,14 @@ sh rename/projectfile.sh --profile my_app
 
 ## 词库说明
 
-`rename/func.sh` 依赖 `resource/words.txt` 与 `resource/ioswords.txt` 生成随机函数名。**当前仓库未附带词库文件**，使用前请自行放入（每行一个词，或空格分隔的单词表，与原先用法一致）。
+`rename/func.sh` 与 `writecode/randomvalue.py` 依赖 `resource/words.txt` 与 `resource/ioswords.txt` 生成随机符号名。**仓库已内置**两份词库（各约 1000 词），路径固定为 `resource/`，与 profile 无关。
+
+| 文件 | 用途 | 格式 |
+|------|------|------|
+| `words.txt` | 通用英文单词（变量名、参数标签、类名片段等） | **一行一词**的合法 OC 标识符（字母开头，仅字母数字）；空行与 `#` 开头注释行会被忽略 |
+| `ioswords.txt` | iOS/OC 风格后缀（如 `View`、`Controller`、`Manager`） | 同上；与 `words.txt` 随机组合成函数名（如 `fetchData` + `Handler`） |
+
+扩展词库：编辑上述文件后追加单词（每行一个词）。可用 `resource/_generate_wordlists.py` 重新生成或作参考。建议避免与 UIKit/Foundation 类名、保留字（`init`、`dealloc` 等）完全相同的单词。
 
 ## 使用流程
 
@@ -151,5 +158,5 @@ python3 /path/to/Confuse/writecode/analysis/analys.py
 
 1. 复制 `profiles/default` 为新 profile 名
 2. 按目标工程修改 `writecode.json` 与 `rename.env`
-3. 准备 `resource/words.txt`、`resource/ioswords.txt`
+3. （可选）按需扩展 `resource/words.txt`、`resource/ioswords.txt`
 4. 使用 `CONFUSE_PROFILE=新名` 或 `--profile 新名` 运行各脚本

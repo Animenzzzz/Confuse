@@ -21,12 +21,25 @@ if [[ ! -f "$WORDS_FILE" || ! -f "$IOS_WORDS_FILE" ]]; then
     exit 1
 fi
 
-WORDS=$(cat "$WORDS_FILE")
-IOS_WORDS=$(cat "$IOS_WORDS_FILE")
+WORDS_LIST=()
+while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
+    [[ -z "$line" || "$line" == \#* ]] && continue
+    read -ra _parts <<< "$line"
+    WORDS_LIST+=("${_parts[@]}")
+done < "$WORDS_FILE"
 
-WORDS_LIST=(${WORDS})
+IOS_WORDS_LIST=()
+while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
+    [[ -z "$line" || "$line" == \#* ]] && continue
+    read -ra _parts <<< "$line"
+    IOS_WORDS_LIST+=("${_parts[@]}")
+done < "$IOS_WORDS_FILE"
+
 WORDS_LIST_COUNT=${#WORDS_LIST[@]}
-IOS_WORDS_LIST=(${IOS_WORDS})
 IOS_WORDS_LIST_COUNT=${#IOS_WORDS_LIST[@]}
 
 echo "当前功能模块：【函数重命名】"

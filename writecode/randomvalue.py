@@ -13,15 +13,19 @@ ios_worlds_path = f"{confuse_path}/resource/ioswords.txt"
 
 params_type_pool = ["int","float","void *","double","long long","bool","char"]
 
-wfile = open(worlds_path,'r')
-wstring = str(wfile.read())
-worlds_arr = wstring.split(' ')
-wfile.close()
+def load_wordlist(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        text = f.read()
+    words = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+        words.extend(line.split())
+    return words
 
-iosfile = open(ios_worlds_path,'r')
-iosstring = str(iosfile.read())
-iosworlds_arr = iosstring.split(' ')
-iosfile.close()
+worlds_arr = load_wordlist(worlds_path)
+iosworlds_arr = load_wordlist(ios_worlds_path)
 
 def type_value():
     index = random.randint(0,len(params_type_pool)-1)
