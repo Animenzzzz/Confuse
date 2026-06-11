@@ -7,8 +7,12 @@ iOS 工程混淆工具集：Objective-C 与 Swift 垃圾代码注入、工程前
 ```
 Confuse/
 ├── README.md
+├── confuse.py                         # 统一入口（自动检测 OC / Swift）
+├── project_detect.py                  # 工程源文件类型扫描
+├── auto_config.py                     # 加载 profiles/<name>/auto.json
 ├── profiles/                          # 工程相关配置（按 profile 隔离，便于移植）
 │   └── default/                       # 示例 profile，可复制为新工程
+│       ├── auto.json                  # 统一入口：忽略目录、enabled_modules 覆盖
 │       ├── writecode.json             # OC 垃圾代码写入：白名单、数量、开关类名等
 │       ├── swift.json                 # Swift 垃圾代码 / 重命名：白名单、数量、忽略规则等
 │       └── rename.env                 # 重命名：白名单、临时目录、宏头文件路径等
@@ -62,6 +66,7 @@ cp -R profiles/default profiles/my_app
 export CONFUSE_PROFILE=my_app
 
 # 或命令行参数
+python3 confuse.py --profile my_app --project /Users/you/MyApp
 python3 writecode/writecontrol.py --profile my_app
 python3 swift/writecontrol.py --profile my_app
 sh rename/func.sh --profile my_app
@@ -69,6 +74,47 @@ sh rename/projectfile.sh --profile my_app
 ```
 
 未指定时默认使用 `default`。
+
+### auto.json 字段说明（统一入口）
+
+| 字段 | 说明 |
+|------|------|
+| `enabled_modules` | `null` 表示按工程自动检测；或 `["oc"]` / `["swift"]` / `["oc","swift"]` 强制指定 |
+| `ignore_dirs` | 扫描 `.m/.h/.swift` 时跳过的目录名（默认含 `Pods`、`Carthage`、`Build`、`.git` 等） |
+
+## 推荐：统一入口（自动检测 OC / Swift）
+
+无需手动选择语言，工具会扫描工程并运行对应模块：
+
+```bash
+python3 /path/to/Confuse/confuse.py --project /Users/you/MyApp --profile default
+
+# 非交互：白名单注入 + 新建 10 个垃圾文件
+python3 confuse.py --project /Users/you/MyApp --inject-white --new-files 10
+
+# 仅预览（Swift 模块 dry-run；OC 模块仍会写入）
+python3 confuse.py \
+  --project swift/_test_fixtures/MyApp \
+  --inject-white --new-files 2 --dry-run --skip-xcode
+
+# 仅查看检测结果
+python3 confuse.py --project /Users/you/MyApp --detect-only
+```
+
+**自动检测规则：**
+
+| 条件 | 运行模块 |
+|------|----------|
+| 存在 `.m` 文件（非纯头工程） | OC `writecode/writecontrol.py` |
+| 存在 `.swift` 文件 | Swift `swift/writecontrol.py` |
+| 混编（同时有 `.m` 与 `.swift`） | **两者都跑**，共用同一 `--profile` |
+| 仅有 `.h`、无 `.m` | 不跑 OC 模块（纯头文件/SDK 头） |
+
+扫描时会忽略 `Pods/`、`Carthage/`、`Build/`、`.git/` 等目录（与 `auto.json` 及 Swift profile 白名单一致）。
+
+**交互简化：** 统一入口只问一次工程路径与通用选项（白名单注入、新建文件数、Swift 重命名等），不再询问「选 OC 还是 Swift」。各子模块入口仍可单独使用（向后兼容）。
+
+OC 函数宏 / 工程前缀重命名（`rename/func.sh`、`rename/projectfile.sh`）仍为独立脚本；统一入口的 `--rename` 仅作用于 Swift 符号重命名。
 
 ### writecode.json 字段说明
 
@@ -231,4 +277,4 @@ python3 /path/to/Confuse/writecode/analysis/analys.py
 1. 复制 `profiles/default` 为新 profile 名
 2. 按目标工程修改 `writecode.json`（OC）、`swift.json`（Swift）、`rename.env`（OC 重命名）
 3. （可选）按需扩展 `resource/words.txt`、`resource/ioswords.txt`
-4. 使用 `CONFUSE_PROFILE=新名` 或 `--profile 新名` 运行各脚本
+4. 推荐使用 `python3 confuse.py --project 工程路径 --profile 新名`；或分别运行各子模块
