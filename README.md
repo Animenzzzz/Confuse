@@ -17,15 +17,18 @@ Confuse/
 │       ├── swift.json                 # Swift 垃圾代码 / 重命名：白名单、数量、忽略规则等
 │       └── rename.env                 # 重命名：白名单、临时目录、宏头文件路径等
 ├── resource/                          # 共享资源（词库、UIKit API 解析结果等）
-│   ├── words.txt                      # 通用英文词库（内置，一行一词）
-│   ├── ioswords.txt                   # iOS/OC 风格后缀词库（内置）
+│   ├── words.txt                      # 通用英文词库（内置，一行一词，约 3500+）
+│   ├── ioswords.txt                   # iOS/OC 风格后缀词库（内置，约 2200+）
+│   ├── _generate_wordlists.py         # 从 _word_roots.py 重新生成词库
+│   ├── _word_roots.py                 # 词根与组合规则（生成脚本专用）
+│   ├── _append_uikit_apis.py          # 去重追加 UIKit API 到 func_orign
 │   ├── random_func_create.txt         # OC 运行时生成，Git 忽略
 │   ├── random_class_name.txt          # OC 运行时生成，Git 忽略
 │   ├── random_swift_func_create.txt   # Swift 运行时生成，Git 忽略
 │   ├── random_swift_class_name.txt    # Swift 运行时生成，Git 忽略
 │   ├── swift_rename_map.json          # Swift 重命名映射表，Git 忽略
-│   ├── func_orign/                    # iOS 原生 API 原文
-│   └── func_analysised/               # 经 analysis 解析后的 API 字典
+│   ├── func_orign/                    # iOS 原生 API 原文（约 1850 行）
+│   └── func_analysised/               # 经 analysis 解析后的 API 字典（JSON 行）
 ├── writecode/                         # OC 垃圾代码写入模块
 │   ├── config.py                      # 加载 profile + 运行时路径
 │   ├── profile_loader.py              # profile 解析与 JSON 读取
@@ -162,16 +165,63 @@ OC 函数宏 / 工程前缀重命名（`rename/func.sh`、`rename/projectfile.sh
 - Ruby（writecontrol 修改 `.xcodeproj` 时需要；Swift 新建文件注册同样需要）
 - sqlite3（func.sh）
 
-## 词库说明
+## resource/ 资源说明
 
-`rename/func.sh` 与 `writecode/randomvalue.py`、`swift/randomvalue.py` 依赖 `resource/words.txt` 与 `resource/ioswords.txt` 生成随机符号名。**仓库已内置**两份词库（各约 1000 词），路径固定为 `resource/`，与 profile 无关。
+`resource/` 为共享素材目录，与 profile 无关。OC 垃圾代码、符号重命名、Swift 注入均会读取其中词库与 API 解析结果。
+
+### 规模（当前内置）
+
+| 路径 | 条数 | 说明 |
+|------|------|------|
+| `words.txt` | **3568** 词 | 通用英文词根（动词/名词/形容词），一行一词 |
+| `ioswords.txt` | **2219** 词 | UIKit/SwiftUI/Foundation 风格后缀与组件名片段 |
+| `func_orign/uikit_class_func.txt` | **210** 行 | UIKit/Foundation 类方法（`+`）原文 |
+| `func_orign/uikit_class_instancetype_func.txt` | **89** 行 | 类工厂方法（`+ (instancetype)`）原文 |
+| `func_orign/uikit_member_func.txt` | **1352** 行 | 实例方法（`-`）原文 |
+| `func_orign/uikit_member_instancetype_func.txt` | **203** 行 | 实例初始化方法（`- (instancetype)`）原文 |
+| `func_analysised/*.txt` | 与 `func_orign` 对应 | 经 `analys.py` 解析后的 JSON 行（`params` / `returntype` / `funcname` / `descrip`） |
+| `random_func_create.txt` | 运行时生成 | OC 自定义函数模板缓存（Git 忽略） |
+| `random_class_name.txt` | 运行时生成 | OC 随机类名列表（Git 忽略） |
+
+### 消费关系
+
+| 消费者 | 读取的资源 |
+|--------|------------|
+| `writecode/randomvalue.py`、`swift/randomvalue.py` | `words.txt`、`ioswords.txt` |
+| `rename/func.sh` | `words.txt`、`ioswords.txt` |
+| `writecode/writecontrol.py` → `codemodel.system_func_call_model` | `func_analysised/uikit_class_func.txt`（系统 API 调用模板） |
+| `writecode/writecontrol.py` → `randomvalue.func_create` | 写入 `random_func_create.txt`、`random_class_name.txt` |
+
+### 词库格式
 
 | 文件 | 用途 | 格式 |
 |------|------|------|
 | `words.txt` | 通用英文单词（变量名、参数标签、类名片段等） | **一行一词**的合法 OC 标识符（字母开头，仅字母数字）；空行与 `#` 开头注释行会被忽略 |
-| `ioswords.txt` | iOS/OC 风格后缀（如 `View`、`Controller`、`Manager`） | 同上；与 `words.txt` 随机组合成函数名（如 `fetchData` + `Handler`） |
+| `ioswords.txt` | iOS/OC 风格后缀（如 `View`、`Controller`、`Manager`） | 同上（PascalCase 片段）；与 `words.txt` 随机组合成函数名（如 `fetch` + `Handler`） |
 
-扩展词库：编辑上述文件后追加单词（每行一个词）。可用 `resource/_generate_wordlists.py` 重新生成或作参考。建议避免与 UIKit/Foundation 类名、保留字（`init`、`dealloc` 等）完全相同的单词。
+### 扩展与重新生成
+
+**词库（推荐脚本生成）：**
+
+```bash
+python3 resource/_generate_wordlists.py
+```
+
+脚本从 `resource/_word_roots.py` 中的词根与组合规则生成 `words.txt` / `ioswords.txt`，并过滤 OC/Swift 保留字与常见系统类名冲突。也可手工向上述 `.txt` 追加单词（每行一词）。
+
+**UIKit API：**
+
+1. 向 `func_orign/*.txt` 追加真实 API 声明（每行一条，与头文件一致）
+2. 或运行补充脚本：`python3 resource/_append_uikit_apis.py`（去重追加内置补充集）
+3. 重新解析：
+
+```bash
+python3 writecode/analysis/analys.py
+```
+
+`analys.py` 会覆盖 `func_analysised/` 下四个对应文件。`writecode/config.py` 中 `system_func_path` 指向 `func_analysised/uikit_class_func.txt`。
+
+建议避免与 UIKit/Foundation 类名、保留字（`init`、`dealloc` 等）完全相同的单词。
 
 ## 使用流程
 
@@ -264,9 +314,16 @@ python3 swift/writecontrol.py --project /Users/you/MyApp --rename
 | 重命名 | 为简单词边界替换，可能误改字符串字面量；重命名后需自行编译验证 |
 | rename/ | OC 的 `func.sh` / `projectfile.sh` **不处理** Swift 源文件，Swift 重命名请用本模块 |
 
-### 五、（可选）重新生成 UIKit API 解析文件
+### 五、（可选）重新生成词库与 UIKit API 解析文件
 
 ```bash
+# 词库
+python3 /path/to/Confuse/resource/_generate_wordlists.py
+
+# UIKit API 补充（去重追加 func_orign）
+python3 /path/to/Confuse/resource/_append_uikit_apis.py
+
+# 解析 func_orign → func_analysised
 python3 /path/to/Confuse/writecode/analysis/analys.py
 ```
 
@@ -276,5 +333,5 @@ python3 /path/to/Confuse/writecode/analysis/analys.py
 
 1. 复制 `profiles/default` 为新 profile 名
 2. 按目标工程修改 `writecode.json`（OC）、`swift.json`（Swift）、`rename.env`（OC 重命名）
-3. （可选）按需扩展 `resource/words.txt`、`resource/ioswords.txt`
+3. （可选）运行 `resource/_generate_wordlists.py` 或手工扩展 `resource/words.txt`、`resource/ioswords.txt`
 4. 推荐使用 `python3 confuse.py --project 工程路径 --profile 新名`；或分别运行各子模块

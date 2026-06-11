@@ -194,9 +194,15 @@
 {"params": ["UIApplication *"], "returntype": "void", "funcname": "applicationProtectedDataDidBecomeAvailable", "descrip": ["", "", ";"]}
 {"params": ["UIApplication *", "nullable UIWindow *"], "returntype": "UIInterfaceOrientationMask", "funcname": "application", "descrip": ["supportedInterfaceOrientationsForWindow", ";"]}
 {"params": ["UIApplication *", "UIApplicationExtensionPointIdentifier"], "returntype": "BOOL", "funcname": "application", "descrip": ["shouldAllowExtensionPointIdentifier"]}
+{"params": ["UIApplication *", "NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable UIViewController *", "funcname": "", "descrip": ["application", "viewControllerWithRestorationIdentifierPath", "coder"]}
+{"params": ["UIApplication *", "NSCoder *"], "returntype": "BOOL", "funcname": "", "descrip": ["application", "shouldSaveApplicationState"]}
+{"params": ["UIApplication *", "NSCoder *"], "returntype": "BOOL", "funcname": "", "descrip": ["application", "shouldRestoreApplicationState"]}
+{"params": ["UIApplication *", "NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["application", "willEncodeRestorableStateWithCoder"]}
+{"params": ["UIApplication *", "NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["application", "didDecodeRestorableStateWithCoder"]}
 {"params": ["UIApplication *", "NSString *"], "returntype": "BOOL", "funcname": "application", "descrip": ["willContinueUserActivityWithType"]}
 {"params": ["UIApplication *", "NSString *", "NSError *"], "returntype": "void", "funcname": "application", "descrip": ["didFailToContinueUserActivityWithType", "error"]}
 {"params": ["UIApplication *", "NSUserActivity *"], "returntype": "void", "funcname": "application", "descrip": ["didUpdateUserActivity"]}
+{"params": ["UIApplication *", "CKShareMetadata *"], "returntype": "void", "funcname": "", "descrip": ["application", "userDidAcceptCloudKitShareWithMetadata"]}
 {"params": ["UIInterfaceOrientation", "BOOL"], "returntype": "void", "funcname": "setStatusBarOrientation", "descrip": ["animated"]}
 {"params": ["UIStatusBarStyle", "BOOL"], "returntype": "void", "funcname": "setStatusBarStyle", "descrip": ["animated"]}
 {"params": ["BOOL", "UIStatusBarAnimation"], "returntype": "void", "funcname": "setStatusBarHidden", "descrip": ["withAnimation"]}
@@ -777,6 +783,10 @@
 {"params": ["UISearchController *"], "returntype": "void", "funcname": "didDismissSearchController", "descrip": []}
 {"params": ["UISearchController *"], "returntype": "void", "funcname": "presentSearchController", "descrip": []}
 {"params": ["UISearchController *"], "returntype": "void", "funcname": "updateSearchResultsForSearchController", "descrip": []}
+{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerWillBeginSearch"]}
+{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerDidBeginSearch"]}
+{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerWillEndSearch"]}
+{"params": ["UISearchDisplayController *"], "returntype": "void", "funcname": "", "descrip": ["searchDisplayControllerDidEndSearch"]}
 {"params": ["UISearchDisplayController *", "UITableView *"], "returntype": "void", "funcname": "searchDisplayController", "descrip": ["didLoadSearchResultsTableView"]}
 {"params": ["UISearchDisplayController *", "UITableView *"], "returntype": "void", "funcname": "searchDisplayController", "descrip": ["willUnloadSearchResultsTableView"]}
 {"params": ["UISearchDisplayController *", "UITableView *"], "returntype": "void", "funcname": "searchDisplayController", "descrip": ["willShowSearchResultsTableView"]}
@@ -837,6 +847,11 @@
 {"params": ["UIView *", "NSUInteger"], "returntype": "void", "funcname": "insertArrangedSubview", "descrip": ["atIndex"]}
 {"params": ["CGFloat", "UIView *"], "returntype": "void", "funcname": "setCustomSpacing", "descrip": ["afterView"]}
 {"params": ["UIView *"], "returntype": "CGFloat", "funcname": "customSpacingAfterView", "descrip": []}
+{"params": ["NSIndexPath *", "UIView *"], "returntype": "nullable NSString *", "funcname": "", "descrip": ["modelIdentifierForElementAtIndexPath", "inView"]}
+{"params": ["NSString *", "UIView *"], "returntype": "nullable NSIndexPath *", "funcname": "", "descrip": ["indexPathForElementWithModelIdentifier", "inView"]}
+{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["encodeRestorableStateWithCoder"]}
+{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["decodeRestorableStateWithCoder"]}
+{"params": {}, "returntype": "void", "funcname": "", "descrip": ["applicationFinishedRestoringState;"]}
 {"params": ["nullable UIImage*", "UIControlState"], "returntype": "void", "funcname": "setBackgroundImage", "descrip": ["forState"]}
 {"params": ["UIControlState"], "returntype": "nullable UIImage*", "funcname": "backgroundImageForState", "descrip": []}
 {"params": ["nullable UIImage*", "UIControlState", "UIControlState"], "returntype": "void", "funcname": "setDividerImage", "descrip": ["forLeftSegmentState", "rightSegmentState"]}
@@ -1114,6 +1129,8 @@
 {"params": {}, "returntype": "BOOL", "funcname": "hasAmbiguousLayout", "descrip": []}
 {"params": ["UILayoutConstraintAxis"], "returntype": "NSArray<__kindof NSLayoutConstraint *> *", "funcname": "constraintsAffectingLayoutForAxis", "descrip": []}
 {"params": {}, "returntype": "BOOL", "funcname": "hasAmbiguousLayout", "descrip": []}
+{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["encodeRestorableStateWithCoder"]}
+{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["decodeRestorableStateWithCoder"]}
 {"params": ["BOOL"], "returntype": "nullable UIView *", "funcname": "snapshotViewAfterScreenUpdates", "descrip": []}
 {"params": ["CGRect", "BOOL"], "returntype": "BOOL", "funcname": "drawViewHierarchyInRect", "descrip": ["afterScreenUpdates"]}
 {"params": {}, "returntype": "void", "funcname": "startAnimation", "descrip": []}
@@ -1163,6 +1180,9 @@
 {"params": {}, "returntype": "BOOL", "funcname": "shouldAutomaticallyForwardAppearanceMethods", "descrip": []}
 {"params": ["nullable UIViewController *"], "returntype": "void", "funcname": "willMoveToParentViewController", "descrip": []}
 {"params": ["nullable UIViewController *"], "returntype": "void", "funcname": "didMoveToParentViewController", "descrip": []}
+{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["encodeRestorableStateWithCoder"]}
+{"params": ["NSCoder *"], "returntype": "void", "funcname": "", "descrip": ["decodeRestorableStateWithCoder"]}
+{"params": {}, "returntype": "void", "funcname": "", "descrip": ["applicationFinishedRestoringState;"]}
 {"params": {}, "returntype": "void", "funcname": "updateViewConstraints", "descrip": []}
 {"params": {}, "returntype": "void", "funcname": "viewLayoutMarginsDidChang", "descrip": [""]}
 {"params": {}, "returntype": "void", "funcname": "viewSafeAreaInsetsDidChang", "descrip": [""]}
@@ -1201,6 +1221,7 @@
 {"params": ["UIViewController *"], "returntype": "CGRect", "funcname": "initialFrameForViewController", "descrip": []}
 {"params": ["UIViewController *"], "returntype": "CGRect", "funcname": "finalFrameForViewController", "descrip": []}
 {"params": ["id <UIViewControllerContextTransitioning>"], "returntype": "void", "funcname": "animateTransition", "descrip": []}
+{"params": ["id <UIViewControllerContextTransitioning>"], "returntype": "id <UIViewImplicitlyAnimating>", "funcname": "", "descrip": ["interruptibleAnimatorForTransition"]}
 {"params": ["id <UIViewControllerContextTransitioning>"], "returntype": "void", "funcname": "startInteractiveTransition", "descrip": []}
 {"params": {}, "returntype": "CGFloat", "funcname": "completionSpeed", "descrip": []}
 {"params": {}, "returntype": "UIViewAnimationCurve", "funcname": "completionCurve", "descrip": []}
@@ -1229,3 +1250,103 @@
 {"params": {}, "returntype": "void", "funcname": "makeKeyWindow", "descrip": []}
 {"params": ["CGRect", "nullable UIWindow *"], "returntype": "CGRect", "funcname": "convertRect", "descrip": ["toWindow"]}
 {"params": ["CGRect", "nullable UIWindow *"], "returntype": "CGRect", "funcname": "convertRect", "descrip": ["fromWindow"]}
+{"params": {}, "returntype": "void", "funcname": "sizeToFit", "descrip": []}
+{"params": {}, "returntype": "void", "funcname": "layoutSubviews", "descrip": []}
+{"params": ["UIView *"], "returntype": "BOOL", "funcname": "isDescendantOfView", "descrip": []}
+{"params": ["NSInteger"], "returntype": "nullable UIView *", "funcname": "viewWithTag", "descrip": []}
+{"params": ["UILayoutPriority", "UILayoutConstraintAxis"], "returntype": "void", "funcname": "setContentHuggingPriority", "descrip": ["forAxis"]}
+{"params": ["UILayoutPriority", "UILayoutConstraintAxis"], "returntype": "void", "funcname": "setContentCompressionResistancePriority", "descrip": ["forAxis"]}
+{"params": ["NSLayoutConstraint *"], "returntype": "void", "funcname": "addConstraint", "descrip": []}
+{"params": ["NSArray<__kindof NSLayoutConstraint *> *"], "returntype": "void", "funcname": "addConstraints", "descrip": []}
+{"params": ["NSLayoutConstraint *"], "returntype": "void", "funcname": "removeConstraint", "descrip": []}
+{"params": ["NSArray<__kindof NSLayoutConstraint *> *"], "returntype": "void", "funcname": "removeConstraints", "descrip": []}
+{"params": ["UIGestureRecognizer *"], "returntype": "void", "funcname": "addGestureRecognizer", "descrip": []}
+{"params": ["UIGestureRecognizer *"], "returntype": "void", "funcname": "removeGestureRecognizer", "descrip": []}
+{"params": ["CGPoint", "nullable UIEvent *"], "returntype": "BOOL", "funcname": "pointInside", "descrip": ["withEvent"]}
+{"params": ["CGPoint", "nullable UIEvent *"], "returntype": "nullable UIView *", "funcname": "hitTest", "descrip": ["withEvent"]}
+{"params": ["CGPoint", "nullable UIView *"], "returntype": "void", "funcname": "convertPoint", "descrip": ["toView"]}
+{"params": ["CGPoint", "nullable UIView *"], "returntype": "void", "funcname": "convertPoint", "descrip": ["fromView"]}
+{"params": ["CGRect", "nullable UIView *"], "returntype": "void", "funcname": "convertRect", "descrip": ["toView"]}
+{"params": ["CGRect", "nullable UIView *"], "returntype": "void", "funcname": "convertRect", "descrip": ["fromView"]}
+{"params": ["BOOL"], "returntype": "void", "funcname": "viewWillAppear", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "viewDidAppear", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "viewWillDisappear", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "viewDidDisappear", "descrip": []}
+{"params": {}, "returntype": "void", "funcname": "viewDidLoad", "descrip": []}
+{"params": {}, "returntype": "void", "funcname": "loadView", "descrip": []}
+{"params": ["CGSize", "id<UIViewControllerTransitionCoordinator>"], "returntype": "void", "funcname": "viewWillTransitionToSize", "descrip": ["withTransitionCoordinator"]}
+{"params": ["UITraitCollection *", "id<UIViewControllerTransitionCoordinator>"], "returntype": "void", "funcname": "willTransitionToTraitCollection", "descrip": ["withTransitionCoordinator"]}
+{"params": ["UIViewController *", "BOOL", "void (^ __nullable", "void"], "returntype": "void", "funcname": "presentViewController", "descrip": ["animated", "completion"]}
+{"params": ["BOOL", "void (^ __nullable", "void"], "returntype": "void", "funcname": "dismissViewControllerAnimated", "descrip": ["completion"]}
+{"params": ["BOOL", "BOOL"], "returntype": "void", "funcname": "beginAppearanceTransition", "descrip": ["animated"]}
+{"params": {}, "returntype": "void", "funcname": "endAppearanceTransition", "descrip": []}
+{"params": ["nullable NSString *", "UIControlState"], "returntype": "void", "funcname": "setTitle", "descrip": ["forState"]}
+{"params": ["nullable UIColor *", "UIControlState"], "returntype": "void", "funcname": "setTitleColor", "descrip": ["forState"]}
+{"params": ["nullable UIImage *", "UIControlState"], "returntype": "void", "funcname": "setImage", "descrip": ["forState"]}
+{"params": ["nullable UIImage *", "UIControlState"], "returntype": "void", "funcname": "setBackgroundImage", "descrip": ["forState"]}
+{"params": ["nullable NSAttributedString *", "UIControlState"], "returntype": "void", "funcname": "setAttributedTitle", "descrip": ["forState"]}
+{"params": ["nullable id", "SEL", "UIControlEvents"], "returntype": "void", "funcname": "addTarget", "descrip": ["action", "forControlEvents"]}
+{"params": ["nullable id", "nullable SEL", "UIControlEvents"], "returntype": "void", "funcname": "removeTarget", "descrip": ["action", "forControlEvents"]}
+{"params": ["UIControlEvents"], "returntype": "void", "funcname": "sendActionsForControlEvents", "descrip": []}
+{"params": ["nullable NSString *"], "returntype": "void", "funcname": "setText", "descrip": []}
+{"params": ["nullable NSAttributedString *"], "returntype": "void", "funcname": "setAttributedText", "descrip": []}
+{"params": ["nullable UIFont *"], "returntype": "void", "funcname": "setFont", "descrip": []}
+{"params": ["nullable UIColor *"], "returntype": "void", "funcname": "setTextColor", "descrip": []}
+{"params": ["NSTextAlignment"], "returntype": "void", "funcname": "setTextAlignment", "descrip": []}
+{"params": ["NSInteger"], "returntype": "void", "funcname": "setNumberOfLines", "descrip": []}
+{"params": ["nullable NSString *"], "returntype": "void", "funcname": "setPlaceholder", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setSecureTextEntry", "descrip": []}
+{"params": ["nullable UIImage *"], "returntype": "void", "funcname": "setImage", "descrip": []}
+{"params": ["nullable UIImage *"], "returntype": "void", "funcname": "setHighlightedImage", "descrip": []}
+{"params": ["nullable NSArray<UIImage *> *"], "returntype": "void", "funcname": "setAnimationImages", "descrip": []}
+{"params": ["CGPoint", "BOOL"], "returntype": "void", "funcname": "setContentOffset", "descrip": ["animated"]}
+{"params": ["CGRect", "BOOL"], "returntype": "void", "funcname": "scrollRectToVisible", "descrip": ["animated"]}
+{"params": {}, "returntype": "void", "funcname": "flashScrollIndicators", "descrip": []}
+{"params": ["UIEdgeInsets"], "returntype": "void", "funcname": "setContentInset", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setBounces", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setShowsHorizontalScrollIndicator", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setShowsVerticalScrollIndicator", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setPagingEnabled", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setScrollEnabled", "descrip": []}
+{"params": ["CGFloat"], "returntype": "void", "funcname": "setAlpha", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setHidden", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setOpaque", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setClipsToBounds", "descrip": []}
+{"params": ["BOOL"], "returntype": "void", "funcname": "setUserInteractionEnabled", "descrip": []}
+{"params": ["nullable UIColor *"], "returntype": "void", "funcname": "setBackgroundColor", "descrip": []}
+{"params": ["nullable UIColor *"], "returntype": "void", "funcname": "setTintColor", "descrip": []}
+{"params": ["CGAffineTransform"], "returntype": "void", "funcname": "setTransform", "descrip": []}
+{"params": ["CGRect"], "returntype": "void", "funcname": "setFrame", "descrip": []}
+{"params": ["CGRect"], "returntype": "void", "funcname": "setBounds", "descrip": []}
+{"params": ["CGPoint"], "returntype": "void", "funcname": "setCenter", "descrip": []}
+{"params": {}, "returntype": "BOOL", "funcname": "canBecomeFirstResponder", "descrip": []}
+{"params": {}, "returntype": "BOOL", "funcname": "canResignFirstResponder", "descrip": []}
+{"params": ["NSCoder *"], "returntype": "void", "funcname": "encodeWithCoder", "descrip": []}
+{"params": ["NSCoder *"], "returntype": "nullable instancetype", "funcname": "initWithCoder", "descrip": []}
+{"params": {}, "returntype": "NSUInteger", "funcname": "hash", "descrip": []}
+{"params": ["id"], "returntype": "BOOL", "funcname": "isEqual", "descrip": []}
+{"params": {}, "returntype": "NSString *", "funcname": "description", "descrip": []}
+{"params": ["id", "SEL", "nullable NSNotificationName", "nullable id"], "returntype": "void", "funcname": "addObserver", "descrip": ["selector", "name", "object"]}
+{"params": ["id"], "returntype": "void", "funcname": "removeObserver", "descrip": []}
+{"params": ["id", "nullable NSNotificationName", "nullable id"], "returntype": "void", "funcname": "removeObserver", "descrip": ["name", "object"]}
+{"params": ["NSNotificationName", "nullable id"], "returntype": "void", "funcname": "postNotificationName", "descrip": ["object"]}
+{"params": ["NSNotificationName", "nullable id", "nullable NSDictionary *"], "returntype": "void", "funcname": "postNotificationName", "descrip": ["object", "userInfo"]}
+{"params": ["nullable id", "NSString *"], "returntype": "void", "funcname": "setObject", "descrip": ["forKey"]}
+{"params": ["NSString *"], "returntype": "nullable id", "funcname": "objectForKey", "descrip": []}
+{"params": ["NSString *"], "returntype": "void", "funcname": "removeObjectForKey", "descrip": []}
+{"params": {}, "returntype": "void", "funcname": "synchronize", "descrip": []}
+{"params": ["NSString *", "BOOL"], "returntype": "BOOL", "funcname": "writeToFile", "descrip": ["atomically"]}
+{"params": ["NSURL *"], "returntype": "nullable NSData *", "funcname": "dataWithContentsOfURL", "descrip": []}
+{"params": ["NSString *"], "returntype": "void", "funcname": "appendString", "descrip": []}
+{"params": ["NSString *"], "returntype": "void", "funcname": "appendFormat", "descrip": ["...;"]}
+{"params": ["id"], "returntype": "void", "funcname": "addObject", "descrip": []}
+{"params": ["id"], "returntype": "void", "funcname": "removeObject", "descrip": []}
+{"params": {}, "returntype": "void", "funcname": "removeAllObjects", "descrip": []}
+{"params": ["id", "NSUInteger"], "returntype": "void", "funcname": "insertObject", "descrip": ["atIndex"]}
+{"params": ["NSUInteger", "id"], "returntype": "void", "funcname": "replaceObjectAtIndex", "descrip": ["withObject"]}
+{"params": ["id", "id<NSCopying>"], "returntype": "void", "funcname": "setObject", "descrip": ["forKeyedSubscript"]}
+{"params": ["id"], "returntype": "void", "funcname": "removeObjectForKey", "descrip": []}
+{"params": ["SEL", "nullable id", "NSTimeInterval"], "returntype": "void", "funcname": "performSelector", "descrip": ["withObject", "afterDelay"]}
+{"params": ["SEL", "nullable id", "BOOL"], "returntype": "void", "funcname": "performSelectorOnMainThread", "descrip": ["withObject", "waitUntilDone"]}
+{"params": {}, "returntype": "void", "funcname": "invalidate", "descrip": []}
+{"params": {}, "returntype": "void", "funcname": "fire", "descrip": []}

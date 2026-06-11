@@ -57,3 +57,33 @@
 {"params": {}, "returntype": "instancetype", "funcname": "new", "descrip": []}
 {"params": ["NSString *"], "returntype": "instancetype", "funcname": "passwordRulesWithDescriptor", "descrip": []}
 {"params": ["NSString *", "UIPreviewActionStyle", "NSArray<UIPreviewAction *> *"], "returntype": "instancetype", "funcname": "actionGroupWithTitle", "descrip": ["style", "actions"]}
+{"params": ["nullable NSString *", "UIAlertActionStyle", "void (^ __nullable", "UIAlertAction *action"], "returntype": "instancetype", "funcname": "actionWithTitle", "descrip": ["style", "handler"]}
+{"params": ["CGRect", "CGFloat"], "returntype": "instancetype", "funcname": "bezierPathWithRoundedRect", "descrip": ["cornerRadius"]}
+{"params": ["NSUInteger[]", "NSUInteger"], "returntype": "instancetype", "funcname": "indexPathWithIndexes", "descrip": ["length"]}
+{"params": ["UIBlurEffectStyle"], "returntype": "instancetype", "funcname": "effectWithStyle", "descrip": []}
+{"params": ["UIBlurEffect *"], "returntype": "instancetype", "funcname": "vibrancyEffectWithBlurEffect", "descrip": []}
+{"params": ["UIBlurEffect *"], "returntype": "instancetype", "funcname": "effectForBlurEffect", "descrip": []}
+{"params": ["NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "storyboardWithName", "descrip": ["bundle"]}
+{"params": ["NSString *"], "returntype": "instancetype", "funcname": "viewControllerWithIdentifier", "descrip": []}
+{"params": ["UIView *", "NSTimeInterval", "UIViewAnimationOptions", "void (^ __nullable", "void", "void (^ __nullable", "BOOL finished"], "returntype": "instancetype", "funcname": "transitionWithView", "descrip": ["duration", "options", "animations", "completion"]}
+{"params": ["UIView *", "UIView *", "NSTimeInterval"], "returntype": "instancetype", "funcname": "transitionFlipFromView", "descrip": ["toView", "duration"]}
+{"params": ["double", "double", "void (^", "void"], "returntype": "instancetype", "funcname": "keyframeWithRelativeStartTime", "descrip": ["relativeDuration", "animations"]}
+{"params": ["NSTimeInterval", "UIViewAnimationCurve", "void (^", "void"], "returntype": "instancetype", "funcname": "animatorWithDuration", "descrip": ["curve", "animations"]}
+{"params": ["NSTimeInterval", "CGPoint", "CGPoint", "void (^", "void"], "returntype": "instancetype", "funcname": "animatorWithDuration", "descrip": ["controlPoint1", "controlPoint2", "animations"]}
+{"params": ["NSTimeInterval", "id<UITimingCurveProvider>"], "returntype": "instancetype", "funcname": "animatorWithDuration", "descrip": ["timingParameters"]}
+{"params": ["id<NSItemProviderWriting>"], "returntype": "instancetype", "funcname": "itemProviderWithObject", "descrip": []}
+{"params": ["id<UIDropSession>", "CGPoint"], "returntype": "instancetype", "funcname": "previewTargetWithContainer", "descrip": ["center"]}
+{"params": {}, "returntype": "instancetype", "funcname": "previewParameters", "descrip": []}
+{"params": ["NSValue *"], "returntype": "instancetype", "funcname": "previewParametersWithTextLineRects", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "groupedBackgroundConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "plainHeaderFooterConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "plainCellConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "subtitleCellConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "value1CellConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "value2CellConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "filledButtonConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "grayButtonConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "tintedButtonConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "borderedButtonConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "borderlessButtonConfiguration", "descrip": []}
+{"params": {}, "returntype": "instancetype", "funcname": "prominentButtonConfiguration", "descrip": []}

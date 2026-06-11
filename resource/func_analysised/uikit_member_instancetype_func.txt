@@ -15,6 +15,7 @@
 {"params": ["NSAttributedString *", "CGPoint", "UIView *"], "returntype": "instancetype", "funcname": "initWithAttributedName", "descrip": ["point", "inView"]}
 {"params": ["nullable NSString *", "nullable id<UIActionSheetDelegate>", "nullable NSString *", "nullable NSString *", "nullable NSString *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["delegate", "cancelButtonTitle", "destructiveButtonTitle", "otherButtonTitles", "..", ""]}
 {"params": ["CGRect"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": []}
+{"params": ["NSCoder *"], "returntype": "instancetype", "funcname": "", "descrip": ["initWithCoder"]}
 {"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": {}, "returntype": "instancetype", "funcname": "init", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
@@ -164,3 +165,39 @@
 {"params": ["CGRect"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": []}
 {"params": ["nullable NSString *", "nullable NSBundle *"], "returntype": "instancetype", "funcname": "initWithNibName", "descrip": ["bundle"]}
 {"params": ["nullable UIVisualEffect *"], "returntype": "instancetype", "funcname": "initWithEffect", "descrip": []}
+{"params": ["CGRect", "UITableViewStyle"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": ["style"]}
+{"params": ["UIViewController *"], "returntype": "instancetype", "funcname": "initWithRootViewController", "descrip": []}
+{"params": ["UIBarButtonSystemItem", "nullable id", "nullable SEL"], "returntype": "instancetype", "funcname": "initWithBarButtonSystemItem", "descrip": ["target", "action"]}
+{"params": ["nullable NSString *", "UIBarButtonItemStyle", "nullable id", "nullable SEL"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["style", "target", "action"]}
+{"params": ["nullable id", "nullable SEL"], "returntype": "instancetype", "funcname": "initWithTarget", "descrip": ["action"]}
+{"params": ["UIActivityIndicatorViewStyle"], "returntype": "instancetype", "funcname": "initWithActivityIndicatorStyle", "descrip": []}
+{"params": ["UIProgressViewStyle"], "returntype": "instancetype", "funcname": "initWithProgressViewStyle", "descrip": []}
+{"params": ["CGRect", "nullable UIAction *"], "returntype": "instancetype", "funcname": "initWithFrame", "descrip": ["primaryAction"]}
+{"params": ["UIButtonConfiguration *"], "returntype": "instancetype", "funcname": "initWithConfiguration", "descrip": []}
+{"params": ["NSString *", "nullable NSDictionary<NSAttributedStringKey,id> *"], "returntype": "instancetype", "funcname": "initWithString", "descrip": ["attributes"]}
+{"params": ["NSString *"], "returntype": "instancetype", "funcname": "initWithString", "descrip": []}
+{"params": ["NSData *", "NSStringEncoding"], "returntype": "instancetype", "funcname": "initWithData", "descrip": ["encoding"]}
+{"params": ["NSString *"], "returntype": "instancetype", "funcname": "initWithContentsOfFile", "descrip": []}
+{"params": ["NSURL *"], "returntype": "instancetype", "funcname": "initWithContentsOfURL", "descrip": []}
+{"params": ["const id []", "NSUInteger"], "returntype": "instancetype", "funcname": "initWithObjects", "descrip": ["count"]}
+{"params": ["NSArray *"], "returntype": "instancetype", "funcname": "initWithArray", "descrip": []}
+{"params": ["NSArray *", "BOOL"], "returntype": "instancetype", "funcname": "initWithArray", "descrip": ["copyItems"]}
+{"params": ["NSDictionary *"], "returntype": "instancetype", "funcname": "initWithDictionary", "descrip": []}
+{"params": ["NSDictionary *", "BOOL"], "returntype": "instancetype", "funcname": "initWithDictionary", "descrip": ["copyItems"]}
+{"params": ["NSSet *"], "returntype": "instancetype", "funcname": "initWithSet", "descrip": []}
+{"params": ["NSUInteger"], "returntype": "instancetype", "funcname": "initWithCapacity", "descrip": []}
+{"params": ["NSURL *"], "returntype": "instancetype", "funcname": "initWithURL", "descrip": []}
+{"params": ["NSURL *", "NSURLRequestCachePolicy", "NSTimeInterval"], "returntype": "instancetype", "funcname": "initWithURL", "descrip": ["cachePolicy", "timeoutInterval"]}
+{"params": ["NSTimeInterval"], "returntype": "instancetype", "funcname": "initWithTimeIntervalSinceNow", "descrip": []}
+{"params": ["NSTimeInterval", "NSDate *"], "returntype": "instancetype", "funcname": "initWithTimeInterval", "descrip": ["sinceDate"]}
+{"params": ["NSDate *", "NSTimeInterval", "id", "SEL", "nullable id", "BOOL"], "returntype": "instancetype", "funcname": "initWithFireDate", "descrip": ["interval", "target", "selector", "userInfo", "repeats"]}
+{"params": ["NSString *", "nullable id", "nullable NSDictionary *"], "returntype": "instancetype", "funcname": "initWithName", "descrip": ["object", "userInfo"]}
+{"params": ["NSArray *", "nullable NSArray<__kindof UIActivity *> *", "nullable NSArray<UIActivityType> *"], "returntype": "instancetype", "funcname": "initWithActivityItems", "descrip": ["applicationActivities", "excludedActivityTypes"]}
+{"params": ["UIBarButtonSystemItem", "UIMenu *"], "returntype": "instancetype", "funcname": "initWithBarButtonSystemItem", "descrip": ["menu"]}
+{"params": ["UIAction *"], "returntype": "instancetype", "funcname": "initWithPrimaryAction", "descrip": []}
+{"params": ["NSString *", "nullable UIImage *", "nullable UIActionIdentifier", "UIActionHandler"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["image", "identifier", "handler"]}
+{"params": ["NSString *", "nullable UIImage *", "nullable UIActionIdentifier", "nullable NSString *", "UIMenuElementAttributes", "UIMenuElementState", "UIActionHandler"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["image", "identifier", "discoverabilityTitle", "attributes", "state", "handler"]}
+{"params": ["NSString *", "NSArray<UIMenuElement *> *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["children"]}
+{"params": ["NSString *", "nullable UIImage *", "nullable UIMenuIdentifier", "UIMenuOptions", "NSArray<UIMenuElement *> *"], "returntype": "instancetype", "funcname": "initWithTitle", "descrip": ["image", "identifier", "options", "children"]}
+{"params": ["NSItemProvider *", "NSItemProviderPreviewProvider"], "returntype": "instancetype", "funcname": "initWithItemProvider", "descrip": ["previewProvider"]}
+{"params": ["NSItemProvider *", "NSItemProviderPreviewProvider", "NSItemProviderLoadActionProvider"], "returntype": "instancetype", "funcname": "initWithItemProvider", "descrip": ["previewProvider", "actionProvider"]}

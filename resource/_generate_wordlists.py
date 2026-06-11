@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
-"""One-off generator for resource/words.txt and resource/ioswords.txt."""
+"""Regenerate resource/words.txt and resource/ioswords.txt from curated roots."""
 import re
 from pathlib import Path
+
+from _word_roots import (
+    GENERAL_AFFIXES,
+    GENERAL_PREFIXES,
+    GENERAL_ROOTS,
+    IOS_BASE_FRAGMENTS,
+    IOS_PREFIXES,
+    IOS_SUFFIXES_EXTRA,
+)
 
 RESOURCE = Path(__file__).resolve().parent
 
@@ -24,9 +33,27 @@ RESERVED = {
     "init", "dealloc", "alloc", "copy", "mutable", "description", "debug",
     "release", "autorelease", "retain", "perform", "responds", "conforms",
     "isEqual", "hash", "class", "superclass", "description", "debugDescription",
+    "main", "load", "store", "open", "close", "read", "write", "send", "recv",
+    "connect", "bind", "listen", "accept", "fork", "exec", "wait", "kill",
+    "signal", "pipe", "fcntl", "ioctl", "mmap", "malloc", "free", "calloc",
+    "realloc", "printf", "scanf", "fprintf", "sprintf", "snprintf", "strlen",
+    "strcpy", "strncpy", "strcmp", "strncmp", "memcpy", "memmove", "memset",
+    "memcmp", "sizeof", "typeof", "inline", "restrict", "volatile", "register",
+    "auto", "extern", "static", "typedef", "struct", "union", "enum", "goto",
 }
 
-GENERAL_WORDS = """
+# Rare full UIKit/Foundation type names — keep common suffixes like View/Controller
+IOS_AVOID = {
+    "NSObject", "NSString", "NSArray", "NSDictionary", "NSNumber", "NSData",
+    "NSDate", "NSURL", "NSError", "NSNotification", "NSIndexPath", "NSRange",
+    "UIView", "UIViewController", "UIApplication", "UIWindow", "UIScreen",
+    "UITableView", "UICollectionView", "UINavigationController", "UITabBarController",
+    "IBAction", "IBOutlet", "instancetype", "NSManagedObject", "NSManagedObjectContext",
+    "CALayer", "CGContext", "CGImage", "CGColor", "CGRect", "CGPoint", "CGSize",
+}
+
+# Legacy embedded lists (kept for backward-compatible regeneration)
+LEGACY_GENERAL_WORDS = """
 alpha beta gamma delta epsilon zeta eta theta iota kappa lambda mu nu xi omicron
 pi rho sigma tau upsilon phi chi psi omega
 amber azure birch cedar coral crimson ebony emerald fern garnet hazel ivory jade
@@ -173,7 +200,7 @@ theorem lemma corollary proposition conjecture hypothesis axiom postulate
 definition notation convention terminology glossary vocabulary lexicon thesaurus
 """.split()
 
-IOS_SUFFIXES = """
+LEGACY_IOS_SUFFIXES = """
 View Cell Layer Button Label Field Slider Switch Picker Toolbar TabBar NavBar
 Scroll Table Collection Stack Grid Panel Sheet Modal Popup Overlay Badge Chip
 Card Tile Banner Header Footer Sidebar Drawer Menu List Row Column Section
@@ -302,15 +329,6 @@ Collection Stack Grid Sheet Modal Popup Overlay Badge Chip Card Tile Banner
 Header Footer Sidebar Drawer Menu List Row Column Section Layer Cell
 """.split()
 
-# Rare full UIKit/Foundation type names — keep common suffixes like View/Controller
-IOS_AVOID = {
-    "NSObject", "NSString", "NSArray", "NSDictionary", "NSNumber", "NSData",
-    "NSDate", "NSURL", "NSError", "NSNotification", "NSIndexPath", "NSRange",
-    "UIView", "UIViewController", "UIApplication", "UIWindow", "UIScreen",
-    "UITableView", "UICollectionView", "UINavigationController", "UITabBarController",
-    "IBAction", "IBOutlet", "instancetype",
-}
-
 
 def valid_identifier(word: str) -> bool:
     return bool(re.match(r"^[A-Za-z][A-Za-z0-9]*$", word))
@@ -318,6 +336,7 @@ def valid_identifier(word: str) -> bool:
 
 def normalize_words(raw_words, lowercase=False, avoid=None):
     avoid = avoid or set()
+    avoid_lower = {a.lower() for a in avoid}
     seen = set()
     result = []
     for w in raw_words:
@@ -329,7 +348,7 @@ def normalize_words(raw_words, lowercase=False, avoid=None):
         if not valid_identifier(w):
             continue
         key = w.lower()
-        if key in RESERVED or key in {a.lower() for a in avoid}:
+        if key in RESERVED or key in avoid_lower:
             continue
         if key in seen:
             continue
@@ -338,13 +357,104 @@ def normalize_words(raw_words, lowercase=False, avoid=None):
     return result
 
 
+TARGET_GENERAL = 4500
+TARGET_IOS = 3800
+
+
+def expand_general_words():
+    """Build ~3000+ lowercase identifier roots from curated + limited affix combos."""
+    seeds = list(LEGACY_GENERAL_WORDS) + list(GENERAL_ROOTS)
+    expanded = list(seeds)
+    seen = {w.lower() for w in expanded}
+
+    def add(word):
+        key = word.lower()
+        if key not in seen:
+            seen.add(key)
+            expanded.append(word)
+
+    short_roots = [w for w in GENERAL_ROOTS if 3 <= len(w) <= 7]
+    for root in short_roots:
+        for affix in GENERAL_AFFIXES:
+            add(root + affix)
+            if len(expanded) >= TARGET_GENERAL:
+                return expanded
+        for prefix in GENERAL_PREFIXES:
+            if not root.startswith(prefix):
+                add(prefix + root)
+                if len(expanded) >= TARGET_GENERAL:
+                    return expanded
+
+    verbs = [w for w in GENERAL_ROOTS if w in {
+        "fetch", "load", "save", "push", "pull", "send", "bind", "cast", "clip",
+        "crop", "drop", "fill", "find", "fold", "form", "hide", "hold", "join",
+        "keep", "link", "lock", "mark", "move", "open", "pack", "pick", "play",
+        "read", "show", "sort", "take", "tell", "turn", "view", "walk", "wrap",
+        "build", "clear", "close", "count", "cover", "debug", "delay", "embed",
+        "flush", "frame", "grant", "hover", "index", "inject", "launch", "merge",
+        "mount", "parse", "patch", "pivot", "probe", "query", "queue", "reset",
+        "route", "scale", "scope", "shift", "slice", "spawn", "stack", "store",
+        "sweep", "trace", "track", "tweak", "unify", "vault", "watch", "yield",
+        "zoom", "adapt", "align", "apply", "audit", "blend", "boost", "cache",
+    }]
+    nouns = [w for w in GENERAL_ROOTS if w.endswith(("ion", "ment", "ness", "ity", "er", "or", "ist", "ing"))]
+    for verb in verbs:
+        for noun in nouns:
+            add(verb + noun)
+            if len(expanded) >= TARGET_GENERAL:
+                return expanded
+
+    return expanded
+
+
+def expand_ios_words():
+    """Build ~2000+ PascalCase UIKit/SwiftUI style fragments."""
+    seeds = (
+        list(LEGACY_IOS_SUFFIXES)
+        + list(IOS_BASE_FRAGMENTS)
+        + list(IOS_SUFFIXES_EXTRA)
+    )
+    expanded = list(seeds)
+    seen = {w for w in expanded}
+
+    def add(word):
+        if word not in seen:
+            seen.add(word)
+            expanded.append(word)
+
+    bases = [b for b in dict.fromkeys(IOS_BASE_FRAGMENTS) if 3 <= len(b) <= 12]
+    prefixes = [p for p in dict.fromkeys(IOS_PREFIXES) if 3 <= len(p) <= 14]
+    for prefix in prefixes:
+        for base in bases:
+            add(prefix + base)
+            if len(expanded) >= TARGET_IOS:
+                return expanded
+
+    for base in bases:
+        for suffix in IOS_SUFFIXES_EXTRA:
+            if not base.endswith(suffix):
+                add(base + suffix)
+                if len(expanded) >= TARGET_IOS:
+                    return expanded
+
+    # pairwise base blends (ViewCell, TableRow, ...)
+    for i, left in enumerate(bases):
+        for right in bases[i + 1:]:
+            if left != right:
+                add(left + right)
+                if len(expanded) >= TARGET_IOS:
+                    return expanded
+
+    return expanded
+
+
 def write_wordlist(path: Path, words: list[str]):
     path.write_text("\n".join(words) + "\n", encoding="utf-8")
 
 
 def main():
-    general = normalize_words(GENERAL_WORDS, lowercase=True)
-    ios = normalize_words(IOS_SUFFIXES, lowercase=False, avoid=IOS_AVOID)
+    general = normalize_words(expand_general_words(), lowercase=True)
+    ios = normalize_words(expand_ios_words(), lowercase=False, avoid=IOS_AVOID)
 
     write_wordlist(RESOURCE / "words.txt", general)
     write_wordlist(RESOURCE / "ioswords.txt", ios)

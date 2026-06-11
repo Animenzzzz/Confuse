@@ -75,6 +75,8 @@
 {"params": ["NSString *"], "returntype": "BOOL", "funcname": "dictionaryHasDefinitionForTerm", "descrip": []}
 {"params": {}, "returntype": "UIRegion *", "funcname": "infiniteRegion", "descrip": []}
 {"params": ["NSString *"], "returntype": "void", "funcname": "clearTextInputContextIdentifier", "descrip": []}
+{"params": ["NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable UIViewController *", "funcname": "", "descrip": ["viewControllerWithRestorationIdentifierPath", "coder"]}
+{"params": ["NSArray<NSString *> *", "NSCoder *"], "returntype": "nullable id<UIStateRestoring>", "funcname": "", "descrip": ["objectWithRestorationIdentifierPath", "coder"]}
 {"params": ["NSString *", "nullable NSBundle *"], "returntype": "UIStoryboard *", "funcname": "storyboardWithName", "descrip": ["bundle"]}
 {"params": ["NSString *"], "returntype": "void", "funcname": "learnWord", "descrip": []}
 {"params": ["NSString *"], "returntype": "BOOL", "funcname": "hasLearnedWord", "descrip": []}
@@ -97,3 +99,112 @@
 {"params": {}, "returntype": "BOOL", "funcname": "areAnimationsEnabled", "descrip": []}
 {"params": {}, "returntype": "BOOL", "funcname": "requiresConstraintBasedLayout", "descrip": []}
 {"params": {}, "returntype": "void", "funcname": "attemptRotationToDeviceOrientation", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "blackColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "darkGrayColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "lightGrayColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "whiteColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "grayColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "redColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "greenColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "blueColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "cyanColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "yellowColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "magentaColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "orangeColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "purpleColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "brownColor", "descrip": []}
+{"params": {}, "returntype": "UIColor *", "funcname": "clearColor", "descrip": []}
+{"params": ["CGFloat", "UIFontWeight"], "returntype": "UIFont *", "funcname": "monospacedSystemFontOfSize", "descrip": ["weight"]}
+{"params": ["NSString *"], "returntype": "UIImage *", "funcname": "imageNamed", "descrip": []}
+{"params": ["NSString *", "nullable NSBundle *", "nullable UITraitCollection *"], "returntype": "UIImage *", "funcname": "imageNamed", "descrip": ["inBundle", "compatibleWithTraitCollection"]}
+{"params": ["NSString *"], "returntype": "UIImage *", "funcname": "imageWithContentsOfFile", "descrip": []}
+{"params": ["NSData *"], "returntype": "UIImage *", "funcname": "imageWithData", "descrip": []}
+{"params": ["NSData *", "CGFloat"], "returntype": "UIImage *", "funcname": "imageWithData", "descrip": ["scale"]}
+{"params": {}, "returntype": "NSBundle *", "funcname": "mainBundle", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSBundle *", "funcname": "bundleWithPath", "descrip": []}
+{"params": ["Class"], "returntype": "NSBundle *", "funcname": "bundleForClass", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSURL *", "funcname": "URLWithString", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSURL *", "funcname": "fileURLWithPath", "descrip": []}
+{"params": ["NSString *", "BOOL"], "returntype": "NSURL *", "funcname": "fileURLWithPath", "descrip": ["isDirectory"]}
+{"params": {}, "returntype": "NSDate *", "funcname": "date", "descrip": []}
+{"params": {}, "returntype": "NSDate *", "funcname": "distantFuture", "descrip": []}
+{"params": {}, "returntype": "NSDate *", "funcname": "distantPast", "descrip": []}
+{"params": {}, "returntype": "NSLocale *", "funcname": "currentLocale", "descrip": []}
+{"params": {}, "returntype": "NSLocale *", "funcname": "autoupdatingCurrentLocale", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSLocale *", "funcname": "localeWithLocaleIdentifier", "descrip": []}
+{"params": {}, "returntype": "NSTimeZone *", "funcname": "localTimeZone", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSTimeZone *", "funcname": "timeZoneWithName", "descrip": []}
+{"params": {}, "returntype": "NSCalendar *", "funcname": "currentCalendar", "descrip": []}
+{"params": {}, "returntype": "NSCalendar *", "funcname": "autoupdatingCurrentCalendar", "descrip": []}
+{"params": ["NSCalendarIdentifier"], "returntype": "NSCalendar *", "funcname": "calendarWithIdentifier", "descrip": []}
+{"params": ["BOOL"], "returntype": "NSNumber *", "funcname": "numberWithBool", "descrip": []}
+{"params": ["char"], "returntype": "NSNumber *", "funcname": "numberWithChar", "descrip": []}
+{"params": ["short"], "returntype": "NSNumber *", "funcname": "numberWithShort", "descrip": []}
+{"params": ["int"], "returntype": "NSNumber *", "funcname": "numberWithInt", "descrip": []}
+{"params": ["long"], "returntype": "NSNumber *", "funcname": "numberWithLong", "descrip": []}
+{"params": ["long long"], "returntype": "NSNumber *", "funcname": "numberWithLongLong", "descrip": []}
+{"params": ["float"], "returntype": "NSNumber *", "funcname": "numberWithFloat", "descrip": []}
+{"params": ["double"], "returntype": "NSNumber *", "funcname": "numberWithDouble", "descrip": []}
+{"params": ["NSInteger"], "returntype": "NSNumber *", "funcname": "numberWithInteger", "descrip": []}
+{"params": ["unsigned char"], "returntype": "NSNumber *", "funcname": "numberWithUnsignedChar", "descrip": []}
+{"params": ["unsigned int"], "returntype": "NSNumber *", "funcname": "numberWithUnsignedInt", "descrip": []}
+{"params": ["NSUInteger"], "returntype": "NSNumber *", "funcname": "numberWithUnsignedInteger", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSString *", "funcname": "stringWithFormat", "descrip": ["...;"]}
+{"params": ["NSString *"], "returntype": "NSString *", "funcname": "localizedStringWithFormat", "descrip": ["...;"]}
+{"params": ["const char *", "NSStringEncoding"], "returntype": "NSString *", "funcname": "stringWithCString", "descrip": ["encoding"]}
+{"params": ["const void *", "NSUInteger"], "returntype": "NSData *", "funcname": "dataWithBytes", "descrip": ["length"]}
+{"params": ["NSString *"], "returntype": "NSData *", "funcname": "dataWithContentsOfFile", "descrip": []}
+{"params": ["NSURL *"], "returntype": "NSData *", "funcname": "dataWithContentsOfURL", "descrip": []}
+{"params": {}, "returntype": "NSArray *", "funcname": "array", "descrip": []}
+{"params": ["id"], "returntype": "NSArray *", "funcname": "arrayWithObject", "descrip": []}
+{"params": ["const id []", "NSUInteger"], "returntype": "NSArray *", "funcname": "arrayWithObjects", "descrip": ["count"]}
+{"params": ["NSUInteger"], "returntype": "NSMutableArray *", "funcname": "arrayWithCapacity", "descrip": []}
+{"params": {}, "returntype": "NSDictionary *", "funcname": "dictionary", "descrip": []}
+{"params": ["id", "id<NSCopying>"], "returntype": "NSDictionary *", "funcname": "dictionaryWithObject", "descrip": ["forKey"]}
+{"params": ["NSUInteger"], "returntype": "NSMutableDictionary *", "funcname": "dictionaryWithCapacity", "descrip": []}
+{"params": {}, "returntype": "NSSet *", "funcname": "set", "descrip": []}
+{"params": ["id"], "returntype": "NSSet *", "funcname": "setWithObject", "descrip": []}
+{"params": ["NSUInteger"], "returntype": "NSMutableSet *", "funcname": "setWithCapacity", "descrip": []}
+{"params": {}, "returntype": "NSIndexSet *", "funcname": "indexSet", "descrip": []}
+{"params": ["NSUInteger"], "returntype": "NSIndexSet *", "funcname": "indexSetWithIndex", "descrip": []}
+{"params": ["NSRange"], "returntype": "NSIndexSet *", "funcname": "indexSetWithIndexesInRange", "descrip": []}
+{"params": ["NSString *"], "returntype": "NSPredicate *", "funcname": "predicateWithFormat", "descrip": ["...;"]}
+{"params": ["BOOL (^", "id evaluatedObject, NSDictionary<NSString *,id> *bindings"], "returntype": "NSPredicate *", "funcname": "predicateWithBlock", "descrip": []}
+{"params": {}, "returntype": "NSFileManager *", "funcname": "defaultManager", "descrip": []}
+{"params": {}, "returntype": "NSUserDefaults *", "funcname": "standardUserDefaults", "descrip": []}
+{"params": {}, "returntype": "NSNotificationCenter *", "funcname": "defaultCenter", "descrip": []}
+{"params": {}, "returntype": "NSOperationQueue *", "funcname": "mainQueue", "descrip": []}
+{"params": {}, "returntype": "NSOperationQueue *", "funcname": "currentQueue", "descrip": []}
+{"params": {}, "returntype": "dispatch_queue_t", "funcname": "mainQueue", "descrip": []}
+{"params": {}, "returntype": "BOOL", "funcname": "isMainThread", "descrip": []}
+{"params": {}, "returntype": "NSThread *", "funcname": "currentThread", "descrip": []}
+{"params": {}, "returntype": "NSThread *", "funcname": "mainThread", "descrip": []}
+{"params": {}, "returntype": "UIApplication *", "funcname": "sharedApplication", "descrip": []}
+{"params": {}, "returntype": "UIScreen *", "funcname": "mainScreen", "descrip": []}
+{"params": {}, "returntype": "UIWindow *", "funcname": "keyWindow", "descrip": []}
+{"params": {}, "returntype": "NSArray<UIWindow *> *", "funcname": "windows", "descrip": []}
+{"params": ["UIImpactFeedbackStyle"], "returntype": "UIImpactFeedbackGenerator *", "funcname": "impactFeedbackGeneratorWithStyle", "descrip": []}
+{"params": {}, "returntype": "UINotificationFeedbackGenerator *", "funcname": "notificationFeedbackGenerator", "descrip": []}
+{"params": {}, "returntype": "UISelectionFeedbackGenerator *", "funcname": "selectionFeedbackGenerator", "descrip": []}
+{"params": {}, "returntype": "UIActivityIndicatorView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UILabel *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIButton *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UITextField *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UITextView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIImageView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UITableView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UICollectionView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIScrollView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIStackView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UISwitch *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UISlider *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UISegmentedControl *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIProgressView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIPageControl *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIDatePicker *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIPickerView *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UISearchBar *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIToolbar *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UITabBar *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UINavigationBar *", "funcname": "appearance", "descrip": []}
+{"params": {}, "returntype": "UIBarButtonItem *", "funcname": "appearance", "descrip": []}
