@@ -1,6 +1,6 @@
 # Confuse
 
-iOS 工程（Objective-C）混淆工具集：垃圾代码注入、工程前缀重命名、函数宏混淆。
+iOS 工程混淆工具集：Objective-C 与 Swift 垃圾代码注入、工程前缀重命名、函数宏混淆。
 
 ## 目录结构
 
@@ -9,23 +9,35 @@ Confuse/
 ├── README.md
 ├── profiles/                          # 工程相关配置（按 profile 隔离，便于移植）
 │   └── default/                       # 示例 profile，可复制为新工程
-│       ├── writecode.json             # 垃圾代码写入：白名单、数量、开关类名等
+│       ├── writecode.json             # OC 垃圾代码写入：白名单、数量、开关类名等
+│       ├── swift.json                 # Swift 垃圾代码 / 重命名：白名单、数量、忽略规则等
 │       └── rename.env                 # 重命名：白名单、临时目录、宏头文件路径等
 ├── resource/                          # 共享资源（词库、UIKit API 解析结果等）
 │   ├── words.txt                      # 通用英文词库（内置，一行一词）
 │   ├── ioswords.txt                   # iOS/OC 风格后缀词库（内置）
-│   ├── random_func_create.txt         # 运行时生成，Git 忽略
-│   ├── random_class_name.txt          # 运行时生成，Git 忽略
+│   ├── random_func_create.txt         # OC 运行时生成，Git 忽略
+│   ├── random_class_name.txt          # OC 运行时生成，Git 忽略
+│   ├── random_swift_func_create.txt   # Swift 运行时生成，Git 忽略
+│   ├── random_swift_class_name.txt    # Swift 运行时生成，Git 忽略
+│   ├── swift_rename_map.json          # Swift 重命名映射表，Git 忽略
 │   ├── func_orign/                    # iOS 原生 API 原文
 │   └── func_analysised/               # 经 analysis 解析后的 API 字典
-├── writecode/                         # 垃圾代码写入模块
+├── writecode/                         # OC 垃圾代码写入模块
 │   ├── config.py                      # 加载 profile + 运行时路径
 │   ├── profile_loader.py              # profile 解析与 JSON 读取
 │   ├── writecontrol.py                # 入口脚本
 │   ├── codemodel.py / filemanager.py / randomvalue.py
 │   ├── xcodeprojhelp.rb
 │   └── analysis/                      # 原生 SDK 解析（analys.py）
-├── rename/                            # 重命名模块
+├── swift/                             # Swift 混淆模块（与 writecode 并列）
+│   ├── config.py                      # 加载 swift.json profile
+│   ├── profile_loader.py
+│   ├── writecontrol.py                # 入口：注入 / 新建文件 / 重命名
+│   ├── codemodel.py / filemanager.py / randomvalue.py
+│   ├── rename.py                      # Swift 符号前缀重命名
+│   ├── xcodeprojhelp_swift.rb         # 向 .xcodeproj 注册 .swift 文件
+│   └── _test_fixtures/                # 本地 dry-run 样例工程
+├── rename/                            # OC 重命名模块
 │   ├── common.sh                      # 加载 profile 的公共逻辑
 │   ├── projectfile.sh                 # 工程前缀重命名
 │   └── func.sh                        # 函数宏混淆
@@ -38,8 +50,9 @@ Confuse/
 
 ```bash
 cp -R profiles/default profiles/my_app
-# 编辑 profiles/my_app/writecode.json
-# 编辑 profiles/my_app/rename.env
+# 编辑 profiles/my_app/writecode.json   # OC
+# 编辑 profiles/my_app/swift.json      # Swift
+# 编辑 profiles/my_app/rename.env      # OC 重命名
 ```
 
 切换 profile 的两种方式（二选一）：
@@ -50,6 +63,7 @@ export CONFUSE_PROFILE=my_app
 
 # 或命令行参数
 python3 writecode/writecontrol.py --profile my_app
+python3 swift/writecontrol.py --profile my_app
 sh rename/func.sh --profile my_app
 sh rename/projectfile.sh --profile my_app
 ```
@@ -66,6 +80,24 @@ sh rename/projectfile.sh --profile my_app
 | `call_func_name` | 开关类中的入口方法名 |
 | `hx_folder` | 使用自定义开关类时，`.h/.m` 所在子目录名（默认 `HX`） |
 
+### swift.json 字段说明
+
+| 字段 | 说明 |
+|------|------|
+| `file_while_list` | 白名单文件夹名（仅这些目录下的 `.swift` 参与注入/重命名） |
+| `member_num_min` / `member_num_max` | 每个类型注入属性/方法数量的范围 |
+| `new_file_count_min` / `new_file_count_max` | 交互模式下新建垃圾 Swift 文件的数量参考范围 |
+| `call_all_class` | 调用入口类名；空则自动创建「工程名+SwiftAllCall」 |
+| `call_func_name` | 入口类中的调用方法名 |
+| `hx_folder` | 自定义入口类 `.swift` 所在子目录（默认 `HX`） |
+| `output_subdir` | 新建垃圾 `.swift` 的输出子目录；空则写入工程主 target 目录 |
+| `inject_properties` / `inject_methods` | 是否向现有 Swift 类型注入属性/方法 |
+| `rename_enabled` | profile 默认是否开启重命名（也可用 CLI `--rename`） |
+| `rename_prefix` | 符号重命名前缀（如 `Obf` → `ObfMyClass`） |
+| `rename_types` / `rename_functions` / `rename_properties` | 重命名范围开关 |
+| `skip_line_patterns` | 含这些子串的行跳过注入/重命名（如 `@objc`、`override`、`init(`） |
+| `ignore_dirs` / `ignore_files` | 遍历时跳过的目录/文件名 |
+
 ### rename.env 字段说明
 
 | 变量 | 说明 |
@@ -81,12 +113,12 @@ sh rename/projectfile.sh --profile my_app
 
 - macOS
 - Python 3
-- Ruby（writecontrol 修改 `.xcodeproj` 时需要）
+- Ruby（writecontrol 修改 `.xcodeproj` 时需要；Swift 新建文件注册同样需要）
 - sqlite3（func.sh）
 
 ## 词库说明
 
-`rename/func.sh` 与 `writecode/randomvalue.py` 依赖 `resource/words.txt` 与 `resource/ioswords.txt` 生成随机符号名。**仓库已内置**两份词库（各约 1000 词），路径固定为 `resource/`，与 profile 无关。
+`rename/func.sh` 与 `writecode/randomvalue.py`、`swift/randomvalue.py` 依赖 `resource/words.txt` 与 `resource/ioswords.txt` 生成随机符号名。**仓库已内置**两份词库（各约 1000 词），路径固定为 `resource/`，与 profile 无关。
 
 | 文件 | 用途 | 格式 |
 |------|------|------|
@@ -146,7 +178,47 @@ sh /path/to/Confuse/rename/func.sh
 
 跑完后请手动检查宏头文件，删除误混淆的系统方法声明。
 
-### 四、（可选）重新生成 UIKit API 解析文件
+### 四、Swift 垃圾代码与重命名（swift/writecontrol.py）
+
+**命令：**
+
+```bash
+python3 /path/to/Confuse/swift/writecontrol.py
+python3 /path/to/Confuse/swift/writecontrol.py --profile default
+
+# 非交互示例
+python3 swift/writecontrol.py \
+  --project /Users/you/MyApp \
+  --inject-white \
+  --new-files 10 \
+  --skip-xcode
+
+# 仅预览
+python3 swift/writecontrol.py \
+  --project swift/_test_fixtures/MyApp \
+  --inject-white --new-files 2 --dry-run --skip-xcode
+
+# 符号前缀重命名（生成 resource/swift_rename_map.json）
+python3 swift/writecontrol.py --project /Users/you/MyApp --rename
+```
+
+**能力：**
+
+1. 向白名单目录内现有 `.swift` 的 `class`/`struct`/`extension` 注入 `private` 属性与方法
+2. 在工程目录（或 `output_subdir`）新建完整 Swift 垃圾类文件，并通过 `xcodeprojhelp_swift.rb` 注册到 Xcode（需 Ruby + xcodeproj gem）
+3. 可选前缀重命名：类型 / 函数 / 属性，并输出映射表
+
+**Swift 语法与限制：**
+
+| 场景 | 说明 |
+|------|------|
+| 跳过规则 | 含 `override`、`@objc`、`@IBAction`、`@IBOutlet`、`init(`、`deinit` 等的行不会被注入或作为重命名锚点 |
+| 混编 | `@objc` 暴露给 OC 的符号请勿重命名；Swift 侧注入的 `private` 成员不影响 OC 桥接 |
+| SPM | 纯 Swift Package 无 `.xcodeproj`，请使用 `--skip-xcode` 并手动维护 Package 源文件列表 |
+| 重命名 | 为简单词边界替换，可能误改字符串字面量；重命名后需自行编译验证 |
+| rename/ | OC 的 `func.sh` / `projectfile.sh` **不处理** Swift 源文件，Swift 重命名请用本模块 |
+
+### 五、（可选）重新生成 UIKit API 解析文件
 
 ```bash
 python3 /path/to/Confuse/writecode/analysis/analys.py
@@ -157,6 +229,6 @@ python3 /path/to/Confuse/writecode/analysis/analys.py
 ## 典型移植步骤
 
 1. 复制 `profiles/default` 为新 profile 名
-2. 按目标工程修改 `writecode.json` 与 `rename.env`
+2. 按目标工程修改 `writecode.json`（OC）、`swift.json`（Swift）、`rename.env`（OC 重命名）
 3. （可选）按需扩展 `resource/words.txt`、`resource/ioswords.txt`
 4. 使用 `CONFUSE_PROFILE=新名` 或 `--profile 新名` 运行各脚本
