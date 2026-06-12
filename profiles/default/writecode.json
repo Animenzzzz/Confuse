@@ -1,5 +1,5 @@
 {
-  "file_while_list": ["Services", "TFBLoginRegister"],
+  "file_while_list": ["Services", "TFBLoginRegister", "Runner", "Classes"],
   "m_h_num_min": 5,
   "m_h_num_max": 10,
   "call_all_class": "XSDKAllCall",

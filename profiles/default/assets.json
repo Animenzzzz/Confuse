@@ -3,7 +3,7 @@
   "scan_whole_project": true,
   "enabled_operations": ["reencode", "strip_metadata"],
   "skip_patterns": ["AppIcon", "LaunchImage", "LaunchScreen"],
-  "ignore_dirs": ["Pods", "Carthage", "Build", ".git", "DerivedData", ".build", "3rd"],
+  "ignore_dirs": ["Pods", "Carthage", "Build", "build", ".git", "DerivedData", ".build", "3rd", "Flutter", "ephemeral", ".symlinks", ".dart_tool"],
   "in_place": true,
   "output_suffix": "_assets_out",
   "copy_to": "",

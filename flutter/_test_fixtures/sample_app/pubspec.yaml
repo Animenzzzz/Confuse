@@ -1,0 +1,13 @@
+name: sample_app
+description: Confuse Flutter fixture (iOS only).
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

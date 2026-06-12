@@ -1,5 +1,5 @@
 {
-  "file_while_list": ["Services", "Features"],
+  "file_while_list": ["Services", "Features", "Runner", "Classes"],
   "member_num_min": 3,
   "member_num_max": 8,
   "new_file_count_min": 5,
@@ -34,6 +34,6 @@
     "protocol ",
     " associatedtype "
   ],
-  "ignore_dirs": ["3rd", "Pods", "Carthage", ".build", "DerivedData"],
+  "ignore_dirs": ["3rd", "Pods", "Carthage", ".build", "DerivedData", "Flutter", "ephemeral", ".symlinks", "build", ".dart_tool"],
   "ignore_files": ["Package.swift"]
 }

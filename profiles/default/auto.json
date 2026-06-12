@@ -1,5 +1,5 @@
 {
   "enabled_modules": null,
-  "ignore_dirs": ["Pods", "Carthage", "Build", ".git", "DerivedData", ".build", "3rd"],
+  "ignore_dirs": ["Pods", "Carthage", "Build", "build", ".git", "DerivedData", ".build", "3rd", "Flutter", "ephemeral", ".symlinks", ".dart_tool"],
   "assets_enabled": true
 }

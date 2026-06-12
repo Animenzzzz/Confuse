@@ -7,12 +7,13 @@ iOS 工程混淆工具集：Objective-C 与 Swift 垃圾代码注入、工程前
 ```
 Confuse/
 ├── README.md
-├── confuse.py                         # 统一入口（自动检测 OC / Swift / Assets）
-├── project_detect.py                  # 工程源文件与资源类型扫描
-├── auto_config.py                     # 加载 profiles/<name>/auto.json
+├── confuse.py                         # 统一入口（自动检测 OC / Swift / Assets / Flutter）
+├── project_detect.py                  # 工程源文件与资源类型扫描；Flutter iOS 路径解析
+├── auto_config.py                     # 加载 profiles/<name>/auto.json、flutter.json
 ├── profiles/                          # 工程相关配置（按 profile 隔离，便于移植）
 │   └── default/                       # 示例 profile，可复制为新工程
 │       ├── auto.json                  # 统一入口：忽略目录、enabled_modules、assets 开关
+│       ├── flutter.json               # Flutter 工程：ios 子路径、ignore、Runner 白名单建议
 │       ├── writecode.json             # OC 垃圾代码写入：白名单、数量、开关类名等
 │       ├── swift.json                 # Swift 垃圾代码 / 重命名：白名单、数量、忽略规则等
 │       ├── assets.json                # 资源指纹差异化：扫描范围、重编码、扰动等
@@ -51,6 +52,8 @@ Confuse/
 │   ├── process.py                     # 入口：扫描 / 重编码 / 扰动 / metadata
 │   ├── scanner.py / processor.py / xcassets.py
 │   └── _test_fixtures/                # 本地 dry-run 样例 xcassets
+├── flutter/                           # Flutter 相关（仅 iOS 侧；无 Dart 处理）
+│   └── _test_fixtures/sample_app/     # 最小 Flutter 工程 fixture（detect-only / dry-run）
 ├── rename/                            # OC 重命名模块
 │   ├── common.sh                      # 加载 profile 的公共逻辑
 │   ├── projectfile.sh                 # 工程前缀重命名
@@ -92,8 +95,84 @@ sh rename/projectfile.sh --profile my_app
 | 字段 | 说明 |
 |------|------|
 | `enabled_modules` | `null` 表示按工程自动检测；或 `["oc"]` / `["swift"]` / `["assets"]` / 任意组合强制指定 |
-| `ignore_dirs` | 扫描 `.m/.h/.swift`/图片时跳过的目录名（默认含 `Pods`、`Carthage`、`Build`、`.git` 等） |
+| `ignore_dirs` | 扫描 `.m/.h/.swift`/图片时跳过的目录名（默认含 `Pods`、`Flutter`、`Carthage`、`Build`、`build`、`.git` 等） |
 | `assets_enabled` | `true`（默认）时在检测到 xcassets/图片时自动运行 assets 模块；`false` 关闭 |
+
+### flutter.json 字段说明（Flutter 工程 iOS 解析）
+
+| 字段 | 说明 |
+|------|------|
+| `flutter_enabled` | `true`（默认）时启用 Flutter 路径解析；`false` 等同 `--native-only` |
+| `ios_subpath` | Flutter 工程内 iOS 目录名，默认 `ios` |
+| `ignore_dirs` | 额外忽略目录（与 `auto.json` 合并）；默认含 `Pods`、`Flutter`、`ephemeral`、`.symlinks`、`build`、`.dart_tool` |
+| `runner_target` | 文档用途，默认 target 名 `Runner` |
+| `recommended_file_while_list` | 建议写入 `writecode.json` / `swift.json` 的白名单目录（如 `Runner`、`Classes`） |
+
+## Flutter 工程（仅处理 ios/）
+
+Confuse **不处理** `lib/**/*.dart`、`android/` 等 Flutter 非 iOS 部分。传入 Flutter 工程根目录时，工具会自动解析 `ios/` 并在该目录上运行 OC / Swift / Assets 模块。
+
+### 路径与类型
+
+| 类型 | `--project` 传入路径 | 实际 iOS 处理根路径 |
+|------|----------------------|---------------------|
+| 纯原生 | `/path/MyApp`（含 `.xcodeproj`） | 同路径 |
+| 纯 Flutter | `/path/flutter_app`（含 `pubspec.yaml`） | `/path/flutter_app/ios` |
+| 混编 | 含 `ios/` 嵌套或根目录同时有原生与 Flutter 标记 | 解析出的 `ios/` 或嵌套 iOS 路径 |
+| 直接指定 ios | `/path/flutter_app/ios` | 同路径（兼容原生用法） |
+
+```bash
+# Flutter 工程根（推荐）
+python3 confuse.py --project /path/to/flutter_app --detect-only
+
+# 直接指向 ios/ 子目录（等同原生）
+python3 confuse.py --project /path/to/flutter_app/ios --detect-only
+
+# 强制按原生路径，不向上找 pubspec
+python3 confuse.py --project /path/to/flutter_app/ios --native-only --detect-only
+
+# dry-run（Swift / Assets 预览）
+python3 confuse.py \
+  --project flutter/_test_fixtures/sample_app \
+  --inject-white --new-files 2 --dry-run --skip-xcode --detect-only
+```
+
+**检测日志示例：**
+
+```
+Detected: Flutter project → iOS root: ios/ (Runner.xcodeproj)
+Scanned: Swift (1 files), Assets (1 .xcassets) → running ...
+```
+
+### 默认忽略目录（Flutter ios/）
+
+扫描与混淆时跳过（可在 profile 中扩展）：
+
+- `Pods/` — CocoaPods 依赖
+- `Flutter/` — Flutter 引擎生成文件（含 `Generated.xcconfig` 等）
+- `ephemeral/`、`.symlinks/` — Flutter 构建链接
+- `build/`、`.dart_tool/` — 构建缓存
+- 以及原生侧已有的 `Carthage`、`DerivedData` 等
+
+### 白名单建议
+
+Flutter iOS 工程请在 profile 中将 `Runner`、`Classes` 加入白名单（`profiles/default` 示例已包含）：
+
+- `writecode.json` → `file_while_list`
+- `swift.json` → `file_while_list`
+
+### 限制
+
+- **不混淆 Dart**（`lib/`、`test/` 等）
+- **不处理** `android/`、`web/` 等平台目录
+- 子模块仍可直接调用，但需自行传入 **ios 根路径**（或依赖统一入口自动解析）
+- OC 重命名（`rename/func.sh`）需对 `ios/` 目录单独配置路径
+
+### 混编场景
+
+- **Flutter 主工程 + 原生插件代码**：通常位于 `ios/Runner` 或 `ios/Classes`，按 Flutter 根路径传入即可。
+- **原生主工程 + 内嵌 Flutter 模块**：若根目录无 `pubspec.yaml` 但存在 `ios/` 子目录，会识别为 `mixed` 并处理 `ios/`。
+- 使用 `--native-only` 可禁用 Flutter 解析，按传入路径原样扫描（适用于已指向 `ios/` 或纯 Xcode 工程）。
 
 ## 推荐：统一入口（自动检测 OC / Swift / Assets）
 
@@ -132,7 +211,7 @@ python3 confuse.py --project /Users/you/MyApp --detect-only
 
 **混跑顺序：** 统一入口先运行 **Assets**（资源与代码无关，先改 hash 再改源码），再 OC、再 Swift。
 
-扫描时会忽略 `Pods/`、`Carthage/`、`Build/`、`.git/`、`*.framework` 等目录（与 `auto.json` 及 profile 白名单一致）。
+扫描时会忽略 `Pods/`、`Flutter/`、`Carthage/`、`Build/`、`build/`、`.git/`、`*.framework` 等目录（与 `auto.json`、`flutter.json` 及 profile 白名单一致）。
 
 **交互简化：** 统一入口只问一次工程路径与通用选项（白名单注入、新建文件数、Swift 重命名等），不再询问「选 OC 还是 Swift」。各子模块入口仍可单独使用（向后兼容）。
 

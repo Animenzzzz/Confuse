@@ -1,0 +1,7 @@
+{
+  "flutter_enabled": true,
+  "ios_subpath": "ios",
+  "ignore_dirs": ["Pods", "Flutter", "build", ".symlinks", "ephemeral", ".dart_tool"],
+  "runner_target": "Runner",
+  "recommended_file_while_list": ["Runner", "Classes"]
+}

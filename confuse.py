@@ -22,7 +22,12 @@ sys.path.insert(0, os.path.join(REPO_ROOT, 'writecode'))
 import profile_loader  # noqa: E402
 
 from auto_config import load_auto_settings  # noqa: E402
-from project_detect import format_detection_log, resolve_modules, scan_project  # noqa: E402
+from project_detect import (  # noqa: E402
+    format_detection_log,
+    resolve_ios_root,
+    resolve_modules,
+    scan_project,
+)
 
 NEW_FILES_OPTION = """
 ----------------
@@ -43,7 +48,12 @@ def parse_args(argv):
     parser.add_argument('--profile', help='profile 名称（默认 default 或 CONFUSE_PROFILE）')
     parser.add_argument(
         '--project',
-        help='Xcode 工程根目录（含 .xcodeproj 的上一级）；省略则交互输入',
+        help='工程路径：原生为 .xcodeproj 上一级；Flutter 为含 pubspec.yaml 的根目录或 ios/ 子目录',
+    )
+    parser.add_argument(
+        '--native-only',
+        action='store_true',
+        help='强制按原生路径处理（不解析 Flutter pubspec / ios 子目录）',
     )
     parser.add_argument(
         '--detect-only',
@@ -207,8 +217,19 @@ def main(argv):
     os.environ['CONFUSE_PROFILE'] = profile
 
     auto_settings = load_auto_settings(profile)
-    project = resolve_project_path(args)
-    detection = scan_project(project, ignore_dirs=auto_settings.get('ignore_dirs'))
+    input_path = resolve_project_path(args)
+    flutter_settings = auto_settings.get('flutter', {})
+    resolution = resolve_ios_root(
+        input_path,
+        native_only=args.native_only,
+        flutter_settings=flutter_settings,
+    )
+    ios_root = resolution['ios_root']
+    detection = scan_project(
+        ios_root,
+        ignore_dirs=auto_settings.get('ignore_dirs'),
+        resolution=resolution,
+    )
     modules = resolve_modules(detection, auto_settings.get('enabled_modules'))
 
     if args.assets_only:
@@ -230,21 +251,21 @@ def main(argv):
         return 1
 
     if modules.get('assets') and not modules['oc'] and not modules['swift']:
-        assets_argv = build_assets_argv(profile, project, args.dry_run)
+        assets_argv = build_assets_argv(profile, ios_root, args.dry_run)
         return run_subprocess(assets_argv, 'Assets process')
 
     inject_white, new_files, do_rename, add_properties = interactive_flags(args, modules)
 
     exit_code = 0
     if modules.get('assets'):
-        assets_argv = build_assets_argv(profile, project, args.dry_run)
+        assets_argv = build_assets_argv(profile, ios_root, args.dry_run)
         code = run_subprocess(assets_argv, 'Assets process')
         exit_code = max(exit_code, code)
 
     if modules['oc']:
         oc_argv = build_oc_argv(
             profile,
-            project,
+            ios_root,
             inject_white,
             new_files,
             args.new_files_level,
@@ -256,7 +277,7 @@ def main(argv):
     if modules['swift']:
         swift_argv = build_swift_argv(
             profile,
-            project,
+            ios_root,
             inject_white,
             new_files,
             do_rename,
