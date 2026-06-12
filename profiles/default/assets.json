@@ -1,0 +1,16 @@
+{
+  "file_while_list": [],
+  "scan_whole_project": true,
+  "enabled_operations": ["reencode", "strip_metadata"],
+  "skip_patterns": ["AppIcon", "LaunchImage", "LaunchScreen"],
+  "ignore_dirs": ["Pods", "Carthage", "Build", ".git", "DerivedData", ".build", "3rd"],
+  "in_place": true,
+  "output_suffix": "_assets_out",
+  "copy_to": "",
+  "reencode_quality": 95,
+  "perturb_enabled": false,
+  "perturb_strength": 1,
+  "rename_assets": false,
+  "rename_prefix": "img_",
+  "randomize_imageset_filenames": false
+}

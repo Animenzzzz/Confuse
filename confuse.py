@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Confuse 统一入口：扫描 Xcode 工程，自动选择 OC / Swift 混淆模块。
+Confuse 统一入口：扫描 Xcode 工程，自动选择 OC / Swift / Assets 混淆模块。
 
 仍可直接使用各子模块入口（向后兼容）：
   python3 writecode/writecontrol.py
   python3 swift/writecontrol.py
+  python3 assets/process.py
   sh rename/func.sh
 """
 import argparse
@@ -37,7 +38,7 @@ NEW_FILES_OPTION = """
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(
-        description='Confuse 统一入口：自动检测 OC / Swift 并运行对应模块',
+        description='Confuse 统一入口：自动检测 OC / Swift / Assets 并运行对应模块',
     )
     parser.add_argument('--profile', help='profile 名称（默认 default 或 CONFUSE_PROFILE）')
     parser.add_argument(
@@ -49,7 +50,9 @@ def parse_args(argv):
         action='store_true',
         help='仅扫描并输出检测结果，不执行混淆',
     )
-    parser.add_argument('--dry-run', action='store_true', help='Swift 模块仅预览（OC 模块不支持）')
+    parser.add_argument('--dry-run', action='store_true', help='Swift / Assets 模块仅预览（OC 模块不支持）')
+    parser.add_argument('--assets-only', action='store_true', help='仅运行 assets 资源指纹模块')
+    parser.add_argument('--skip-assets', action='store_true', help='跳过 assets 资源指纹模块')
     parser.add_argument('--inject-white', action='store_true', help='向白名单目录注入/写入垃圾代码')
     parser.add_argument(
         '--new-files',
@@ -124,6 +127,20 @@ def interactive_flags(args, modules):
     return inject_white, new_files, do_rename, add_properties
 
 
+def build_assets_argv(profile, project, dry_run):
+    argv = [
+        sys.executable,
+        os.path.join(REPO_ROOT, 'assets', 'process.py'),
+        '--profile',
+        profile,
+        '--project',
+        project,
+    ]
+    if dry_run:
+        argv.append('--dry-run')
+    return argv
+
+
 def build_oc_argv(profile, project, inject_white, new_files, new_files_level, add_properties):
     argv = [
         sys.executable,
@@ -194,20 +211,36 @@ def main(argv):
     detection = scan_project(project, ignore_dirs=auto_settings.get('ignore_dirs'))
     modules = resolve_modules(detection, auto_settings.get('enabled_modules'))
 
+    if args.assets_only:
+        modules = {'oc': False, 'swift': False, 'assets': True}
+    elif args.skip_assets:
+        modules['assets'] = False
+    elif not auto_settings.get('assets_enabled', True):
+        modules['assets'] = False
+
     print(f'\n当前 profile：{profile}')
     print(format_detection_log(detection, modules))
 
     if args.detect_only:
         return 0
 
-    if not modules['oc'] and not modules['swift']:
-        print('\n未检测到可处理的 OC（.m）或 Swift 源文件，已退出。')
+    if not modules['oc'] and not modules['swift'] and not modules.get('assets'):
+        print('\n未检测到可处理的 OC（.m）、Swift 源文件或图片资源，已退出。')
         print('提示：纯头文件工程（仅有 .h 无 .m）不会触发 OC 模块。')
         return 1
+
+    if modules.get('assets') and not modules['oc'] and not modules['swift']:
+        assets_argv = build_assets_argv(profile, project, args.dry_run)
+        return run_subprocess(assets_argv, 'Assets process')
 
     inject_white, new_files, do_rename, add_properties = interactive_flags(args, modules)
 
     exit_code = 0
+    if modules.get('assets'):
+        assets_argv = build_assets_argv(profile, project, args.dry_run)
+        code = run_subprocess(assets_argv, 'Assets process')
+        exit_code = max(exit_code, code)
+
     if modules['oc']:
         oc_argv = build_oc_argv(
             profile,

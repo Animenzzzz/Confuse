@@ -7,14 +7,15 @@ iOS 工程混淆工具集：Objective-C 与 Swift 垃圾代码注入、工程前
 ```
 Confuse/
 ├── README.md
-├── confuse.py                         # 统一入口（自动检测 OC / Swift）
-├── project_detect.py                  # 工程源文件类型扫描
+├── confuse.py                         # 统一入口（自动检测 OC / Swift / Assets）
+├── project_detect.py                  # 工程源文件与资源类型扫描
 ├── auto_config.py                     # 加载 profiles/<name>/auto.json
 ├── profiles/                          # 工程相关配置（按 profile 隔离，便于移植）
 │   └── default/                       # 示例 profile，可复制为新工程
-│       ├── auto.json                  # 统一入口：忽略目录、enabled_modules 覆盖
+│       ├── auto.json                  # 统一入口：忽略目录、enabled_modules、assets 开关
 │       ├── writecode.json             # OC 垃圾代码写入：白名单、数量、开关类名等
 │       ├── swift.json                 # Swift 垃圾代码 / 重命名：白名单、数量、忽略规则等
+│       ├── assets.json                # 资源指纹差异化：扫描范围、重编码、扰动等
 │       └── rename.env                 # 重命名：白名单、临时目录、宏头文件路径等
 ├── resource/                          # 共享资源（词库、UIKit API 解析结果等）
 │   ├── words.txt                      # 通用英文词库（内置，一行一词，约 3500+）
@@ -44,6 +45,12 @@ Confuse/
 │   ├── rename.py                      # Swift 符号前缀重命名
 │   ├── xcodeprojhelp_swift.rb         # 向 .xcodeproj 注册 .swift 文件
 │   └── _test_fixtures/                # 本地 dry-run 样例工程
+├── assets/                            # 资源指纹差异化模块（防 4.3，与语言无关）
+│   ├── config.py                      # 加载 assets.json profile
+│   ├── profile_loader.py
+│   ├── process.py                     # 入口：扫描 / 重编码 / 扰动 / metadata
+│   ├── scanner.py / processor.py / xcassets.py
+│   └── _test_fixtures/                # 本地 dry-run 样例 xcassets
 ├── rename/                            # OC 重命名模块
 │   ├── common.sh                      # 加载 profile 的公共逻辑
 │   ├── projectfile.sh                 # 工程前缀重命名
@@ -59,6 +66,7 @@ Confuse/
 cp -R profiles/default profiles/my_app
 # 编辑 profiles/my_app/writecode.json   # OC
 # 编辑 profiles/my_app/swift.json      # Swift
+# 编辑 profiles/my_app/assets.json     # 资源指纹
 # 编辑 profiles/my_app/rename.env      # OC 重命名
 ```
 
@@ -72,6 +80,7 @@ export CONFUSE_PROFILE=my_app
 python3 confuse.py --profile my_app --project /Users/you/MyApp
 python3 writecode/writecontrol.py --profile my_app
 python3 swift/writecontrol.py --profile my_app
+python3 assets/process.py --profile my_app
 sh rename/func.sh --profile my_app
 sh rename/projectfile.sh --profile my_app
 ```
@@ -82,10 +91,11 @@ sh rename/projectfile.sh --profile my_app
 
 | 字段 | 说明 |
 |------|------|
-| `enabled_modules` | `null` 表示按工程自动检测；或 `["oc"]` / `["swift"]` / `["oc","swift"]` 强制指定 |
-| `ignore_dirs` | 扫描 `.m/.h/.swift` 时跳过的目录名（默认含 `Pods`、`Carthage`、`Build`、`.git` 等） |
+| `enabled_modules` | `null` 表示按工程自动检测；或 `["oc"]` / `["swift"]` / `["assets"]` / 任意组合强制指定 |
+| `ignore_dirs` | 扫描 `.m/.h/.swift`/图片时跳过的目录名（默认含 `Pods`、`Carthage`、`Build`、`.git` 等） |
+| `assets_enabled` | `true`（默认）时在检测到 xcassets/图片时自动运行 assets 模块；`false` 关闭 |
 
-## 推荐：统一入口（自动检测 OC / Swift）
+## 推荐：统一入口（自动检测 OC / Swift / Assets）
 
 无需手动选择语言，工具会扫描工程并运行对应模块：
 
@@ -95,10 +105,16 @@ python3 /path/to/Confuse/confuse.py --project /Users/you/MyApp --profile default
 # 非交互：白名单注入 + 新建 10 个垃圾文件
 python3 confuse.py --project /Users/you/MyApp --inject-white --new-files 10
 
-# 仅预览（Swift 模块 dry-run；OC 模块仍会写入）
+# 仅预览（Swift / Assets 模块 dry-run；OC 模块仍会写入）
 python3 confuse.py \
   --project swift/_test_fixtures/MyApp \
   --inject-white --new-files 2 --dry-run --skip-xcode
+
+# 仅运行资源指纹模块
+python3 confuse.py --project /Users/you/MyApp --assets-only
+
+# 混跑时跳过资源处理
+python3 confuse.py --project /Users/you/MyApp --skip-assets
 
 # 仅查看检测结果
 python3 confuse.py --project /Users/you/MyApp --detect-only
@@ -110,10 +126,13 @@ python3 confuse.py --project /Users/you/MyApp --detect-only
 |------|----------|
 | 存在 `.m` 文件（非纯头工程） | OC `writecode/writecontrol.py` |
 | 存在 `.swift` 文件 | Swift `swift/writecontrol.py` |
+| 存在 `.xcassets` 或 `.png/.jpg/.jpeg/.webp` | Assets `assets/process.py` |
 | 混编（同时有 `.m` 与 `.swift`） | **两者都跑**，共用同一 `--profile` |
 | 仅有 `.h`、无 `.m` | 不跑 OC 模块（纯头文件/SDK 头） |
 
-扫描时会忽略 `Pods/`、`Carthage/`、`Build/`、`.git/` 等目录（与 `auto.json` 及 Swift profile 白名单一致）。
+**混跑顺序：** 统一入口先运行 **Assets**（资源与代码无关，先改 hash 再改源码），再 OC、再 Swift。
+
+扫描时会忽略 `Pods/`、`Carthage/`、`Build/`、`.git/`、`*.framework` 等目录（与 `auto.json` 及 profile 白名单一致）。
 
 **交互简化：** 统一入口只问一次工程路径与通用选项（白名单注入、新建文件数、Swift 重命名等），不再询问「选 OC 还是 Swift」。各子模块入口仍可单独使用（向后兼容）。
 
@@ -147,6 +166,24 @@ OC 函数宏 / 工程前缀重命名（`rename/func.sh`、`rename/projectfile.sh
 | `skip_line_patterns` | 含这些子串的行跳过注入/重命名（如 `@objc`、`override`、`init(`） |
 | `ignore_dirs` / `ignore_files` | 遍历时跳过的目录/文件名 |
 
+### assets.json 字段说明
+
+| 字段 | 说明 |
+|------|------|
+| `file_while_list` | 白名单文件夹名；空且 `scan_whole_project=true` 时扫描全工程 |
+| `scan_whole_project` | `true` 时扫描工程内所有图片（仍跳过 `ignore_dirs`） |
+| `enabled_operations` | 启用的操作：`reencode`、`perturb`、`strip_metadata`、`rename_assets` |
+| `skip_patterns` | 路径含这些子串的资源跳过（默认 `AppIcon`、`LaunchImage`、`LaunchScreen`） |
+| `ignore_dirs` | 额外忽略的目录名 |
+| `in_place` | `true` 原地修改；`false` 复制到 `工程名+output_suffix` |
+| `output_suffix` | 非原地模式的输出目录后缀（默认 `_assets_out`） |
+| `copy_to` | 可选，指定绝对输出目录（CLI `--copy-to` 可覆盖） |
+| `reencode_quality` | JPEG/WebP 重编码质量 1–100（默认 95） |
+| `perturb_enabled` | 是否启用轻量像素扰动（需 Pillow） |
+| `perturb_strength` | 扰动强度 1–3（默认 1，肉眼难察觉） |
+| `rename_assets` / `randomize_imageset_filenames` | 随机化 imageset 内文件名并更新 `Contents.json`（跳过 appiconset） |
+| `rename_prefix` | imageset 内新文件名前缀 |
+
 ### rename.env 字段说明
 
 | 变量 | 说明 |
@@ -164,6 +201,7 @@ OC 函数宏 / 工程前缀重命名（`rename/func.sh`、`rename/projectfile.sh
 - Python 3
 - Ruby（writecontrol 修改 `.xcodeproj` 时需要；Swift 新建文件注册同样需要）
 - sqlite3（func.sh）
+- **可选** Pillow（`pip install Pillow`）：assets 模块像素扰动与完整重编码；未安装时 macOS 上可降级使用 `sips` 重编码
 
 ## resource/ 资源说明
 
@@ -314,7 +352,45 @@ python3 swift/writecontrol.py --project /Users/you/MyApp --rename
 | 重命名 | 为简单词边界替换，可能误改字符串字面量；重命名后需自行编译验证 |
 | rename/ | OC 的 `func.sh` / `projectfile.sh` **不处理** Swift 源文件，Swift 重命名请用本模块 |
 
-### 五、（可选）重新生成词库与 UIKit API 解析文件
+### 五、资源指纹差异化（assets/process.py）
+
+用于降低 App Store **4.3（Spam / 重复应用）** 审查时资源字节 hash 完全一致的风险。通过重编码、metadata 剥离、可选像素微扰等方式改变图片文件指纹，**不能替代 UI/功能差异**。
+
+**命令：**
+
+```bash
+python3 /path/to/Confuse/assets/process.py
+python3 assets/process.py --profile default --project /Users/you/MyApp
+
+# 预览（不写入）
+python3 assets/process.py \
+  --project assets/_test_fixtures/MyApp \
+  --dry-run
+
+# 输出到新目录（不修改原工程）
+python3 assets/process.py \
+  --project /Users/you/MyApp \
+  --copy-to /Users/you/MyApp_assets_out
+
+# 非原地模式（profile in_place=false + output_suffix）
+# 会复制整个工程树到 工程名_assets_out 再处理图片
+```
+
+**默认行为：**
+
+- 扫描 `.xcassets` 内 imageset/appiconset 及独立 `.png/.jpg/.jpeg/.webp`
+- 默认跳过 `AppIcon`、`LaunchImage`、`LaunchScreen` 相关路径
+- 默认启用 `reencode` + `strip_metadata`，原地修改
+- `appiconset` 不参与 imageset 文件名随机化
+
+**限制：**
+
+- 仅改变资源文件 hash，不改变业务逻辑或界面布局
+- AppIcon / Launch 类资源默认跳过，避免打包失败
+- 无 Pillow 时 `perturb` 不可用；重编码依赖 Pillow 或 macOS `sips`
+- 重命名 imageset 内文件后需自行编译验证 Asset Catalog 引用
+
+### 六、（可选）重新生成词库与 UIKit API 解析文件
 
 ```bash
 # 词库
@@ -332,6 +408,6 @@ python3 /path/to/Confuse/writecode/analysis/analys.py
 ## 典型移植步骤
 
 1. 复制 `profiles/default` 为新 profile 名
-2. 按目标工程修改 `writecode.json`（OC）、`swift.json`（Swift）、`rename.env`（OC 重命名）
+2. 按目标工程修改 `writecode.json`（OC）、`swift.json`（Swift）、`assets.json`（资源）、`rename.env`（OC 重命名）
 3. （可选）运行 `resource/_generate_wordlists.py` 或手工扩展 `resource/words.txt`、`resource/ioswords.txt`
 4. 推荐使用 `python3 confuse.py --project 工程路径 --profile 新名`；或分别运行各子模块

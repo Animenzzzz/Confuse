@@ -15,6 +15,7 @@ def load_auto_settings(profile_name):
     defaults = {
         'enabled_modules': None,
         'ignore_dirs': sorted(DEFAULT_IGNORE_DIRS),
+        'assets_enabled': True,
     }
     path = auto_profile_path(profile_name)
     if not os.path.isfile(path):
@@ -25,4 +26,6 @@ def load_auto_settings(profile_name):
         defaults['ignore_dirs'] = data['ignore_dirs']
     if 'enabled_modules' in data:
         defaults['enabled_modules'] = data['enabled_modules']
+    if 'assets_enabled' in data:
+        defaults['assets_enabled'] = data['assets_enabled']
     return defaults

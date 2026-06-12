@@ -1,4 +1,5 @@
 {
   "enabled_modules": null,
-  "ignore_dirs": ["Pods", "Carthage", "Build", ".git", "DerivedData", ".build", "3rd"]
+  "ignore_dirs": ["Pods", "Carthage", "Build", ".git", "DerivedData", ".build", "3rd"],
+  "assets_enabled": true
 }

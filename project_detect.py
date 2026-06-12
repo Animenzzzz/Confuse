@@ -15,6 +15,8 @@ DEFAULT_IGNORE_DIRS = frozenset({
     'node_modules',
 })
 
+ASSET_IMAGE_EXTENSIONS = frozenset({'.png', '.jpg', '.jpeg', '.webp'})
+
 
 def normalize_project_root(path):
     path = os.path.abspath(os.path.expanduser(path.strip()))
@@ -30,9 +32,15 @@ def scan_project(project_root, ignore_dirs=None):
     if ignore_dirs:
         ignored.update(ignore_dirs)
 
-    counts = {'m': 0, 'h': 0, 'swift': 0}
+    counts = {'m': 0, 'h': 0, 'swift': 0, 'xcassets': 0, 'images': 0}
     for dir_root, dirs, files in os.walk(root):
-        dirs[:] = [d for d in dirs if d not in ignored]
+        dirs[:] = [
+            d for d in dirs
+            if d not in ignored and not d.endswith('.framework')
+        ]
+        for dirname in dirs:
+            if dirname.endswith('.xcassets'):
+                counts['xcassets'] += 1
         for filename in files:
             ext = os.path.splitext(filename)[1].lower()
             if ext == '.m':
@@ -41,14 +49,18 @@ def scan_project(project_root, ignore_dirs=None):
                 counts['h'] += 1
             elif ext == '.swift':
                 counts['swift'] += 1
+            elif ext in ASSET_IMAGE_EXTENSIONS:
+                counts['images'] += 1
 
     has_oc = counts['m'] > 0
     has_swift = counts['swift'] > 0
+    has_assets = counts['xcassets'] > 0 or counts['images'] > 0
     return {
         'project_root': root,
         'counts': counts,
         'has_oc': has_oc,
         'has_swift': has_swift,
+        'has_assets': has_assets,
         'ignore_dirs': sorted(ignored),
     }
 
@@ -63,10 +75,12 @@ def resolve_modules(detection, enabled_modules=None):
         return {
             'oc': 'oc' in allowed,
             'swift': 'swift' in allowed,
+            'assets': 'assets' in allowed,
         }
     return {
         'oc': detection['has_oc'],
         'swift': detection['has_swift'],
+        'assets': detection['has_assets'],
     }
 
 
@@ -77,10 +91,19 @@ def format_detection_log(detection, modules):
         parts.append(f'Objective-C ({c["m"]} .m, {c["h"]} .h)')
     if c['swift']:
         parts.append(f'Swift ({c["swift"]} files)')
+    asset_parts = []
+    if c.get('xcassets'):
+        asset_parts.append(f'{c["xcassets"]} .xcassets')
+    if c.get('images'):
+        asset_parts.append(f'{c["images"]} images')
+    if asset_parts:
+        parts.append('Assets (' + ', '.join(asset_parts) + ')')
     if not parts:
-        parts.append('未检测到 .m / .swift 源文件')
+        parts.append('未检测到 .m / .swift / 图片资源')
 
     run_parts = []
+    if modules.get('assets'):
+        run_parts.append('assets process')
     if modules['oc']:
         run_parts.append('OC writecode')
     if modules['swift']:
